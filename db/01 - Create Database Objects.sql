@@ -1,0 +1,147 @@
+CREATE DATABASE IF NOT EXISTS plannpla_db
+	DEFAULT CHARACTER SET utf8
+	DEFAULT COLLATE utf8_general_ci;
+
+USE plannpla_db;
+
+CREATE TABLE IF NOT EXISTS User (
+	UserID BIGINT NOT NULL AUTO_INCREMENT,
+	FirstName VARCHAR(100) NOT NULL,
+	LastName VARCHAR(100) NULL,
+	Email VARCHAR(100) NOT NULL UNIQUE,
+	`Password` CHAR(255) NOT NULL,
+	Phone VARCHAR(50) NULL,
+	Picture BLOB NULL,
+	Radius INT NULL,
+	Reminder INT NULL,
+	PRIMARY KEY (UserID)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `Event` (
+	EventID BIGINT NOT NULL AUTO_INCREMENT,
+	HostID BIGINT NOT NULL,
+	`Name` VARCHAR(100) NOT NULL,
+	Description VARCHAR(1000) NULL,
+	`Time` DATETIME NULL,
+	Address VARCHAR(100) NULL,
+    City VARCHAR(100) NULL,
+    State VARCHAR(50) NULL,
+	Zipcode VARCHAR(50) NULL,
+	Capacity INT NULL,
+	Private TINYINT(1) NOT NULL DEFAULT 0,
+	PRIMARY KEY (EventID),
+	FOREIGN KEY (HostID) REFERENCES User (UserID)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS Participant (
+	EventID BIGINT NOT NULL,
+	UserID BIGINT NOT NULL,
+	Invited TINYINT(1) NOT NULL DEFAULT 0,
+	PRIMARY KEY (EventID, UserID),
+	FOREIGN KEY (EventID) REFERENCES Event (EventID),
+	FOREIGN KEY (UserID) REFERENCES User (UserID)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS EventTag (
+	EventID BIGINT NOT NULL,
+	Tag VARCHAR(100) NOT NULL,
+	PRIMARY KEY (EventID, Tag),
+	FOREIGN KEY (EventID) REFERENCES Event (EventID)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS UserTag (
+	UserID BIGINT NOT NULL,
+	Tag VARCHAR(100) NOT NULL,
+	PRIMARY KEY (UserID, Tag),
+	FOREIGN KEY (UserID) REFERENCES User (UserID)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS `Comment` (
+	CommentID BIGINT NOT NULL AUTO_INCREMENT,
+	EventID BIGINT NOT NULL,
+	UserID BIGINT NOT NULL,
+	ParentID BIGINT NULL,
+	Text VARCHAR(1000) NULL,
+	PRIMARY KEY (CommentID),
+	FOREIGN KEY (EventID) REFERENCES Event (EventID),
+	FOREIGN KEY (UserID) REFERENCES User (UserID),
+	FOREIGN KEY (ParentID) REFERENCES `Comment` (CommentID)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS Media (
+	MediaID BIGINT NOT NULL AUTO_INCREMENT,
+	EventID BIGINT NOT NULL,
+	UserID BIGINT NOT NULL,
+	Link VARCHAR(100) NULL,
+	PRIMARY KEY (MediaID),
+	FOREIGN KEY (EventID) REFERENCES Event (EventID),
+	FOREIGN KEY (UserID) REFERENCES User (UserID)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS State (
+	`Code` VARCHAR(50) NOT NULL,
+    `Name` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (Code)
+) ENGINE=InnoDB;
+
+/* Insert states */
+INSERT INTO State (`Code`, `Name`)
+SELECT `Code`, `Name`
+FROM (
+	SELECT 'AL' AS `Code`, 'Alabama' AS `Name`
+	UNION SELECT 'AK', 'Alaska'
+	UNION SELECT 'AZ', 'Arizona'
+	UNION SELECT 'AR', 'Arkansas'
+	UNION SELECT 'CA', 'California'
+	UNION SELECT 'CO', 'Colorado'
+	UNION SELECT 'CT', 'Connecticut'
+	UNION SELECT 'DE', 'Delaware'
+	UNION SELECT 'DC', 'District of Columbia'
+	UNION SELECT 'FL', 'Florida'
+	UNION SELECT 'GA', 'Georgia'
+	UNION SELECT 'HI', 'Hawaii'
+	UNION SELECT 'ID', 'Idaho'
+	UNION SELECT 'IL', 'Illinois'
+	UNION SELECT 'IN', 'Indiana'
+	UNION SELECT 'IA', 'Iowa'
+	UNION SELECT 'KS', 'Kansas'
+	UNION SELECT 'KY', 'Kentucky'
+	UNION SELECT 'LA', 'Louisiana'
+	UNION SELECT 'ME', 'Maine'
+	UNION SELECT 'MD', 'Maryland'
+	UNION SELECT 'MA', 'Massachusetts'
+	UNION SELECT 'MI', 'Michigan'
+	UNION SELECT 'MN', 'Minnesota'
+	UNION SELECT 'MS', 'Mississippi'
+	UNION SELECT 'MO', 'Missouri'
+	UNION SELECT 'MT', 'Montana'
+	UNION SELECT 'NE', 'Nebraska'
+	UNION SELECT 'NV', 'Nevada'
+	UNION SELECT 'NH', 'New Hampshire'
+	UNION SELECT 'NJ', 'New Jersey'
+	UNION SELECT 'NM', 'New Mexico'
+	UNION SELECT 'NY', 'New York'
+	UNION SELECT 'NC', 'North Carolina'
+	UNION SELECT 'ND', 'North Dakota'
+	UNION SELECT 'OH', 'Ohio'
+	UNION SELECT 'OK', 'Oklahoma'
+	UNION SELECT 'OR', 'Oregon'
+	UNION SELECT 'PA', 'Pennsylvania'
+	UNION SELECT 'RI', 'Rhode Island'
+	UNION SELECT 'SC', 'South Carolina'
+	UNION SELECT 'SD', 'South Dakota'
+	UNION SELECT 'TN', 'Tennessee'
+	UNION SELECT 'TX', 'Texas'
+	UNION SELECT 'UT', 'Utah'
+	UNION SELECT 'VT', 'Vermont'
+	UNION SELECT 'VA', 'Virginia'
+	UNION SELECT 'WA', 'Washington'
+	UNION SELECT 'WV', 'West Virginia'
+	UNION SELECT 'WI', 'Wisconsin'
+	UNION SELECT 'WY', 'Wyoming'
+) Tmp
+WHERE NOT EXISTS (
+	SELECT S.Code
+    FROM State S
+    WHERE S.Code = Tmp.Code);
+
