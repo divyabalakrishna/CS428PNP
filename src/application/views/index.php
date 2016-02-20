@@ -33,23 +33,23 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form class="form-signin">
+			<form class="form-signin" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/login">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Sign In</h3>
 				</div>
 				<div class="modal-body">
 					<label for="inputEmail" class="sr-only">Email address</label>
-					<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+					<input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
 					<br>
 					<label for="inputPassword" class="sr-only">Password</label>
-					<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-					<div class="checkbox">
+					<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+<!--					<div class="checkbox">
 						<label>
 							<input type="checkbox" value="remember-me"> Remember me
 						</label>
 					</div>
-<!--				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -58,7 +58,7 @@
 			</form>
 		</div>
 	</div>
-</div>      
+</div>
 
 <!-- Modal Sign Up -->
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
