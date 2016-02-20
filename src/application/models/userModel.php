@@ -14,4 +14,16 @@ class UserModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 
+	public function insertUser($email, $password) {
+		$sql = "INSERT INTO User (Email, Password)
+				VALUES (:email, :password)";
+
+		$parameters = array(
+				":email" => $email,
+				":password" => password_hash($password, PASSWORD_DEFAULT)
+		);
+
+		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
+
 }

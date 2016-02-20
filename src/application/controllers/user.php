@@ -46,4 +46,23 @@ class User
 		header('location: ' . URL_WITH_INDEX_FILE);
 	}
 
+	public function createAccount()
+	{
+		$GLOBALS["beans"]->userModel->insertUser($_POST["email"], $_POST["password"]);
+		$this->login();
+	}
+
+	public function checkUniqueEmail()
+	{
+		$unique = false;
+		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
+
+		if (!is_numeric($loginInfo->UserID))
+		{
+			$unique = true;
+		}
+
+		echo json_encode($unique);
+	}
+
 }

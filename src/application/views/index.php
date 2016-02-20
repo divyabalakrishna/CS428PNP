@@ -39,6 +39,7 @@
 					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Sign In</h3>
 				</div>
 				<div class="modal-body">
+					<?php echo $GLOBALS["beans"]->siteHelper->getAlertHTML(); ?>
 					<label for="inputEmail" class="sr-only">Email address</label>
 					<input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
 					<br>
@@ -64,17 +65,17 @@
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form class="form-signup">
+			<form class="form-signup" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/createAccount">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Sign Up - New User</h3>
 				</div>
 				<div class="modal-body">
 					<label for="inputEmail" class="sr-only">Email address</label>
-					<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+					<input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
 					<br>
 					<label for="inputPassword" class="sr-only">Password</label>
-					<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+					<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
 					<br>
 					<label for="inputPassword2" class="sr-only">Re-type Password</label>
 					<input type="password" id="inputPassword2" class="form-control" placeholder="Re-type Password" required>

@@ -6,7 +6,7 @@ USE plannpla_db;
 
 CREATE TABLE IF NOT EXISTS User (
 	UserID BIGINT NOT NULL AUTO_INCREMENT,
-	FirstName VARCHAR(100) NOT NULL,
+	FirstName VARCHAR(100) NULL,
 	LastName VARCHAR(100) NULL,
 	Email VARCHAR(100) NOT NULL UNIQUE,
 	`Password` CHAR(255) NOT NULL,
@@ -17,6 +17,10 @@ CREATE TABLE IF NOT EXISTS User (
 	PRIMARY KEY (UserID)
 ) ENGINE=InnoDB;
 
+/* Originally FirstName is required. Change this to not required for easy sign-up. */
+ALTER TABLE User
+CHANGE FirstName FirstName VARCHAR(100) NULL;
+
 CREATE TABLE IF NOT EXISTS `Event` (
 	EventID BIGINT NOT NULL AUTO_INCREMENT,
 	HostID BIGINT NOT NULL,
@@ -24,8 +28,8 @@ CREATE TABLE IF NOT EXISTS `Event` (
 	Description VARCHAR(1000) NULL,
 	`Time` DATETIME NULL,
 	Address VARCHAR(100) NULL,
-    City VARCHAR(100) NULL,
-    State VARCHAR(50) NULL,
+	City VARCHAR(100) NULL,
+	State VARCHAR(50) NULL,
 	Zipcode VARCHAR(50) NULL,
 	Capacity INT NULL,
 	Private TINYINT(1) NOT NULL DEFAULT 0,
@@ -80,8 +84,8 @@ CREATE TABLE IF NOT EXISTS Media (
 
 CREATE TABLE IF NOT EXISTS State (
 	`Code` VARCHAR(50) NOT NULL,
-    `Name` VARCHAR(100) NOT NULL,
-    PRIMARY KEY (Code)
+	`Name` VARCHAR(100) NOT NULL,
+	PRIMARY KEY (Code)
 ) ENGINE=InnoDB;
 
 /* Insert states */
@@ -142,6 +146,6 @@ FROM (
 ) Tmp
 WHERE NOT EXISTS (
 	SELECT S.Code
-    FROM State S
-    WHERE S.Code = Tmp.Code);
+	FROM State S
+	WHERE S.Code = Tmp.Code);
 
