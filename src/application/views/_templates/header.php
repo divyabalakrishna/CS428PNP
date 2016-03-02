@@ -8,6 +8,9 @@ if (!$this) {
 	exit(header('HTTP/1.0 403 Forbidden'));
 }
 
+if (!isset($userID)) {
+	$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,3 +43,34 @@ if (!$this) {
 
 </head>
 <body>
+<?php if (is_numeric($userID)) { ?>
+	<!-- top bar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" type="button">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="<?php echo URL_WITH_INDEX_FILE; ?>">
+					<img alt="PLAN n PLAY" src="<?php echo URL; ?>public/img/pnp.png" height="30" />
+				</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="<?php echo URL_WITH_INDEX_FILE; ?>">Home</a>
+					</li>
+					<li>
+						<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile">Profile</a>
+					</li>
+					<li>
+						<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/logout">Logout</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+<?php } ?>
