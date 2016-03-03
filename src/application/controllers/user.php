@@ -65,4 +65,10 @@ class User
 		echo json_encode($unique);
 	}
 
+	public function viewProfile()
+	{
+		require APP . 'views/_templates/header.php';
+		require APP . 'views/user/user_profile.php';
+		require APP . 'views/_templates/footer.php';
+	}
 }
