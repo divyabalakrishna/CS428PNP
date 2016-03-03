@@ -155,6 +155,7 @@ class Application
 	private function loadModels()
 	{
 		require APP . '/core/model.php';
+		require APP . '/models/eventModel.php';
 		require APP . '/models/userModel.php';
 
 		$GLOBALS["beans"]->userModel = new UserModel($this->db);
