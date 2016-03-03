@@ -29,7 +29,9 @@ if (!isset($userID)) {
 
 	<!-- CSS -->
 	<link href="<?php echo URL; ?>public/css/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="<?php echo URL; ?>public/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
+	<?php if (is_numeric($userID)) { ?>
+		<link href="<?php echo URL; ?>public/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
+	<?php } ?>
 	<link href="<?php echo URL; ?>public/css/bootstrap-datepicker3.css" rel="stylesheet">
 	<link href="<?php echo URL; ?>public/css/bootstrap-timepicker.css" rel="stylesheet">
 	<link href="<?php echo URL; ?>public/css/font-awesome.css" rel="stylesheet" type="text/css">
