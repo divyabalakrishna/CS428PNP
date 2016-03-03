@@ -29,6 +29,7 @@ if (!isset($userID)) {
 
 	<!-- CSS -->
 	<link href="<?php echo URL; ?>public/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo URL; ?>public/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo URL; ?>public/css/font-awesome.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo URL; ?>public/css/animate.min.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo URL; ?>public/css/creative.css" rel="stylesheet" type="text/css">
