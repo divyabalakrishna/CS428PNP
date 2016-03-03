@@ -22,8 +22,7 @@ class QueryHelper
 	public function executeWriteQuery($db, $sql, $parameters) {
 		foreach ($parameters as $parameterKey => $parameterValue)
 		{
-			if (!is_numeric($parameterValue) && $parameterValue == "")
-			{
+			if (!is_numeric($parameterValue) && $parameterValue == "") {
 				$parameters[$parameterKey] = null;
 			}
 		}
@@ -36,9 +35,15 @@ class QueryHelper
 		}
 	}
 
-	public function getAllRows($db, $sql, $parameters) {
+	public function getAllRows($db, $sql, $parameters = "") {
 		$query = $db->prepare($sql);
-		$query->execute($parameters);
+
+		if ($parameters == "") {
+			$query->execute();
+		}
+		else {
+			$query->execute($parameters);
+		}
 
 		return $query->fetchAll();
 	}

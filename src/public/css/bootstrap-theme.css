@@ -7,6 +7,10 @@ body {
     padding-bottom: 35px;
     padding-top: 70px;
 }
+.asterisk-required {
+  color: red !important;
+  margin-left: 5px;
+}
 .btn-default,
 .btn-primary,
 .btn-success,

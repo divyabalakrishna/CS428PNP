@@ -30,18 +30,60 @@ if (!isset($userID)) {
 	<!-- CSS -->
 	<link href="<?php echo URL; ?>public/css/bootstrap.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo URL; ?>public/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo URL; ?>public/css/bootstrap-datepicker3.css" rel="stylesheet">
+	<link href="<?php echo URL; ?>public/css/bootstrap-timepicker.css" rel="stylesheet">
 	<link href="<?php echo URL; ?>public/css/font-awesome.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo URL; ?>public/css/animate.min.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo URL; ?>public/css/creative.css" rel="stylesheet" type="text/css">
 
 	<!-- JS -->
 	<script src="<?php echo URL; ?>public/js/jquery.js"></script>
+	<script src="<?php echo URL; ?>public/js/jquery.validate.js"></script>
+	<script src="<?php echo URL; ?>public/js/additional-methods.js"></script>
 
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
+	<script>
+		$.validator.setDefaults({
+			errorElement: 'span',
+			errorClass: 'help-block error-help-block',
+			errorPlacement: function (error, element) {
+				if (element.parent().parent().hasClass('checkbox') || element.parent().parent().hasClass('radio')) {
+					element.parent().parent().parent().append(error);
+				}
+				else if (element.parent('.input-group').length || element.prop('type') === 'checkbox' || element.prop('type') === 'radio') {
+					error.insertAfter(element.parent());
+				}
+				else {
+					error.insertAfter(element);
+				}
+			},
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},
+			onfocusout: function (element) {
+				$(element).valid();
+			}
+		});
+
+		$(document).ready(function(){
+			// Add asterisk to required fields
+			$('input,textarea,select').filter('[required]').each(function(index, element) {
+				$(element).closest('.form-group').find('label:first').append('<span class="asterisk-required">*</span>');
+			});
+
+			// Add asterisk to required groups of checkboxes or radio buttons
+			$('.form-group.required').each(function(index, element) {
+				$(element).find('label:first').append('<span class="asterisk-required">*</span>');
+			});
+		});
+	</script>
 </head>
 <body>
 <?php if (is_numeric($userID)) { ?>

@@ -1,9 +1,11 @@
 <?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
 
 <div class="container">
-	<h2 class="page-header">Events Joined</h2>
+	<h2 class="page-header">Events Created</h2>
 
 	<div class="clearfix table-action">
+		<button type="button" id="add" class="btn btn-default pull-left">Create Event</button>
+
 		<form method="post" class="form-inline table-filter pull-right">
 			<div class="form-group">
 				<label class="sr-only" for="timeType">Time Type</label>
@@ -25,7 +27,8 @@
 					<th>Name</th>
 					<th>Description</th>
 					<th>Date/Time</th>
-					<th>Address</th>
+					<th>Location</th>
+					<th>Participants</th>
 					<th>Type</th>
 				</tr>
 			</thead>
@@ -38,9 +41,15 @@
 							</a>
 						</td>
 						<td class="truncate"><?php echo $event->Description ?></td>
-						<td><?php echo $event->Formatted_Time ?></td>
+						<td><?php echo $event->FormattedTime ?></td>
 						<td><?php echo $event->Address ?></td>
-						<td><?php echo $event->Type ?></td>
+						<td>
+							<?php echo $event->ParticipantCount;
+							if (is_numeric($event->Capacity)) {
+								echo " out of " . $event->Capacity;
+							} ?>
+						</td>
+						<td><?php echo $event->TagName ?></td>
 					</tr>
 				<?php } ?>
 			</tbody>
@@ -50,8 +59,12 @@
 
 <script>
 	$(document).ready(function(){
+		$('#add').click(function(){
+			window.location.href = '<?php echo URL_WITH_INDEX_FILE; ?>events/edit';
+		});
+
 		$('#clear').click(function(){
-			window.location.href = '<?php echo URL_WITH_INDEX_FILE; ?>events/listJoined';
+			window.location.href = '<?php echo URL_WITH_INDEX_FILE; ?>events/listHosted';
 		});
 	});
 </script>

@@ -156,10 +156,12 @@ class Application
 	{
 		require APP . '/core/model.php';
 		require APP . '/models/eventModel.php';
+		require APP . '/models/resourceModel.php';
 		require APP . '/models/userModel.php';
 
-		$GLOBALS["beans"]->userModel = new UserModel($this->db);
 		$GLOBALS["beans"]->eventModel = new EventModel($this->db);
+		$GLOBALS["beans"]->resourceModel = new ResourceModel($this->db);
+		$GLOBALS["beans"]->userModel = new UserModel($this->db);
 	}
 
 	private function checkLoggedIn()

@@ -16,7 +16,7 @@ class Events
 		$events = $GLOBALS["beans"]->eventModel->getHostedEvents($userID, $timeType);
 
 		require APP . 'views/_templates/header.php';
-		require APP . 'views/event/index_hosted.php';
+		require APP . 'views/events/index_hosted.php';
 		require APP . 'views/_templates/footer.php';
 	}
 
@@ -33,7 +33,7 @@ class Events
 		$events = $GLOBALS["beans"]->eventModel->getJoinedEvents($userID, $timeType);
 
 		require APP . 'views/_templates/header.php';
-		require APP . 'views/event/index_joined.php';
+		require APP . 'views/events/index_joined.php';
 		require APP . 'views/_templates/footer.php';
 	}
 
@@ -43,7 +43,7 @@ class Events
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 
 		require APP . 'views/_templates/header.php';
-		require APP . 'views/event/view.php';
+		require APP . 'views/events/view.php';
 		require APP . 'views/_templates/footer.php';
 	}
 
@@ -54,7 +54,7 @@ class Events
 		$tags = $GLOBALS["beans"]->resourceModel->getTags();
 
 		require APP . 'views/_templates/header.php';
-		require APP . 'views/event/create_event.php';
+		require APP . 'views/events/edit.php';
 		require APP . 'views/_templates/footer.php';
 	}
 
