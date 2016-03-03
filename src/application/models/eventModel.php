@@ -82,10 +82,17 @@ class EventModel extends Model
 	public function getHostedEvents($hostID, $timeType = "")
 	{
 		$sql = "SELECT Event.*,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS Formatted_Time,
 					Tag.Name AS TagName,
-					Tag.Icon AS TagIcon
+					Tag.Icon AS TagIcon,
+					IFNULL(Participant_Summary.Participant_Count, 0) AS Participant_Count
 				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
+				LEFT JOIN (
+					SELECT EventID, COUNT(UserID) AS Participant_Count
+					FROM Participant
+					GROUP BY EventID
+				) Participant_Summary ON Participant_Summary.EventID = Event.EventID
 				WHERE Event.HostID = :hostID";
 
 		if (strcasecmp($timeType, "future") == 0)
@@ -107,6 +114,7 @@ class EventModel extends Model
 	public function getJoinedEvents($userID, $timeType = "")
 	{
 		$sql = "SELECT Event.*,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS Formatted_Time,
 					Tag.Name AS TagName,
 					Tag.Icon AS TagIcon
 				FROM Event

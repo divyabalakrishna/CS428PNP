@@ -36,4 +36,11 @@ class QueryHelper
 		}
 	}
 
+	public function getAllRows($db, $sql, $parameters) {
+		$query = $db->prepare($sql);
+		$query->execute($parameters);
+
+		return $query->fetchAll();
+	}
+
 }

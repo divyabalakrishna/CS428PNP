@@ -159,6 +159,7 @@ class Application
 		require APP . '/models/userModel.php';
 
 		$GLOBALS["beans"]->userModel = new UserModel($this->db);
+		$GLOBALS["beans"]->eventModel = new EventModel($this->db);
 	}
 
 	private function checkLoggedIn()
