@@ -20,13 +20,19 @@
 				<input type="nickname" class="form-control" id="nickname" placeholder="Nick Name">
 	    	</div>
 	    </div>
-	    <div class="form-group">
+	    
+	    <!-- Date -->
+		<div class="form-group">
 			<label for="birthdate" class="col-sm-2 control-label">Birth Date</label>
-			<div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-			  <input class="span2" size="16" type="text" value="12-02-2012">
-			  <span class="add-on"><i class="icon-th"></i></span>
+			<div class="col-sm-10">
+				<div class="input-group date col-sm-2">
+					<!-- <input type="text" id="birthdate" name="birthdate" value="<?php echo $event->FormattedDate ?>" class="form-control" required aria-required="true" /> -->
+					<input type="text" id="birthdate" name="birthdate" value="03/03/1999" class="form-control" required aria-required="true" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+				</div>
 			</div>
-	    </div>
+		</div>
+		
 	    
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
@@ -44,3 +50,20 @@
 	  </div>
 	</form>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$('.input-group.date').datepicker({
+			todayBtn: 'linked',
+			clearBtn: true
+		});
+
+		$('#form').validate({
+			rules: {
+				birthdate: {
+					date: true
+				}
+			}
+		});
+	});
+</script>
