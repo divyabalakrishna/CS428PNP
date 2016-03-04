@@ -33,6 +33,26 @@
 			</div>
 		</div>
 		
+		<div class="form-group">
+			<label for="gender" class="col-sm-2 control-label">Gender</label>
+			<div class="col-sm-10">
+				<input type="gender" class="form-control" id="gender" placeholder="Gender">
+	    	</div>
+	    </div>
+	    
+	    <div class="form-group">
+			<label for="phone" class="col-sm-2 control-label">Phone</label>
+			<div class="col-sm-10">
+				<input type="phone" class="form-control" id="phone" placeholder="Phone">
+	    	</div>
+	    </div>
+	    
+	    <div class="form-group">
+			<label for="email" class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-10">
+				<input type="email" class="form-control" id="email" placeholder="test@test.com">
+	    	</div>
+	    </div>
 	    
 	  <div class="form-group">
 	    <div class="col-sm-offset-2 col-sm-10">
