@@ -1,4 +1,4 @@
-<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
+<!--<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>-->
 
 <div class="container">
 	<!-- Photo -->
@@ -55,21 +55,12 @@
 				<input type="email" class="form-control" id="email" value="<?php echo $profileInfo->Email ?>" placeholder="test@test.com">
 	    	</div>
 	    </div>
-	    
-	  <div class="form-group">
-	    <div class="col-sm-offset-2 col-sm-10">
-	      <div class="checkbox">
-	        <label>
-	          <input type="checkbox"> Remember me
-	        </label>
-	      </div>
-	    </div>
-	  </div>
-	  <div class="form-group">
-	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="submit" class="btn btn-default">Save</button>
-	    </div>
-	  </div>
+	  
+	  	<div class="form-group">
+	    	<div class="col-sm-offset-2 col-sm-10">
+	      		<button type="submit" class="btn btn-default">Save</button>
+	    	</div>
+	  	</div>
 	</form>
 </div>
 
