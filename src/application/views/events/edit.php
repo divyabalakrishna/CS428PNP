@@ -149,7 +149,7 @@ else {
 				<select id="tagID" name="tagID" class="form-control">
 					<option value="">- Event Type -</option>
 					<?php foreach ($tags as $tag) { ?>
-						<option value="<?php echo $tag->TagID; ?>" <?php if ($event->TagID == $tag->TagID) { ?>selected<?php } ?>><?php echo $tag->TagID; ?></option>
+						<option value="<?php echo $tag->TagID; ?>" <?php if ($event->TagID == $tag->TagID) { ?>selected<?php } ?>><?php echo $tag->Name; ?></option>
 					<?php } ?>
 				</select>
 			</div>
