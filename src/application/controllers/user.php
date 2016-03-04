@@ -76,12 +76,6 @@ class User
 	}
 
 	
-	public function editProfile(){
-		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
-		
-	}
-	
 	public function saveProfile(){
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$GLOBALS["beans"]->userModel->updateProfile(
