@@ -48,8 +48,14 @@ class User
 
 	public function createAccount()
 	{
-		$GLOBALS["beans"]->userModel->insertUser($_POST["email"], $_POST["password"]);
-		$this->login();
+		$GLOBALS["beans"]->userModel->insertUser($_POST["email"], $_POST["password1"]);
+		//$this->login();
+        
+        $loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
+
+        $_SESSION["userID"] = $loginInfo->UserID;
+		header('location: ' . URL_WITH_INDEX_FILE);
+
 	}
 
 	public function checkUniqueEmail()
