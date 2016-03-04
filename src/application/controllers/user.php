@@ -67,8 +67,33 @@ class User
 
 	public function viewProfile()
 	{
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
+		
 		require APP . 'views/_templates/header.php';
 		require APP . 'views/user/user_profile.php';
 		require APP . 'views/_templates/footer.php';
+	}
+
+	
+	public function editProfile(){
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
+		
+	}
+	
+	public function saveProfile(){
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$GLOBALS["beans"]->userModel->updateProfile(
+				$userID,
+				$_POST["firstname"],
+				$_POST["lastname"],
+				$_POST["email"],
+				$_POST["phone"],
+				$_POST["picture"],
+				$_POST["radius"],
+				$_POST["reminder"]
+		);
+		header('location: ' . URL_WITH_INDEX_FILE . 'user/user_profile/' . $userID);
 	}
 }
