@@ -1,5 +1,4 @@
 <?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
-
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -33,18 +32,18 @@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form class="form-signin" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/login">
+			<form class="form-group" id="signinForm" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/login">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Sign In</h3>
 				</div>
 				<div class="modal-body">
 					<?php echo $GLOBALS["beans"]->siteHelper->getAlertHTML(); ?>
-					<label for="inputEmail" class="sr-only">Email address</label>
-					<input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+					<label for="email" class="sr-only">Email address</label>
+					<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
 					<br>
-					<label for="inputPassword" class="sr-only">Password</label>
-					<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+					<label for="password" class="sr-only">Password</label>
+					<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
 <!--					<div class="checkbox">
 						<label>
 							<input type="checkbox" value="remember-me"> Remember me
@@ -65,26 +64,29 @@
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form class="form-signup" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/createAccount">
+			<form class="form-group" id="signupForm" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/createAccount">
+                <fieldset>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Sign Up - New User</h3>
 				</div>
 				<div class="modal-body">
-					<label for="inputEmail" class="sr-only">Email address</label>
-					<input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+					<label for="email" class="sr-only">Email address</label>
+                    <input type="hidden" id="existingEmail" name="existingEmail" value="<?php echo $email ?>" />
+					<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
 					<br>
-					<label for="inputPassword" class="sr-only">Password</label>
-					<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+					<label for="password1" class="sr-only">Password</label>
+					<input type="password" id="password1" name="password1" class="form-control" placeholder="Password" required>
 					<br>
-					<label for="inputPassword2" class="sr-only">Re-type Password</label>
-					<input type="password" id="inputPassword2" class="form-control" placeholder="Re-type Password" required>
+					<label for="password2" class="sr-only">Re-type Password</label>
+					<input type="password" id="password2" name="password2" class="form-control" placeholder="Re-type Password" required>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 <!--				<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>-->
 					<button type="submit" class="btn btn-primary">Register</button>
 				</div>
+                </fieldset>
 			</form>
 		</div>
 	</div>
@@ -208,5 +210,71 @@
 <script>
 	$(document).ready(function(){
 		$('body').attr('id', 'page-top');
+        
+        // validation
+		$("#signinForm").validate({
+			rules: {
+				email: {
+                    required: true,
+					email: true
+                },
+				password: {
+					required: true
+				}
+			},
+			messages: {
+				email: "Please enter your email",
+				password: {
+					required: "Please provide a password"
+				}
+			}
+		});
+        
+    
+		$("#signupForm").validate({
+            
+			rules: {
+				email: {
+                    required: true,
+                    email: true,
+                    remote: {
+                        depends: function(element) {
+                            return $('#existingEmail').val() != $(element).val();
+                        },
+                        param: {
+                            url: '<?php echo URL_WITH_INDEX_FILE; ?>user/checkUniqueEmail',
+                            type: 'post'
+                        }
+                    }
+                },
+				password1: {
+					required: true,
+					minlength: 6
+				},
+				password2: {
+					required: true,
+					minlength: 6,
+					equalTo: "#password1"
+				}
+			},
+            
+			messages: {
+				email: {
+                    required: "Please enter your email",
+                    email: "Please enter correct email format",
+                    remote: "There is an existing account with this email."
+                },
+				password1: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 6 characters long"
+				},
+				password2: {
+					required: "Please provide a password",
+					minlength: "Your password must be at least 6 characters long",
+					equalTo: "Please enter the same password as above"
+				}
+			}
+		});
+        
 	});
 </script>
