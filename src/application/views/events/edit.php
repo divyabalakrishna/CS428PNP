@@ -10,6 +10,16 @@ else {
 }
 ?>
 
+<!-- JS -->
+<script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+<script src="<?php echo URL; ?>public/js/locationpicker.jquery.min.js"></script>
+<style>
+    /* style overrides for bootstrap/google map conflicts */
+    .gm-style img {max-width: none;}
+    .gm-style label {width: auto; display:inline;} 
+    .pac-container {z-index:2000 !important;}
+</style>
+
 <div class="container">
 	<h2 class="page-header"><?php echo $title; ?></h2>
 
@@ -60,10 +70,70 @@ else {
 		<div class="form-group">
 			<label for="address" class="col-sm-2 control-label">Location</label>
 			<div class="col-sm-10">
-				<input type="text" id="address" name="address" value="<?php echo $event->Address ?>" class="form-control" required aria-required="true" placeholder="Event Location">
-			</div>
+				<div class="input-group col-sm-12">
+                    <input type="text" id="address" name="address" value="<?php echo $event->Address ?>" class="form-control" required aria-required="true" placeholder="Event Location">
+                    <span class="input-group-addon"><a id="location" href="" data-target="#gmap-dialog" data-toggle="modal"><i class="glyphicon glyphicon-map-marker"></i></a></span>
+                    
+                </div>           
+            </div>
 		</div>
 
+        <div id="gmap-dialog" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Choose Location</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal" style="width: 100%">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Location:</label>
+
+                                <div class="col-sm-10"><input type="text" class="form-control" id="gmap-address" value="<?php echo $event->Address ?>"/></div>
+                            </div>
+                            <div id="gmap" style="width: 100%; height: 400px;"></div>
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="m-t-small">
+                                <label class="p-r-small col-sm-1 control-label">Lat.:</label>
+
+                                <div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="gmap-lat"/></div>
+                                <label class="p-r-small col-sm-2 control-label">Long.:</label>
+
+                                <div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="gmap-lon"/></div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <script>
+                                $('#gmap').locationpicker({
+                                    location: {latitude: 40.11380279, longitude: -88.22490519999997},
+                                    radius: 0,
+                                    inputBinding: {
+                                        latitudeInput: $('#gmap-lat'),
+                                        longitudeInput: $('#gmap-lon'),
+                                        locationNameInput: $('#gmap-address')
+                                    },
+                                    enableAutocomplete: true
+                                });
+                                $('#gmap-dialog').on('shown.bs.modal', function() {
+                                    $('#gmap').locationpicker('autosize');
+                                });
+                                $(function(){
+                                    $(document).on("click", "#save-event", function(event){
+                                        $('#address').val($('#gmap-address').val());        
+                                    }); 
+                                });                        
+
+                            </script>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="save-event">Select</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
 		<!-- Capacity -->  
 		<div class="form-group">
 			<label for="capacity" class="col-sm-2 control-label">Capacity</label>
@@ -119,5 +189,9 @@ else {
 				}
 			}
 		});
+//		$('#location').click(function(){
+//			alert('loca');
+//		});
+        
 	});
 </script>
