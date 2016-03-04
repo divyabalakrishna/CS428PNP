@@ -94,6 +94,6 @@ class User
 				$_POST["radius"],
 				$_POST["reminder"]
 		);
-		header('location: ' . URL_WITH_INDEX_FILE . 'user/user_profile/' . $userID);
+		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
 }
