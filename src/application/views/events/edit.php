@@ -12,7 +12,7 @@ else {
 
 <!-- JS -->
 <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
-<script src="<?php echo URL; ?>public/js/locationpicker.jquery.min.js"></script>
+<script src="<?php echo URL; ?>public/js/locationpicker.jquery.js"></script>
 <style>
 	/* style overrides for bootstrap/google map conflicts */
 	.gm-style img {max-width: none;}
@@ -99,26 +99,46 @@ else {
 								<div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="gmap-lon"/></div>
 							</div>
 							<div class="clearfix"></div>
-							<script>
-								$('#gmap').locationpicker({
-									location: {latitude: 40.11380279, longitude: -88.22490519999997},
-									radius: 0,
-									inputBinding: {
-										latitudeInput: $('#gmap-lat'),
-										longitudeInput: $('#gmap-lon'),
-										locationNameInput: $('#gmap-address')
-									},
-									enableAutocomplete: true
-								});
-								$('#gmap-dialog').on('shown.bs.modal', function() {
-									$('#gmap').locationpicker('autosize');
-								});
-								$(function(){
-									$(document).on("click", "#save-event", function(event){
-										$('#address').val($('#gmap-address').val());
-									});
-								});
-							</script>
+                            <script>
+                                var lat,long;
+                                function getLocation() {
+                                    if (navigator.geolocation) {
+                                        navigator.geolocation.getCurrentPosition(getPosition);
+                                    } else { 
+                                        alert("Geolocation is not supported by this browser.");
+                                    }
+                                }
+                                function getPosition(position) {
+                                    $('#gmap-lat').val(position.coords.latitude); 
+                                    $('#gmap-lon').val(position.coords.longitude);
+                                    
+                                    $('#gmap').locationpicker({
+                                        <?php if (is_numeric($event->EventID)) { ?>
+                                        location: {latitude: <?php echo $event->Lat ?>, longitude: <?php echo $event->Lon ?>},
+                                        <?php } else { ?>
+                                        location: {latitude: position.coords.latitude, longitude: position.coords.longitude},
+                                        <?php } ?>
+                                        radius: 0,
+                                        inputBinding: {
+                                            latitudeInput: $('#gmap-lat'),
+                                            longitudeInput: $('#gmap-lon'),
+                                            locationNameInput: $('#gmap-address')
+                                        },
+                                        enableAutocomplete: true
+                                    });
+                                }
+                                
+                                getLocation();
+                                $('#gmap-dialog').on('shown.bs.modal', function() {
+                                    $('#gmap').locationpicker('autosize');
+                                });
+                                $(function(){
+                                    $(document).on("click", "#save-event", function(event){
+                                        $('#address').val($('#gmap-address').val());        
+                                    }); 
+                                });                        
+
+                            </script>
 						</div>
 					</div>
 					<div class="modal-footer">

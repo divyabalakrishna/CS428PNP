@@ -3,9 +3,9 @@
 class EventModel extends Model
 {
 
-	public function insertEvent($hostID, $name, $description, $date, $time, $address, $capacity, $tagID) {
-		$sql = "INSERT INTO Event (HostID, Name, Description, Time, Address, Capacity, TagID)
-				VALUES (:hostID, :name, :description, STR_TO_DATE(:time, '%m/%d/%Y %h:%i %p'), :address, :capacity, :tagID)";
+	public function insertEvent($hostID, $name, $description, $date, $time, $address, $capacity, $tagID, $lat, $lon) {
+		$sql = "INSERT INTO Event (HostID, Name, Description, Time, Address, Capacity, TagID, Lat, Lon)
+				VALUES (:hostID, :name, :description, STR_TO_DATE(:time, '%m/%d/%Y %h:%i %p'), :address, :capacity, :tagID, :lat, :lon)";
 
 		$parameters = array(
 				":hostID" => $hostID,
@@ -14,20 +14,25 @@ class EventModel extends Model
 				":time" => $date . " " . $time,
 				":address" => $address,
 				":capacity" => $capacity,
-				":tagID" => $tagID
+				":tagID" => $tagID,
+                ":lat" => $lat,
+                ":lon" => $lon
 		);
 
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-	public function updateEvent($eventID, $hostID, $name, $description, $date, $time, $address, $capacity, $tagID) {
+	public function updateEvent($eventID, $hostID, $name, $description, $date, $time, $address, $capacity, $tagID, $lat, $lon) {
 		$sql = "UPDATE Event
 				SET Name = :name,
 					Description = :description,
 					Time = STR_TO_DATE(:time, '%m/%d/%Y %h:%i %p'),
 					Address = :address,
 					Capacity = :capacity,
-					TagID = :tagID
+					TagID = :tagID,
+                    Lat = :lat,
+                    Lon = :lon
+                    
 				WHERE Event.EventID = :eventID
 					AND Event.HostID = :hostID";
 
@@ -39,7 +44,10 @@ class EventModel extends Model
 				":time" => $date . " " . $time,
 				":address" => $address,
 				":capacity" => $capacity,
-				":tagID" => $tagID
+				":tagID" => $tagID,
+				":lat" => $lat,
+				":lon" => $lon
+            
 		);
 
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
@@ -155,4 +163,31 @@ class EventModel extends Model
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	public function getSearchEvents($userID)
+	{
+        $Address = urlencode("911 W.Springfield Ave, Urbana, IL");
+        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=".$Address."&sensor=true";
+        $xml = simplexml_load_file($request_url) or die("url not loading");
+        $status = $xml->status;
+        if ($status=="OK") {
+          $Lat = $xml->result->geometry->location->lat;
+          $Lon = $xml->result->geometry->location->lng;
+        }
+        
+        $sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedTime, 
+    					Tag.Name AS TagName,
+                        Tag.Icon AS TagIcon,
+                ( 3959 * acos( cos( radians(".$Lat.") ) * cos( radians( lat ) ) 
+                * cos( radians( Lon ) - radians(".$Lon.") ) + sin( radians(".$Lat.") ) * sin(radians(lat)) ) ) AS distance 
+                FROM event 
+				LEFT JOIN Tag ON Tag.TagID = Event.TagID                
+                HAVING distance < 2
+                ORDER BY distance";
+        
+
+		$parameters = array(":userID" => $userID);
+
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+	}
+    
 }

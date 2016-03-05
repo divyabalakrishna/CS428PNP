@@ -37,6 +37,16 @@ class Events
 		require APP . 'views/_templates/footer.php';
 	}
 
+    public function listSearch()
+	{
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID);
+
+		require APP . 'views/_templates/header.php';
+		require APP . 'views/events/index_search.php';
+		require APP . 'views/_templates/footer.php';
+	}
+
 	public function view($eventID)
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -79,7 +89,9 @@ class Events
 						$_POST["time"],
 						$_POST["address"],
 						$_POST["capacity"],
-						$_POST["tagID"]
+						$_POST["tagID"],
+                        $_POST["gmap-lat"],
+                        $_POST["gmap-lon"]
 				);
 
 				$oldImage = $event->Image;
@@ -95,7 +107,9 @@ class Events
 					$_POST["time"],
 					$_POST["address"],
 					$_POST["capacity"],
-					$_POST["tagID"]
+					$_POST["tagID"],
+                    $_POST["gmap-lat"],
+                    $_POST["gmap-lon"]
 			);
 
 			$performUpload = true;
