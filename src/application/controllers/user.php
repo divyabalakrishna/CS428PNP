@@ -86,6 +86,8 @@ class User
 	
 	public function saveProfile(){
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$oldImage = "";
+		
 		$GLOBALS["beans"]->userModel->updateProfile(
 				$userID,
 				$_POST["firstname"],
@@ -100,7 +102,22 @@ class User
 				$_POST["nickname"],
 				$_POST["user_tags"]
 		);
-		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
+		
+		$result = $GLOBALS["beans"]->fileHelper->uploadFile("picture", "profile", "jpg,jpeg,png,bmp", "profile image", 2097152, $userID);
+	
+		if ($result->fileUploaded) {
+			$GLOBALS["beans"]->userModel->updatePicture($userID, $result->fileName);
+	
+			if ($oldImage != "") {
+				$GLOBALS["beans"]->fileHelper->deleteUploadedFile("picture", $oldImage);
+			}
+		}
+		else if ($result->errorMessage != "") {
+			$GLOBALS["beans"]->siteHelper->setAlert("danger", $result->errorMessage);
+			$backToEdit = true;
+		}
+		
+// 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
 
 }

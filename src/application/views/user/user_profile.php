@@ -3,7 +3,8 @@
 <div class="container">
 	<!-- Photo -->
 
-	<form id="form" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/saveProfile" class="form-horizontal">
+	<form id="form" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/saveProfile" class="form-horizontal" enctype="multipart/form-data">
+		
 		<div class="form-group">
 	  		<label for="firstName" class="col-sm-2 control-label">First Name</label>
 	    	<div class="col-sm-10">
@@ -59,6 +60,20 @@
 				<input type="email" class="form-control" id="email" name="email" value="<?php echo $profileInfo->Email ?>" placeholder="test@test.com">
 	    	</div>
 	    </div>
+	    
+	    <!-- Image -->
+		<div class="form-group">
+			<label for="picture" class="col-sm-2 control-label">Picture</label>
+			<div class="col-sm-10">
+				<input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
+				<input type="file" id="picture" name="picture" accept="image/jpg,image/jpeg,image/png,image/bmp" class="form-control" />
+				<p class="help-block">Max file size: 2 MB. Accepted file types: .jpg, .jpeg, .png, .bmp</p>
+				<?php if ($profileInfo->Picture != "") { ?>
+					<img src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $profileInfo->Picture) ?>" height="100" />
+				<?php } ?>
+			</div>
+		</div>
+	    
 	    <div class="form-group">
 	    	<input type="hidden" id="user_tags" name="user_tags" />
 	    	<label for="interests" class="col-sm-2 control-label">Interests</label>

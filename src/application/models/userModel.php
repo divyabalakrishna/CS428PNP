@@ -104,5 +104,17 @@ class UserModel extends Model
 	
 	}
 
+	public function updatePicture($userID, $picture) {
+		$sql = "UPDATE User
+				SET Picture = :picture
+				WHERE UserID = :userID";
+	
+		$parameters = array(
+				":userID" => $userID,
+				":picture" => $picture
+		);
+	
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
 
 }
