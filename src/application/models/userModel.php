@@ -27,7 +27,7 @@ class UserModel extends Model
 	}
 	
 	public function getProfile($userID){
-		$sql = "SELECT FirstName, LastName, Email, Phone, Picture, Radius, Reminder
+		$sql = "SELECT FirstName, LastName, Email, Phone, Picture, Radius, Reminder, NickName, BirthDate, Gender
 				FROM User
 				WHERE UserID = :userID";
 	
@@ -36,7 +36,7 @@ class UserModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 	
-	public function updateProfile($userID, $firstname, $lastname, $email, $phone, $picture, $radius, $reminder){
+	public function updateProfile($userID, $firstname, $lastname, $email, $phone, $picture, $radius, $reminder, $gender, $birthdate, $nickname){
 		$sql = "UPDATE User
 				SET FirstName = :firstname,
 					LastName = :lastname,
@@ -44,7 +44,10 @@ class UserModel extends Model
 					Phone = :phone, 
 					Picture = :picture,
 					Radius = :radius, 
-					Reminder = :reminder
+					Reminder = :reminder,
+					Gender = :gender,
+					BirthDate = :birthdate,
+					NickName = :nickname
 				WHERE UserID = :userID";
 
 		$parameters = array(
@@ -55,7 +58,10 @@ class UserModel extends Model
 				":phone" => $phone,
 				":picture" => $picture,
 				":radius" => $radius,
-				":reminder" => $reminder
+				":reminder" => $reminder,
+				":gender" => $gender,
+				":birthdate" => $birthdate,
+				":nickname" => $nickname
 		);
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	

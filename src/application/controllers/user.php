@@ -92,7 +92,10 @@ class User
 				$_POST["phone"],
 				$_POST["picture"],
 				$_POST["radius"],
-				$_POST["reminder"]
+				$_POST["reminder"],
+				$_POST["gender"],
+				$_POST["birthdate"],
+				$_POST["nickname"]
 		);
 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
