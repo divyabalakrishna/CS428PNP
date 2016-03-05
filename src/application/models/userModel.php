@@ -38,6 +38,15 @@ class UserModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 	
+	public function getTags($userID){
+		$sql = "SELECT TagID
+				FROM UserTag
+				WHERE UserTag.UserID = :userID";
+		
+		$parameters = array(":userID" => $userID);
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+	}
+	
 	public function updateProfile($userID, $firstname, $lastname, $email, $phone, $picture, $radius, $reminder, $gender, $birthdate, $nickname, $user_tags){
 		//delete old tags
 		$sql = "DELETE
