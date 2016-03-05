@@ -1586,7 +1586,7 @@ pre code {
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
-  margin-left: auto;
+  margin-left: 10%;
 }
 @media (min-width: 768px) {
   .container {
@@ -6758,3 +6758,143 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+.create{
+	position: relative;
+    width: 200px;
+    height: 130px;
+    background-color: white;
+    border-radius: 10px;
+    font-size: 60px;
+    color: #EA7617;
+    border-color: #EA7617;
+    margin: 10px;
+}
+
+.created{
+	position: relative;
+    width: 200px;
+    height: 130px;
+    float: left;
+    background-color: #EA7617;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.created .icon{
+	float: left;
+    position: relative;
+    width: 40%;
+    height: 76%;
+    padding:10px;
+}
+
+.created .content{
+	float: left;
+    position: relative;
+    width: 60%;
+    height: 76%;
+    color: white;
+    text-align: center;
+    padding:10px;
+}
+
+.created .details{
+	background-color: white;
+    height: 17%;
+    width: 95%;
+    position: relative;
+    float: left;
+    margin: 5px;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #EA7617;
+    cursor:pointer;
+}
+
+.joined{
+	position: relative;
+    width: 200px;
+    height: 130px;
+    float: left;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #E49721;
+    -moz-border-radius: 50% / 250px;
+    -webkit-border-radius: 40% / 250px;
+    border-radius: 200% / 250px;
+}
+
+.joined .icon{
+	float: left;
+    position: relative;
+    width: 43%;
+    height: 76%;
+    padding: 15px 0px 5px 30px;
+}
+
+.joined .content{
+	float: left;
+    position: relative;
+    width: 55%;
+    height: 76%;
+    color: white;
+    text-align: center;
+    padding: 15px 5px 0px 0px;
+}
+
+.joined .details{
+	background-color: white;
+    height: 14%;
+    width: 60%;
+    position: relative;
+    float: left;
+    margin: 0px 5px 5px 40px;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #E49721;
+    cursor:pointer;
+}
+
+.other{
+	position: relative;
+    width: 200px;
+    height: 130px;
+    float: left;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #E4B40F;
+    -moz-border-radius: 50% / 250px;
+    -webkit-border-radius: 40% / 250px;
+}
+
+.other .icon{
+	float: left;
+    position: relative;
+    width: 43%;
+    height: 76%;
+    padding: 15px 0px 5px 30px;
+}
+
+.other .content{
+	float: left;
+    position: relative;
+    width: 55%;
+    height: 76%;
+    color: white;
+    text-align: center;
+    padding: 15px 5px 0px 0px;
+}
+
+.other .details{
+	background-color: white;
+    height: 14%;
+    width: 60%;
+    position: relative;
+    float: left;
+    margin: 0px 5px 5px 40px;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #E4B40F;
+    cursor:pointer;
+}
