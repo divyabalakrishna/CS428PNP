@@ -137,6 +137,12 @@ else {
                                         $('#address').val($('#gmap-address').val());        
                                     }); 
                                 });                        
+                                $(function(){
+                                    $(document).on("click", "#address", function(event){
+                                        $("#gmap-dialog").modal('show');
+                                        //alert("asd");        
+                                    }); 
+                                });                        
 
                             </script>
 						</div>
