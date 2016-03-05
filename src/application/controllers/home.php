@@ -13,14 +13,21 @@ class Home
 
 	public function index()
 	{
-		require APP . 'views/_templates/header.php';
-		if (is_numeric($GLOBALS["beans"]->siteHelper->getSession("userID"))) {
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+
+		if (is_numeric($userID)) {
+			$hostedEvents = $GLOBALS["beans"]->eventModel->getHostedEvents($userID, "future");
+			$joinedEvents = $GLOBALS["beans"]->eventModel->getJoinedEvents($userID, "future");
+
+			require APP . 'views/_templates/header.php';
 			require APP . 'views/home/index.php';
+			require APP . 'views/_templates/footer.php';
 		}
 		else {
+			require APP . 'views/_templates/header.php';
 			require APP . 'views/index.php';
+			require APP . 'views/_templates/footer.php';
 		}
-		require APP . 'views/_templates/footer.php';
 	}
 
 }
