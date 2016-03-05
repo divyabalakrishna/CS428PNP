@@ -3,8 +3,8 @@
 <div class="container">
 	<p>You have successfully logged in! YAY!</p>
 	
-	<a href="events/listHosted">Events Created</a><br/>
-	<a href="events/edit">Create Event</a><br/>
+	<a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listHosted">Events Created</a><br/>
+	<a href="<?php echo URL_WITH_INDEX_FILE; ?>events/edit">Create Event</a><br/>
 	<br/>
-	<a href="events/listJoined">Events Joined</a><br/>
+	<a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listJoined">Events Joined</a><br/>
 </div>
