@@ -8,13 +8,13 @@
 		<div class="form-group">
 	  		<label for="firstName" class="col-sm-2 control-label">First Name</label>
 	    	<div class="col-sm-10">
-	    		<input type="firstname" class="form-control" id="firstname" name="firstname" value="<?php echo $profileInfo->FirstName ?>" placeholder="First Name">
+	    		<input type="firstname" class="form-control" id="firstname" name="firstname" value="<?php echo $profileInfo->FirstName ?>" placeholder="First Name" required aria-required="true">
 	    	</div>
 		</div>
 		<div class="form-group">
 			<label for="lastname" class="col-sm-2 control-label">Last Name</label>
 			<div class="col-sm-10">
-				<input type="lastname" class="form-control" id="lastname" name="lastname" value="<?php echo $profileInfo->LastName ?>" placeholder="Last Name">
+				<input type="lastname" class="form-control" id="lastname" name="lastname" value="<?php echo $profileInfo->LastName ?>" placeholder="Last Name" required aria-required="true">
 	    	</div>
 	    </div>
 	    <div class="form-group">
@@ -57,7 +57,7 @@
 	    <div class="form-group">
 			<label for="email" class="col-sm-2 control-label">Email</label>
 			<div class="col-sm-10">
-				<input type="email" class="form-control" id="email" name="email" value="<?php echo $profileInfo->Email ?>" placeholder="test@test.com">
+				<input type="email" class="form-control" id="email" name="email" value="<?php echo $profileInfo->Email ?>" placeholder="test@test.com" required aria-required="true">
 	    	</div>
 	    </div>
 	    
@@ -96,7 +96,10 @@
 </div>
 
 <script>
+	var currentdate =  new Date();
+	
 	$(document).ready(function(){
+		
 		$('.input-group.date').datepicker({
 			todayBtn: 'linked',
 			clearBtn: true
@@ -109,7 +112,8 @@
 		$('#form').validate({
 			rules: {
 				birthdate: {
-					date: true
+					date: true,
+					
 				},
 				user_tags: {
 					atLeastOne: true
