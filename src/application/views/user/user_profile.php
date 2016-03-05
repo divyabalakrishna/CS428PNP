@@ -59,6 +59,22 @@
 				<input type="email" class="form-control" id="email" name="email" value="<?php echo $profileInfo->Email ?>" placeholder="test@test.com">
 	    	</div>
 	    </div>
+	    <div class="form-group">
+	    	
+			<div class="col-sm-10">
+				<label class="checkbox-inline">
+					<input type="checkbox" id="inlineCheckbox1" value="option1"> 1
+				</label>
+				<select id="tagID" name="tagID" class="form-control">
+					<option value="">- Event Type -</option>
+					<?php foreach ($tags as $tag) { ?>
+						<option value="<?php echo $tag->TagID; ?>" <?php if ($event->TagID == $tag->TagID) { ?>selected<?php } ?>><?php echo $tag->Name; ?></option>
+					<?php } ?>
+				</select>
+			
+	    	</div>
+	    </div>
+	    
 	  
 	  	<div class="form-group">
 	    	<div class="col-sm-offset-2 col-sm-10">
