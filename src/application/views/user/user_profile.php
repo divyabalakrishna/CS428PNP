@@ -60,18 +60,17 @@
 	    	</div>
 	    </div>
 	    <div class="form-group">
-	    	
+	    	<input type="hidden" id="user_tags" name="user_tags" />
+	    	<label for="interests" class="col-sm-2 control-label">Interests</label>
 			<div class="col-sm-10">
-				<label class="checkbox-inline">
-					<input type="checkbox" id="inlineCheckbox1" value="option1"> 1
-				</label>
-				<select id="tagID" name="tagID" class="form-control">
-					<option value="">- Event Type -</option>
-					<?php foreach ($tags as $tag) { ?>
-						<option value="<?php echo $tag->TagID; ?>" <?php if ($event->TagID == $tag->TagID) { ?>selected<?php } ?>><?php echo $tag->Name; ?></option>
-					<?php } ?>
-				</select>
-			
+				<?php foreach ($tags as $tag) { ?>
+					<label class="checkbox-inline">
+						<input type="checkbox" class="tag-checkbox" id="inlineCheckbox1" value="<?php echo $tag->TagID; ?>" <?php foreach ($tagInfo as $usertag) { if ($usertag->TagID == $tag->TagID) { ?>checked<?php }} ?>> <?php echo $tag->Name; ?>
+					</label>
+				<?php } ?>
+				<?php foreach ($tagInfo as $usertag) { ?>
+					<?php echo $usertag->TagID; ?>
+				<?php }?>
 	    	</div>
 	    </div>
 	    
@@ -91,12 +90,31 @@
 			clearBtn: true
 		});
 
+		$.validator.addMethod('atLeastOne', function() {
+			  return $('input.tag-checkbox:checked').length > 0 ? true : false;
+		}, 'Please select at least one interest.');
+
 		$('#form').validate({
 			rules: {
 				birthdate: {
 					date: true
+				},
+				user_tags: {
+					atLeastOne: true
 				}
 			}
+		});
+		
+
+		$('#form').submit(function() {
+			var user_tags = '';
+			$('input.tag-checkbox:checked').each(function() {
+				user_tags = user_tags + ',' + $(this).val();
+			});
+			if (user_tags.substr(0,1) == ',') {
+				user_tags = user_tags.substr(1);
+			}
+			$('#user_tags').val(user_tags);
 		});
 	});
 </script>
