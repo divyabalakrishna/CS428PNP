@@ -117,7 +117,7 @@ class User
 			$backToEdit = true;
 		}
 		
-// 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
+		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
 
 }

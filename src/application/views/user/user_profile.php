@@ -63,7 +63,7 @@
 	    
 	    <!-- Image -->
 		<div class="form-group">
-			<label for="picture" class="col-sm-2 control-label">Picture</label>
+			<label for="picture" class="col-sm-2 control-label">Profile</label>
 			<div class="col-sm-10">
 				<input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
 				<input type="file" id="picture" name="picture" accept="image/jpg,image/jpeg,image/png,image/bmp" class="form-control" />
