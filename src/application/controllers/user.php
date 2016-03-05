@@ -76,6 +76,7 @@ class User
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
 		$tagInfo = $GLOBALS["beans"]->userModel->getTags($userID);
+		$tags = $GLOBALS["beans"]->resourceModel->getTags();
 		
 		require APP . 'views/_templates/header.php';
 		require APP . 'views/user/user_profile.php';
