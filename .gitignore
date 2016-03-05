@@ -1,5 +1,6 @@
 #Eclipse files
 .project
 .buildpath
+.DS_Store
 .settings/
 src/uploads/
