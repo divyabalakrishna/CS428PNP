@@ -68,9 +68,6 @@
 						<input type="checkbox" class="tag-checkbox" id="inlineCheckbox1" value="<?php echo $tag->TagID; ?>" <?php foreach ($tagInfo as $usertag) { if ($usertag->TagID == $tag->TagID) { ?>checked<?php }} ?>> <?php echo $tag->Name; ?>
 					</label>
 				<?php } ?>
-				<?php foreach ($tagInfo as $usertag) { ?>
-					<?php echo $usertag->TagID; ?>
-				<?php }?>
 	    	</div>
 	    </div>
 	    
