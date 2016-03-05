@@ -95,8 +95,10 @@ class User
 				$_POST["reminder"],
 				$_POST["gender"],
 				$_POST["birthdate"],
-				$_POST["nickname"]
+				$_POST["nickname"],
+				$_POST["user_tags"]
 		);
 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
+
 }

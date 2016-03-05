@@ -38,7 +38,19 @@ class UserModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 	
-	public function updateProfile($userID, $firstname, $lastname, $email, $phone, $picture, $radius, $reminder, $gender, $birthdate, $nickname){
+	public function updateProfile($userID, $firstname, $lastname, $email, $phone, $picture, $radius, $reminder, $gender, $birthdate, $nickname, $user_tags){
+		//delete old tags
+		$sql = "DELETE
+				FROM UserTag
+				WHERE UserTag.UserID = :userID";
+		
+		$parameters = array(
+				":userID" => $userID
+		);
+		
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+		
+		//update user profile information
 		$sql = "UPDATE User
 				SET FirstName = :firstname,
 					LastName = :lastname,
@@ -66,7 +78,22 @@ class UserModel extends Model
 				":nickname" => $nickname
 		);
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+		
+		//loop through each tag and add to usertag table
+		$tags = explode(",", $user_tags);
+		foreach ($tags as $tagID) {
+			$sql = "INSERT INTO UserTag (UserID, TagID)
+				VALUES (:userID, :tagID)";
+			
+			$parameters = array(
+					":userID" => $userID,
+					":tagID" => $tagID
+			);
+			
+			$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+		}
 	
 	}
+
 
 }
