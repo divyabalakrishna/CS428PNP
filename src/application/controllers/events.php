@@ -62,19 +62,29 @@ class Events
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$eventID = $_POST["eventID"];
+		$performUpload = false;
+		$oldImage = "";
+		$backToEdit = false;
 
 		if (is_numeric($eventID)) {
-			$GLOBALS["beans"]->eventModel->updateEvent(
-					$eventID,
-					$userID,
-					$_POST["name"],
-					$_POST["description"],
-					$_POST["date"],
-					$_POST["time"],
-					$_POST["address"],
-					$_POST["capacity"],
-					$_POST["tagID"]
-			);
+			$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
+
+			if ($userID == $event->HostID) {
+				$GLOBALS["beans"]->eventModel->updateEvent(
+						$eventID,
+						$userID,
+						$_POST["name"],
+						$_POST["description"],
+						$_POST["date"],
+						$_POST["time"],
+						$_POST["address"],
+						$_POST["capacity"],
+						$_POST["tagID"]
+				);
+
+				$oldImage = $event->Image;
+				$performUpload = true;
+			}
 		}
 		else {
 			$eventID = $GLOBALS["beans"]->eventModel->insertEvent(
@@ -87,9 +97,32 @@ class Events
 					$_POST["capacity"],
 					$_POST["tagID"]
 			);
+
+			$performUpload = true;
 		}
 
-		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
+		if ($performUpload) {
+			$result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "event", "jpg,jpeg,png,bmp", "event image", 2097152, $eventID);
+
+			if ($result->fileUploaded) {
+				$GLOBALS["beans"]->eventModel->updateEventImage($eventID, $userID, $result->fileName);
+
+				if ($oldImage != "") {
+					$GLOBALS["beans"]->fileHelper->deleteUploadedFile("event", $oldImage);
+				}
+			}
+			else if ($result->errorMessage != "") {
+				$GLOBALS["beans"]->siteHelper->setAlert("danger", $result->errorMessage);
+				$backToEdit = true;
+			}
+		}
+
+		if ($backToEdit) {
+			header('location: ' . URL_WITH_INDEX_FILE . 'events/edit/' . $eventID);
+		}
+		else {
+			header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
+		}
 	}
 
 	public function delete($eventID)

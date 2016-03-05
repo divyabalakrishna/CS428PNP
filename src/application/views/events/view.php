@@ -1,9 +1,11 @@
 <?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
 
 <div class="container">
-	<h2 class="page-header">Event Details</h2>
+	<?php if ($event->Image != "") { ?>
+		<img src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('event', $event->Image) ?>" height="100" class="center-block" />
+	<?php } ?>
 
-	<!-- TODO: Photo -->
+	<h2 class="page-header">Event Details</h2>
 
 	<div class="section form-horizontal">
 		<div class="form-group">

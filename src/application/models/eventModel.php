@@ -140,4 +140,19 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
+	public function updateEventImage($eventID, $hostID, $image) {
+		$sql = "UPDATE Event
+				SET Image = :image
+				WHERE Event.EventID = :eventID
+					AND Event.HostID = :hostID";
+
+		$parameters = array(
+				":eventID" => $eventID,
+				":hostID" => $hostID,
+				":image" => $image
+		);
+
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
+
 }

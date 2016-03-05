@@ -52,3 +52,9 @@ define('DB_HOST', 'localhost:3306');
 define('DB_NAME', 'plannpla_db');
 define('DB_USER', 'plannpla_webapp');
 define('DB_PASS', 'pnp428');
+
+/**
+ * Configuration for: File Upload
+ */
+define('UPLOAD_ROOT', ROOT . 'uploads' . DIRECTORY_SEPARATOR); 
+define('UPLOAD_URL', URL . 'uploads/');
