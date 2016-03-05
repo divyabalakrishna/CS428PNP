@@ -57,7 +57,7 @@
 	    <div class="form-group">
 			<label for="email" class="col-sm-2 control-label">Email</label>
 			<div class="col-sm-10">
-				<input type="email" class="form-control" id="email" name="email" value="<?php echo $profileInfo->Email ?>" placeholder="test@test.com">
+				<input type="email" class="form-control" id="email" name="email" value="<?php echo $profileInfo->Email ?>" placeholder="test@test.com" required aria-required="true">
 	    	</div>
 	    </div>
 	    
