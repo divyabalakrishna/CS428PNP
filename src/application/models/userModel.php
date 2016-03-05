@@ -27,7 +27,9 @@ class UserModel extends Model
 	}
 	
 	public function getProfile($userID){
-		$sql = "SELECT FirstName, LastName, Email, Phone, Picture, Radius, Reminder, NickName, BirthDate, Gender
+		$sql = "SELECT FirstName, LastName, Email, Phone, Picture, Radius, Reminder, NickName, 
+					DATE_FORMAT(BirthDate, '%m/%d/%Y') AS FormattedDate, 
+					Gender
 				FROM User
 				WHERE UserID = :userID";
 	
@@ -46,7 +48,7 @@ class UserModel extends Model
 					Radius = :radius, 
 					Reminder = :reminder,
 					Gender = :gender,
-					BirthDate = :birthdate,
+					BirthDate = STR_TO_DATE(:birthdate, '%m/%d/%Y'),
 					NickName = :nickname
 				WHERE UserID = :userID";
 

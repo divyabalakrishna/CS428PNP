@@ -19,7 +19,7 @@
 	    <div class="form-group">
 			<label for="nickname" class="col-sm-2 control-label">Nick Name</label>
 			<div class="col-sm-10">
-				<input type="nickname" class="form-control" id="nickname" name="nickname" value="" placeholder="Nick Name">
+				<input type="nickname" class="form-control" id="nickname" name="nickname" value="<?php echo $profileInfo->NickName ?>" placeholder="Nick Name">
 	    	</div>
 	    </div>
 	    
@@ -29,7 +29,7 @@
 			<div class="col-sm-10">
 				<div class="input-group date col-sm-2">
 					<!-- <input type="text" id="birthdate" name="birthdate" value="<?php echo $event->FormattedDate ?>" class="form-control" required aria-required="true" /> -->
-					<input type="text" id="birthdate" name="birthdate" value="03/03/1999" class="form-control" required aria-required="true" />
+					<input type="text" id="birthdate" name="birthdate" value="<?php echo $profileInfo->FormattedDate ?>" class="form-control" required aria-required="true" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 				</div>
 			</div>
@@ -38,7 +38,11 @@
 		<div class="form-group">
 			<label for="gender" class="col-sm-2 control-label">Gender</label>
 			<div class="col-sm-10">
-				<input type="gender" class="form-control" id="gender" name="gender" placeholder="Gender">
+				<select id="gender" name="gender" class="form-control">
+					<option value="">- Gender -</option>
+					<option value="M" <?php if ($profileInfo->Gender == "M") { ?>selected<?php } ?>>Male</option>
+					<option value="F" <?php if ($profileInfo->Gender == "F") { ?>selected<?php } ?>>Female</option>
+				</select>
 	    	</div>
 	    </div>
 	    
