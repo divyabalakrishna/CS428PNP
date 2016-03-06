@@ -95,8 +95,6 @@ class User
 				$_POST["lastname"],
 				$_POST["email"],
 				$_POST["phone"],
-				$_POST["radius"],
-				$_POST["reminder"],
 				$_POST["gender"],
 				$_POST["birthdate"],
 				$_POST["nickname"],

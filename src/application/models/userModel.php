@@ -47,7 +47,7 @@ class UserModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 	
-	public function updateProfile($userID, $firstname, $lastname, $email, $phone, $radius, $reminder, $gender, $birthdate, $nickname, $user_tags){
+	public function updateProfile($userID, $firstname, $lastname, $email, $phone, $gender, $birthdate, $nickname, $user_tags){
 		//delete old tags
 		$sql = "DELETE
 				FROM UserTag
@@ -65,8 +65,6 @@ class UserModel extends Model
 					LastName = :lastname,
 					Email = :email, 
 					Phone = :phone, 
-					Radius = :radius, 
-					Reminder = :reminder,
 					Gender = :gender,
 					BirthDate = STR_TO_DATE(:birthdate, '%m/%d/%Y'),
 					NickName = :nickname
@@ -78,8 +76,6 @@ class UserModel extends Model
 				":lastname" => $lastname,
 				":email" => $email,
 				":phone" => $phone,
-				":radius" => $radius,
-				":reminder" => $reminder,
 				":gender" => $gender,
 				":birthdate" => $birthdate,
 				":nickname" => $nickname
