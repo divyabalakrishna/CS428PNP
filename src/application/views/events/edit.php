@@ -94,9 +94,9 @@ else {
 							<div class="clearfix">&nbsp;</div>
 							<div class="m-t-small">
 								<label class="p-r-small col-sm-1 control-label">Lat.:</label>
-								<div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="gmap-lat"/></div>
+								<div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="gmap-lat" name="gmap-lat"/></div>
 								<label class="p-r-small col-sm-2 control-label">Long.:</label>
-								<div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="gmap-lon"/></div>
+								<div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="gmap-lon" name="gmap-lon"/></div>
 							</div>
 							<div class="clearfix"></div>
                             <script>
