@@ -183,7 +183,7 @@ class EventModel extends Model
                         Tag.Icon AS TagIcon,
                 ( 3959 * acos( cos( radians(".$Lat.") ) * cos( radians( lat ) ) 
                 * cos( radians( Lon ) - radians(".$Lon.") ) + sin( radians(".$Lat.") ) * sin(radians(lat)) ) ) AS distance 
-                FROM event 
+                FROM Event 
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID                
                 HAVING distance < ".$radius."
                 ORDER BY distance";
