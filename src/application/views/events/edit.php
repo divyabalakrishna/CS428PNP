@@ -103,10 +103,29 @@ else {
                                 var lat,long;
                                 function getLocation() {
                                     if (navigator.geolocation) {
-                                        navigator.geolocation.getCurrentPosition(getPosition);
+                                        navigator.geolocation.getCurrentPosition(getPosition, noPosition);
                                     } else { 
                                         alert("Geolocation is not supported by this browser.");
                                     }
+                                }
+                                function noPosition(){
+                                    $('#gmap-lat').val(40.1138767);
+                                    $('#gmap-lon').val(-88.2242376);
+
+                                    $('#gmap').locationpicker({
+                                        <?php if (is_numeric($event->Lat) && is_numeric($event->Lon)) { ?>
+                                        location: {latitude: <?php echo $event->Lat ?>, longitude: <?php echo $event->Lon ?>},
+                                        <?php } else { ?>
+                                        location: {latitude: 40.1138767, longitude: -88.2242376},
+                                        <?php } ?>
+                                        radius: 0,
+                                        inputBinding: {
+                                            latitudeInput: $('#gmap-lat'),
+                                            longitudeInput: $('#gmap-lon'),
+                                            locationNameInput: $('#gmap-address')
+                                        },
+                                        enableAutocomplete: true
+                                    });
                                 }
                                 function getPosition(position) {
                                     $('#gmap-lat').val(position.coords.latitude); 
