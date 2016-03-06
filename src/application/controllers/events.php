@@ -47,6 +47,14 @@ class Events
 		require APP . 'views/_templates/footer.php';
 	}
 
+    public function genXML()
+	{
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");    
+		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID);
+
+        require APP . 'views/events/xml.php';
+    }
+
 	public function view($eventID)
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
