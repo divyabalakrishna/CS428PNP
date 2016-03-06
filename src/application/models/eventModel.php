@@ -89,10 +89,12 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 
-	public function getHostedEvents($hostID, $timeType = "")
+	public function getHostedEvents($hostID, $timeType = "", $limit="")
 	{
 		$sql = "SELECT Event.*,
-					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedTime,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
+					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime,
 					Tag.Name AS TagName,
 					Tag.Icon AS TagIcon,
 					IFNULL(ParticipantSummary.ParticipantCount, 0) AS ParticipantCount
@@ -116,15 +118,21 @@ class EventModel extends Model
 
 		$sql .= " ORDER BY Event.Time";
 
+		if (is_numeric($limit)) {
+			$sql .= " LIMIT " . $limit;
+		}
+
 		$parameters = array(":hostID" => $hostID);
 
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
-	public function getJoinedEvents($userID, $timeType = "")
+	public function getJoinedEvents($userID, $timeType = "", $limit="")
 	{
 		$sql = "SELECT Event.*,
-					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedTime,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
+					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime,
 					Tag.Name AS TagName,
 					Tag.Icon AS TagIcon
 				FROM Event
@@ -142,6 +150,10 @@ class EventModel extends Model
 		}
 
 		$sql .= " ORDER BY Event.Time";
+
+		if (is_numeric($limit)) {
+			$sql .= " LIMIT " . $limit;
+		}
 
 		$parameters = array(":userID" => $userID);
 

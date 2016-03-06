@@ -35,7 +35,7 @@
 							</a>
 						</td>
 						<td class="truncate"><?php echo $event->Description ?></td>
-						<td><?php echo $event->FormattedTime ?></td>
+						<td><?php echo $event->FormattedDateTime ?></td>
 						<td><?php echo $event->Address ?></td>
 						<td><?php echo $event->TagName ?></td>
 						<td><?php echo floor($event->distance * 1000) / 1000 ?> miles</td>

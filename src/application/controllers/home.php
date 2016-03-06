@@ -16,8 +16,8 @@ class Home
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
 		if (is_numeric($userID)) {
-			$hostedEvents = $GLOBALS["beans"]->eventModel->getHostedEvents($userID, "future");
-			$joinedEvents = $GLOBALS["beans"]->eventModel->getJoinedEvents($userID, "future");
+			$hostedEvents = $GLOBALS["beans"]->eventModel->getHostedEvents($userID, "future", 4);
+			$joinedEvents = $GLOBALS["beans"]->eventModel->getJoinedEvents($userID, "future", 5);
 
 			require APP . 'views/_templates/header.php';
 			require APP . 'views/home/index.php';
