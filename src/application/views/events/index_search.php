@@ -58,10 +58,10 @@
                     <div id="gmap" style="width: 100%; height: 500px;"></div>
                     <div class="clearfix"></div>
                     <script>
-                        var lat,long;
+                        var lat = 40.11374573,lon=-88.224828;
                         function getLocation() {
                             if (navigator.geolocation) {
-                                navigator.geolocation.getCurrentPosition(getPosition);
+                                navigator.geolocation.getCurrentPosition(getPosition,errorFunction);
                             } else { 
                                 alert("Geolocation is not supported by this browser.");
                             }
@@ -69,19 +69,23 @@
                         function getPosition(position) {
                             $('#gmap-lat').val(position.coords.latitude); 
                             $('#gmap-lon').val(position.coords.longitude);
+                            
+                            lat= position.coords.latitude;
+                            lon= position.coords.longitude;
+                        }
+                        function errorFunction() {
+                            alert("enable your location !!!");
+                        }
 
+                        getLocation();
+                        $('#gmap-dialog').on('shown.bs.modal', function() {
                             $('#gmap').locationpicker({
-                                //location: {latitude: 40.11380279, longitude: -88.22490519999997},
-                                location: {latitude: position.coords.latitude, longitude: position.coords.longitude},
+                                location: {latitude: lat, longitude: lon},
                                 radius: 0,
                                 icon: '<?php echo URL; ?>public/img/user.png',
                                 enableAutocomplete: true,
                                 draggable: false
                             });
-                        }
-
-                        getLocation();
-                        $('#gmap-dialog').on('shown.bs.modal', function() {
                             $('#gmap').locationpicker('load');
                             $('#gmap').locationpicker('autosize');
                         });
