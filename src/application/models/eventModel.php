@@ -186,7 +186,7 @@ class EventModel extends Model
 //          $Lon = $xml->result->geometry->location->lng;
 //        }
         
-        $sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedTime, 
+        $sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
     					Tag.Name AS TagName,
                         Tag.Icon AS TagIcon,
                 ( 3959 * acos( cos( radians(".$Lat.") ) * cos( radians( lat ) ) 

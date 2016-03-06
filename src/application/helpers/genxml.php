@@ -25,7 +25,7 @@ if ($status=="OK") {
   $Lon = $xml->result->geometry->location->lng;
 }
 
-$sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedTime, 
+$sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
                 Tag.Name AS TagName,
                 Tag.Icon AS TagIcon,
         ( 3959 * acos( cos( radians(".$Lat.") ) * cos( radians( lat ) ) 
@@ -56,6 +56,7 @@ foreach ($rows as $row) {
   $newnode->setAttribute("lat", $row['Lat']);
   $newnode->setAttribute("lon", $row['Lon']);
   $newnode->setAttribute("tag", $row['TagName']);
+  $newnode->setAttribute("time", $row['FormattedDateTime']);
 }
 
 echo $dom->saveXML();

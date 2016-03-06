@@ -14,6 +14,7 @@
           var address = markers[i].getAttribute("address");
           var type = markers[i].getAttribute("type");
           var id = markers[i].getAttribute("id");
+          var time = markers[i].getAttribute("time");
           var tag = markers[i].getAttribute("tag").toLowerCase();
           var point = new google.maps.LatLng(
               parseFloat(markers[i].getAttribute("lat")),
