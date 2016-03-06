@@ -177,14 +177,7 @@ class EventModel extends Model
 
 	public function getSearchEvents($userID, $radius, $Lat, $Lon)
 	{
-//        $Address = urlencode("911 W.Springfield Ave, Urbana, IL");
-//        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=".$Address."&sensor=true";
-//        $xml = simplexml_load_file($request_url) or die("url not loading");
-//        $status = $xml->status;
-//        if ($status=="OK") {
-//          $Lat = $xml->result->geometry->location->lat;
-//          $Lon = $xml->result->geometry->location->lng;
-//        }
+
         $sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
     					Tag.Name AS TagName,
                         Tag.Icon AS TagIcon,
@@ -195,7 +188,6 @@ class EventModel extends Model
                 HAVING distance < ".$radius."
                 ORDER BY distance";
         
-
 		$parameters = array(":userID" => $userID);
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}

@@ -39,18 +39,21 @@ class Events
 
     public function listSearch()
 	{
-         $Lat = 0;
-         $Lon = 0;
-         //$Lat = 40.114438899999996;
-         //$Lon = -88.2215344;
-         if(isset($_POST['latitude'])){
-              $Lat = $_POST["latitude"];
+         $Lat = 40.11374573;
+         $Lon = -88.224828;
+
+         if(isset($_COOKIE['latitude'])){
+              $Lat = $_COOKIE["latitude"];
          }
-         if(isset($_POST['longitude'])){
-              $Lon = $_POST["longitude"];
+         if(isset($_COOKIE['longitude'])){
+              $Lon = $_COOKIE["longitude"];
          }
+        
          $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
          $user = $GLOBALS["beans"]->userModel->getProfile($userID);
+         
+         if(!$user->Radius) $user->Radius = 2;
+        
 		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon);
 
 		 require APP . 'views/_templates/header.php';
@@ -60,10 +63,23 @@ class Events
 
     public function genXML()
 	{
-		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");    
-		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID);
+         $Lat = 40.11374573;
+         $Lon = -88.224828;
 
-        require APP . 'views/events/xml.php';
+         if(isset($_COOKIE['latitude'])){
+              $Lat = $_COOKIE["latitude"];
+         }
+         if(isset($_COOKIE['longitude'])){
+              $Lon = $_COOKIE["longitude"];
+         }
+        
+		 $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");  
+         $user = $GLOBALS["beans"]->userModel->getProfile($userID);
+        
+         if(!$user->Radius) $user->Radius = 2;        
+		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon);
+
+         require APP . 'views/events/xml.php';
     }
 
 	public function view($eventID)

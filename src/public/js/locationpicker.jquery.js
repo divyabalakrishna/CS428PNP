@@ -293,6 +293,7 @@
                     return null;
                 }
               case "load":
+                //load(gmapContext,"../../application/helpers/genxml.php");
                 load(gmapContext,"genXML");
                 return this;
                     
