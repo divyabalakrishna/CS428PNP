@@ -50,7 +50,8 @@ class Events
               $Lon = $_POST["longitude"];
          }
          $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $Lat, $Lon);
+         $user = $GLOBALS["beans"]->userModel->getProfile($userID);
+		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon);
 
 		 require APP . 'views/_templates/header.php';
 		 require APP . 'views/events/index_search.php';
@@ -108,8 +109,8 @@ class Events
 						$_POST["address"],
 						$_POST["capacity"],
 						$_POST["tagID"],
-                        $_POST["gmap-lat"],
-                        $_POST["gmap-lon"]
+						$_POST["gmap-lat"],
+						$_POST["gmap-lon"]
 				);
 
 				$oldImage = $event->Image;
@@ -126,8 +127,14 @@ class Events
 					$_POST["address"],
 					$_POST["capacity"],
 					$_POST["tagID"],
-                    $_POST["gmap-lat"],
-                    $_POST["gmap-lon"]
+					$_POST["gmap-lat"],
+					$_POST["gmap-lon"]
+			);
+
+			// Insert host as participant
+			$GLOBALS["beans"]->eventModel->insertParticipant(
+					$eventID,
+					$userID
 			);
 
 			$performUpload = true;
@@ -160,7 +167,12 @@ class Events
 	public function delete($eventID)
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		$GLOBALS["beans"]->eventModel->deleteEvent($eventID, $userID);
+		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
+
+		if ($userID == $event->HostID) {
+			$GLOBALS["beans"]->eventModel->deleteEvent($eventID);
+			$GLOBALS["beans"]->eventModel->deleteEvent($eventID, $userID);
+		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/listHosted');
 	}
