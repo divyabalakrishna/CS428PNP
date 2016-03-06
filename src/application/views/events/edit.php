@@ -113,7 +113,7 @@ else {
                                     $('#gmap-lon').val(position.coords.longitude);
                                     
                                     $('#gmap').locationpicker({
-                                        <?php if (is_numeric($event->EventID)) { ?>
+                                        <?php if (is_numeric($event->Lat) && is_numeric($event->Lon)) { ?>
                                         location: {latitude: <?php echo $event->Lat ?>, longitude: <?php echo $event->Lon ?>},
                                         <?php } else { ?>
                                         location: {latitude: position.coords.latitude, longitude: position.coords.longitude},
@@ -138,11 +138,15 @@ else {
                                     }); 
                                 });                        
                                 $(function(){
-                                    $(document).on("click", "#address", function(event){
+                                    $(document).on("focus", "#address", function(event){
                                         $("#gmap-dialog").modal('show');
-                                        //alert("asd");        
                                     }); 
-                                });                        
+                                });     
+                                $(function(){
+                                    $(document).on("keydown", "#address", function(event){
+                                        event.preventDefault();
+                                    }); 
+                                });     
 
                             </script>
 						</div>
