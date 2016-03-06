@@ -20,6 +20,7 @@ class User
 		if ($errorMessage != "")
 		{
 			$GLOBALS["beans"]->siteHelper->setAlert("danger", $errorMessage);
+			$GLOBALS["beans"]->siteHelper->setPopUp("#myModal");
 		}
 
 		header('location: ' . URL_WITH_INDEX_FILE);

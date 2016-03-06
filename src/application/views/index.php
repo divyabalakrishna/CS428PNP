@@ -211,6 +211,8 @@
 	$(document).ready(function(){
 		$('body').attr('id', 'page-top');
         
+        <?php echo $GLOBALS["beans"]->siteHelper->getPopUp(); ?>
+        
         // validation
 		$("#signinForm").validate({
 			rules: {

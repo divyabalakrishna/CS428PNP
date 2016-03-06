@@ -61,9 +61,9 @@
         var _marker = new google.maps.Marker({
             position: new google.maps.LatLng(54.19335, -3.92695),
             map: _map,
-            title: "Drag Me",
+            title: options.titleIcon,
             icon: options.icon,
-            draggable: options.draggable
+            draggable: options.draggableIcon
         });
         
         return {
@@ -319,7 +319,9 @@
                 locationName: settings.locationName,
                 settings: settings,
                 draggable: settings.draggable,
-                icon: settings.icon
+                icon: settings.icon,
+                draggableIcon: settings.draggableIcon,
+                titleIcon: settings.titleIcon
             });
             $target.data("locationpicker", gmapContext);
             google.maps.event.addListener(gmapContext.marker, "dragend", function(event) {
@@ -354,6 +356,8 @@
         enableAutocomplete: false,
         enableReverseGeocode: true,
         draggable: true,
+        draggableIcon: true,
+        titleIcon: "Drag Me",
         onchanged: function(currentLocation, radius, isMarkerDropped) {},
         onlocationnotfound: function(locationName) {},
         oninitialized: function(component) {}

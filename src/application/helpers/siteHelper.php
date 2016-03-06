@@ -42,5 +42,26 @@ class SiteHelper
 
 		return $html;
 	}
+	public function setPopUp($modalID)
+	{
+		$_SESSION["popup"] = new stdClass();
+		$_SESSION["popup"]->modalID = $modalID;
+	}
 
+	public function getPopUp()
+	{
+		$html = "";
+		$popup = $this->getSession("popup");
+
+		if (is_object($popup))
+		{
+            $html = "$(window).load(function(){ $('". $popup->modalID . "').modal('show');  })";
+		}
+
+		$_SESSION["popup"] = "";
+
+		return $html;
+	}
+
+    
 }

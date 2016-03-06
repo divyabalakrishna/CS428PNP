@@ -8,6 +8,14 @@
     .gm-style img {max-width: none;}
     .gm-style label {width: auto; display:inline;} 
     .pac-container {z-index:2000 !important;}
+    
+gmap{
+    width:100%;
+    height:100%;
+    margin:0;
+    padding:0;
+    position:absolute;
+}
 </style>
 
 <div class="container">
@@ -84,7 +92,8 @@
                                 radius: 0,
                                 icon: '<?php echo URL; ?>public/img/user.png',
                                 enableAutocomplete: true,
-                                draggable: false
+                                draggableIcon: false,
+                                titleIcon: "You are here."
                             });
                             $('#gmap').locationpicker('load');
                             $('#gmap').locationpicker('autosize');
