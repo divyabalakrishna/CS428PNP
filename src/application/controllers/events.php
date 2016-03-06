@@ -152,7 +152,12 @@ class Events
 	public function delete($eventID)
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		$GLOBALS["beans"]->eventModel->deleteEvent($eventID, $userID);
+		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
+
+		if ($userID == $event->HostID) {
+			$GLOBALS["beans"]->eventModel->deleteEvent($eventID);
+			$GLOBALS["beans"]->eventModel->deleteEvent($eventID, $userID);
+		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/listHosted');
 	}

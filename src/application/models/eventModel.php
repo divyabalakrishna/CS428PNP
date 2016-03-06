@@ -201,5 +201,22 @@ class EventModel extends Model
         echo $Lat.','.$Lon;
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
-    
+
+	public function deleteParticipant($eventID, $userID = "") {
+		$sql = "DELETE
+				FROM Participant
+				WHERE Participant.EventID = :eventID";
+
+		if (is_numeric($userID)) {
+			$sql .= " AND Participant.UserID = :userID";
+		}
+
+		$parameters = array(":eventID" => $eventID);
+		if (is_numeric($userID)) {
+			$parameters[":userID"] = $userID;
+		}
+
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
+
 }
