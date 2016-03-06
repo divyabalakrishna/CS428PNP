@@ -175,16 +175,16 @@ class EventModel extends Model
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-	public function getSearchEvents($userID)
+	public function getSearchEvents($userID, $Lat, $Lon)
 	{
-        $Address = urlencode("911 W.Springfield Ave, Urbana, IL");
-        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=".$Address."&sensor=true";
-        $xml = simplexml_load_file($request_url) or die("url not loading");
-        $status = $xml->status;
-        if ($status=="OK") {
-          $Lat = $xml->result->geometry->location->lat;
-          $Lon = $xml->result->geometry->location->lng;
-        }
+//        $Address = urlencode("911 W.Springfield Ave, Urbana, IL");
+//        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=".$Address."&sensor=true";
+//        $xml = simplexml_load_file($request_url) or die("url not loading");
+//        $status = $xml->status;
+//        if ($status=="OK") {
+//          $Lat = $xml->result->geometry->location->lat;
+//          $Lon = $xml->result->geometry->location->lng;
+//        }
         
         $sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
     					Tag.Name AS TagName,
@@ -198,7 +198,7 @@ class EventModel extends Model
         
 
 		$parameters = array(":userID" => $userID);
-
+        echo $Lat.','.$Lon;
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
     

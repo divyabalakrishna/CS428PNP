@@ -2,6 +2,36 @@
 <!-- JS -->
 <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
 <script src="<?php echo URL; ?>public/js/locationpicker.jquery.js"></script>
+
+
+<script>
+    $(function() {
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+        }
+        else {
+            alert('not supported');
+        }
+
+        function errorFunction(){
+            alert('soemthing went wrong');
+        }
+
+        function successFunction(position) {
+           var latitude = position.coords.latitude;
+           var longitude = position.coords.longitude;
+           //alert(latitude);
+           //alert(longitude);
+           $.post({
+              method: 'post',
+              data: { latitude : latitude, longitude : longitude },
+              url: '<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch'
+           });
+        }
+    });
+</script>
+
 <style>
     /* style overrides for bootstrap/google map conflicts */
     .gm-style img {max-width: none;}
@@ -103,14 +133,4 @@
 			window.location.href = '<?php echo URL_WITH_INDEX_FILE; ?>events/listJoined';
 		});
 	});
-    
-    
-    $.ajax({
-   type:"POST",
-   url:"eventModel_.php",
-   data: {type:getlatlong,latitude:latitude,longitude:longitude},
-   success: function(){
-      alert('sent');
-   }
-});
 </script>

@@ -39,12 +39,22 @@ class Events
 
     public function listSearch()
 	{
-		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID);
+         $Lat = 0;
+         $Lon = 0;
+         //$Lat = 40.114438899999996;
+         //$Lon = -88.2215344;
+         if(isset($_POST['latitude'])){
+              $Lat = $_POST["latitude"];
+         }
+         if(isset($_POST['longitude'])){
+              $Lon = $_POST["longitude"];
+         }
+         $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $Lat, $Lon);
 
-		require APP . 'views/_templates/header.php';
-		require APP . 'views/events/index_search.php';
-		require APP . 'views/_templates/footer.php';
+		 require APP . 'views/_templates/header.php';
+		 require APP . 'views/events/index_search.php';
+		 require APP . 'views/_templates/footer.php';
 	}
 
     public function genXML()
@@ -154,5 +164,4 @@ class Events
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/listHosted');
 	}
-
 }
