@@ -50,7 +50,8 @@ class Events
               $Lon = $_POST["longitude"];
          }
          $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $Lat, $Lon);
+         $user = $GLOBALS["beans"]->userModel->getProfile($userID);
+		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon);
 
 		 require APP . 'views/_templates/header.php';
 		 require APP . 'views/events/index_search.php';
