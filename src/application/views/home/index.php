@@ -51,3 +51,27 @@
 		</otherEvents>
 	</other>
 </div>
+<script>
+    $(function() {
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+        }
+        else {
+            alert('not supported');
+        }
+
+        function errorFunction(){
+            alert('something went wrong');
+        }
+
+        function successFunction(position) {
+           var latitude = position.coords.latitude;
+           var longitude = position.coords.longitude;
+
+            document.cookie="latitude=" + latitude;            
+            document.cookie="longitude=" + longitude;            
+            
+        }
+    });
+</script>

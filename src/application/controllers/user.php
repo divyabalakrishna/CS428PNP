@@ -94,7 +94,6 @@ class User
 				$_POST["lastname"],
 				$_POST["email"],
 				$_POST["phone"],
-				$_POST["picture"],
 				$_POST["radius"],
 				$_POST["reminder"],
 				$_POST["gender"],
@@ -102,19 +101,19 @@ class User
 				$_POST["nickname"],
 				$_POST["user_tags"]
 		);
-		
-		$result = $GLOBALS["beans"]->fileHelper->uploadFile("picture", "profile", "jpg,jpeg,png,bmp", "profile image", 2097152, $userID);
-	
-		if ($result->fileUploaded) {
-			$GLOBALS["beans"]->userModel->updatePicture($userID, $result->fileName);
-	
-			if ($oldImage != "") {
-				$GLOBALS["beans"]->fileHelper->deleteUploadedFile("picture", $oldImage);
+		if (!empty($_FILES['picture']['name'])) {
+			$result = $GLOBALS["beans"]->fileHelper->uploadFile("picture", "profile", "jpg,jpeg,png,bmp", "profile image", 2097152, $userID);
+			if ($result->fileUploaded) {
+				$GLOBALS["beans"]->userModel->updatePicture($userID, $result->fileName);
+					
+				if ($oldImage != "") {
+					$GLOBALS["beans"]->fileHelper->deleteUploadedFile("picture", $oldImage);
+				}
 			}
-		}
-		else if ($result->errorMessage != "") {
-			$GLOBALS["beans"]->siteHelper->setAlert("danger", $result->errorMessage);
-			$backToEdit = true;
+			else if ($result->errorMessage != "") {
+				$GLOBALS["beans"]->siteHelper->setAlert("danger", $result->errorMessage);
+				$backToEdit = true;
+			}
 		}
 		
 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');

@@ -177,14 +177,7 @@ class EventModel extends Model
 
 	public function getSearchEvents($userID, $radius, $Lat, $Lon)
 	{
-//        $Address = urlencode("911 W.Springfield Ave, Urbana, IL");
-//        $request_url = "http://maps.googleapis.com/maps/api/geocode/xml?address=".$Address."&sensor=true";
-//        $xml = simplexml_load_file($request_url) or die("url not loading");
-//        $status = $xml->status;
-//        if ($status=="OK") {
-//          $Lat = $xml->result->geometry->location->lat;
-//          $Lon = $xml->result->geometry->location->lng;
-//        }
+
         $sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
     					Tag.Name AS TagName,
                         Tag.Icon AS TagIcon,
@@ -195,9 +188,37 @@ class EventModel extends Model
                 HAVING distance < ".$radius."
                 ORDER BY distance";
         
-
 		$parameters = array(":userID" => $userID);
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
-    
+
+	public function deleteParticipant($eventID, $userID = "") {
+		$sql = "DELETE
+				FROM Participant
+				WHERE Participant.EventID = :eventID";
+
+		if (is_numeric($userID)) {
+			$sql .= " AND Participant.UserID = :userID";
+		}
+
+		$parameters = array(":eventID" => $eventID);
+		if (is_numeric($userID)) {
+			$parameters[":userID"] = $userID;
+		}
+
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
+
+	public function insertParticipant($eventID, $userID) {
+		$sql = "INSERT INTO Participant (EventID, UserID)
+				VALUES (:eventID, :userID)";
+
+		$parameters = array(
+				":eventID" => $eventID,
+				":userID" => $userID
+		);
+
+		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
+
 }

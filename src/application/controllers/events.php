@@ -39,24 +39,48 @@ class Events
 
     public function listSearch()
 	{
-         $Lat = 0;
-         $Lon = 0;
-         //$Lat = 40.114438899999996;
-         //$Lon = -88.2215344;
-         if(isset($_POST['latitude'])){
-              $Lat = $_POST["latitude"];
+         $Lat = 40.11374573;
+         $Lon = -88.224828;
+
+         if(isset($_COOKIE['latitude'])){
+              $Lat = $_COOKIE["latitude"];
          }
-         if(isset($_POST['longitude'])){
-              $Lon = $_POST["longitude"];
+         if(isset($_COOKIE['longitude'])){
+              $Lon = $_COOKIE["longitude"];
          }
+        
          $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
          $user = $GLOBALS["beans"]->userModel->getProfile($userID);
+         
+         if(!$user->Radius) $user->Radius = 2;
+        
 		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon);
 
 		 require APP . 'views/_templates/header.php';
 		 require APP . 'views/events/index_search.php';
 		 require APP . 'views/_templates/footer.php';
 	}
+
+    public function genXML()
+	{
+         $Lat = 40.11374573;
+         $Lon = -88.224828;
+
+         if(isset($_COOKIE['latitude'])){
+              $Lat = $_COOKIE["latitude"];
+         }
+         if(isset($_COOKIE['longitude'])){
+              $Lon = $_COOKIE["longitude"];
+         }
+        
+		 $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");  
+         $user = $GLOBALS["beans"]->userModel->getProfile($userID);
+        
+         if(!$user->Radius) $user->Radius = 2;        
+		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon);
+
+         require APP . 'views/events/xml.php';
+    }
 
 	public function view($eventID)
 	{
@@ -101,8 +125,8 @@ class Events
 						$_POST["address"],
 						$_POST["capacity"],
 						$_POST["tagID"],
-                        $_POST["gmap-lat"],
-                        $_POST["gmap-lon"]
+						$_POST["gmap-lat"],
+						$_POST["gmap-lon"]
 				);
 
 				$oldImage = $event->Image;
@@ -119,8 +143,14 @@ class Events
 					$_POST["address"],
 					$_POST["capacity"],
 					$_POST["tagID"],
-                    $_POST["gmap-lat"],
-                    $_POST["gmap-lon"]
+					$_POST["gmap-lat"],
+					$_POST["gmap-lon"]
+			);
+
+			// Insert host as participant
+			$GLOBALS["beans"]->eventModel->insertParticipant(
+					$eventID,
+					$userID
 			);
 
 			$performUpload = true;
@@ -153,7 +183,12 @@ class Events
 	public function delete($eventID)
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		$GLOBALS["beans"]->eventModel->deleteEvent($eventID, $userID);
+		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
+
+		if ($userID == $event->HostID) {
+			$GLOBALS["beans"]->eventModel->deleteEvent($eventID);
+			$GLOBALS["beans"]->eventModel->deleteEvent($eventID, $userID);
+		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/listHosted');
 	}
