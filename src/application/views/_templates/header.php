@@ -109,6 +109,9 @@ if (!isset($userID)) {
 					<li>
 						<a href="<?php echo URL_WITH_INDEX_FILE; ?>">Home</a>
 					</li>
+                    <li>
+                        <a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch">Search</a>
+                    </li>
 					<li>
 						<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile">Profile</a>
 					</li>
