@@ -167,7 +167,7 @@ else {
 		<div class="form-group">
 			<label for="tagID" class="col-sm-2 control-label">Type</label>
 			<div class="col-sm-10">
-				<select id="tagID" name="tagID" class="form-control">
+				<select id="tagID" name="tagID" class="form-control" required aria-required="true">
 					<option value="">- Event Type -</option>
 					<?php foreach ($tags as $tag) { ?>
 						<option value="<?php echo $tag->TagID; ?>" <?php if ($event->TagID == $tag->TagID) { ?>selected<?php } ?>><?php echo $tag->Name; ?></option>
