@@ -29,7 +29,6 @@
 			<label for="birthdate" class="col-sm-2 control-label">Birth Date</label>
 			<div class="col-sm-10">
 				<div class="input-group date col-sm-2">
-					<!-- <input type="text" id="birthdate" name="birthdate" value="<?php echo $event->FormattedDate ?>" class="form-control" required aria-required="true" /> -->
 					<input type="text" id="birthdate" name="birthdate" value="<?php echo $profileInfo->FormattedDate ?>" class="form-control" required aria-required="true" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 				</div>
