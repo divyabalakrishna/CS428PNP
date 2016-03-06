@@ -101,8 +101,8 @@ class Events
 						$_POST["address"],
 						$_POST["capacity"],
 						$_POST["tagID"],
-                        $_POST["gmap-lat"],
-                        $_POST["gmap-lon"]
+						$_POST["gmap-lat"],
+						$_POST["gmap-lon"]
 				);
 
 				$oldImage = $event->Image;
@@ -119,8 +119,14 @@ class Events
 					$_POST["address"],
 					$_POST["capacity"],
 					$_POST["tagID"],
-                    $_POST["gmap-lat"],
-                    $_POST["gmap-lon"]
+					$_POST["gmap-lat"],
+					$_POST["gmap-lon"]
+			);
+
+			// Insert host as participant
+			$GLOBALS["beans"]->eventModel->insertParticipant(
+					$eventID,
+					$userID
 			);
 
 			$performUpload = true;

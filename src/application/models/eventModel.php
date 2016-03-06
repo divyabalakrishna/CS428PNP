@@ -217,4 +217,16 @@ class EventModel extends Model
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	public function insertParticipant($eventID, $userID) {
+		$sql = "INSERT INTO Participant (EventID, UserID)
+				VALUES (:eventID, :userID)";
+
+		$parameters = array(
+				":eventID" => $eventID,
+				":userID" => $userID
+		);
+
+		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
+
 }
