@@ -55,7 +55,7 @@ class User
         $loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
 
         $_SESSION["userID"] = $loginInfo->UserID;
-		header('location: ' . URL_WITH_INDEX_FILE);
+		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 
 	}
 
