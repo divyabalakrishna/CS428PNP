@@ -195,11 +195,14 @@ class Events
 	}
 	
 	public function reply(){
+		
 		$GLOBALS["beans"]->eventModel->addComment(
 				$_POST["userID"],
 				$_POST["eventID"],
 				$_POST["parentID"],
 				$_POST["text"]
 		);
+		
+// 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
 }
