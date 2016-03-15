@@ -96,7 +96,6 @@ class EventModel extends Model
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime,
 					Tag.Name AS TagName,
-					Tag.Icon AS TagIcon,
 					IFNULL(ParticipantSummary.ParticipantCount, 0) AS ParticipantCount
 				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
@@ -133,8 +132,7 @@ class EventModel extends Model
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime,
-					Tag.Name AS TagName,
-					Tag.Icon AS TagIcon
+					Tag.Name AS TagName
 				FROM Event
 				INNER JOIN Participant ON Participant.EventID = Event.EventID
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
@@ -181,7 +179,6 @@ class EventModel extends Model
 
         $sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
     					Tag.Name AS TagName,
-                        Tag.Icon AS TagIcon,
                 ( 3959 * acos( cos( radians(".$Lat.") ) * cos( radians( lat ) ) 
                 * cos( radians( Lon ) - radians(".$Lon.") ) + sin( radians(".$Lat.") ) * sin(radians(lat)) ) ) AS distance 
                 FROM Event 
