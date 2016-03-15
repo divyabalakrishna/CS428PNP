@@ -195,7 +195,7 @@ class Events
 	}
 	
 	public function reply(){
-		$GLOBALS["beans"]->eventModel->insertEvent(
+		$GLOBALS["beans"]->eventModel->addComment(
 				$_POST["userID"],
 				$_POST["eventID"],
 				$_POST["parentID"],
