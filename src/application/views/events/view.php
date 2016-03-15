@@ -73,13 +73,6 @@
 			<tbody>
 				<?php foreach ($comments as $comment) { ?>
 					<tr>
-						<!-- 
-						<td>
-							<a href="<?php echo URL_WITH_INDEX_FILE . "events/view/" . $event->EventID; ?>">
-								<?php echo $event->Name ?>
-							</a>
-						</td>
-						<td class="truncate"><?php echo $event->Description ?></td> -->
 						<td><?php echo $comment->CommentID ?></td>
 						<td><?php echo $comment->FirstName ?></td>
 						<td><?php echo $comment->Text ?></td>
@@ -106,8 +99,6 @@
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="submit" class="btn btn-default">Save</button>
-				<!-- 
-				<button type="button" id="cancel" class="btn btn-default">Cancel</button>  -->
 			</div>
 		</div>
 	</form>
