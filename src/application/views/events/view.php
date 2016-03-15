@@ -49,11 +49,10 @@
 				<?php if ($userID == $event->HostID) { ?>
 					<button type="button" id="edit" class="btn btn-default">Edit</button>
 					<button type="button" id="delete" class="btn btn-default">Delete</button>
-				<?php } else if ($userID == $event->HostID) { ?>
-					<!-- TODO: Join/Leave Event -->
-					
-				<?php } else { ?>
+				<?php } else if (count($participant) == 0) { ?>
 					<button type="button" id="join" class="btn btn-default">Join</button>
+				<?php } else { ?>
+					<button type="button" id="leave" class="btn btn-default">Leave</button>
 				<?php } ?>
 			</div>
 		</div>
@@ -110,8 +109,14 @@
 					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/delete/" . $event->EventID; ?>';
 				}
 			});
+		<?php } else if (count($participant) == 0) { ?>
+			$('#join').click(function() {
+				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/join/" . $event->EventID; ?>';
+			});
 		<?php } else { ?>
-			<!-- TODO: Join/Leave Event -->
+			$('#leave').click(function() {
+				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/leave/" . $event->EventID; ?>';
+			});
 		<?php } ?>
 	});
 </script>

@@ -86,6 +86,7 @@ class Events
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
+		$participant = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
 		$comments = $GLOBALS["beans"]->eventModel->getComments($eventID);
 		
 		require APP . 'views/_templates/header.php';
@@ -205,4 +206,28 @@ class Events
 		
  		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
+
+	public function join($eventID) {
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$participant = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
+
+		if (count($participant) == 0) {
+			$GLOBALS["beans"]->eventModel->insertParticipant($eventID, $userID);
+		}
+
+		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
+	}
+
+	public function leave($eventID) {
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
+		$participant = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
+
+		if (count($participant) > 0 && $userID != $event->HostID) {
+			$GLOBALS["beans"]->eventModel->deleteParticipant($eventID, $userID);
+		}
+
+		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
+	}
+
 }

@@ -248,4 +248,26 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	public function getParticipants($eventID, $userID = "")
+	{
+		$sql = "SELECT Participant.*,
+					User.FirstName,
+					User.LastName,
+					User.Picture
+				FROM Participant
+				INNER JOIN User ON User.UserID = Participant.UserID
+				WHERE Participant.EventID = :eventID";
+
+		if (is_numeric($userID)) {
+			$sql .= " AND Participant.UserID = :userID";
+		}
+
+		$parameters = array(':eventID' => $eventID);
+		if (is_numeric($userID)) {
+			$parameters[":userID"] = $userID;
+		}
+
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+	}
+
 }
