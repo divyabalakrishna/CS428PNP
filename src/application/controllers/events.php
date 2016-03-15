@@ -86,9 +86,10 @@ class Events
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
-		$participant = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
+		$participants = $GLOBALS["beans"]->eventModel->getParticipants($eventID);
+		$userParticipation = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
 		$comments = $GLOBALS["beans"]->eventModel->getComments($eventID);
-		
+
 		require APP . 'views/_templates/header.php';
 		require APP . 'views/events/view.php';
 		require APP . 'views/_templates/footer.php';
