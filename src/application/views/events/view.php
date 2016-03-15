@@ -63,17 +63,9 @@
 	
 	<div class="table-responsive">
 		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Comment ID</th>
-					<th>User ID</th>
-					<th>Comment</th>
-				</tr>
-			</thead>
 			<tbody>
 				<?php foreach ($comments as $comment) { ?>
 					<tr>
-						<td><?php echo $comment->CommentID ?></td>
 						<td><?php echo $comment->FirstName ?></td>
 						<td><?php echo $comment->Text ?></td>
 					</tr>
