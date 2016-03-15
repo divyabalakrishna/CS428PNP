@@ -225,7 +225,8 @@ class EventModel extends Model
 		$sql = "SELECT c.CommentID, c.UserID, c.ParentID, c.Text, u.FirstName
 				FROM Comment c, User u
 				WHERE c.UserID = u.UserID
-					AND c.EventID = :eventID";
+					AND c.EventID = :eventID
+				ORDER BY c.ParentID, c.CommentID";
 		
 		$parameters = array(
 				":eventID" => $eventID
@@ -244,8 +245,19 @@ class EventModel extends Model
 				":parentID" => $parentID,
 				":text" => $text
 		);
+		$commentID = $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 		
-		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+		if(!is_numeric($parentID)){
+			$sql = "UPDATE Comment
+				SET ParentID = :commentID
+				WHERE Comment.CommentID = :commentID";
+			
+			$parameters = array(
+					":commentID" => $commentID
+			);
+			$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+		}
+		return;
 	}
 
 }
