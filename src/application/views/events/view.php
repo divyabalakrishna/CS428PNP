@@ -83,7 +83,7 @@
 		<div class="form-group">
 			<label for="name" class="col-sm-2 control-label">Comment</label>
 			<div class="col-sm-10">
-				<input type="textview" id="text" name="text" class="form-control" required aria-required="true">
+				<textarea class="form-control" id="text" name="text" required aria-required="true"></textarea>
 			</div>
 		</div>
 		
