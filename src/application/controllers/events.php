@@ -86,7 +86,8 @@ class Events
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
-
+		$comments = $GLOBALS["beans"]->eventModel->getComments($eventID);
+		
 		require APP . 'views/_templates/header.php';
 		require APP . 'views/events/view.php';
 		require APP . 'views/_templates/footer.php';
@@ -191,5 +192,14 @@ class Events
 		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/listHosted');
+	}
+	
+	public function reply(){
+		$GLOBALS["beans"]->eventModel->insertEvent(
+				$_POST["userID"],
+				$_POST["eventID"],
+				$_POST["parentID"],
+				$_POST["text"]
+		);
 	}
 }

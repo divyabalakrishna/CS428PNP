@@ -220,5 +220,31 @@ class EventModel extends Model
 
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
+	
+	public function getComments($eventID){
+		$sql = "SELECT CommentID, UserID, ParentID, Text
+				FROM Comment
+				WHERE Comment.EventID = :eventID";
+		
+		$parameters = array(
+				":eventID" => $eventID
+		);
+		
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+	}
+	
+	public function addComment($userID, $eventID, $parentID, $text){
+		$sql = "INSERT INTO Comment (EventID, UserID, ParentID, Text)
+				VALUES (:eventID, :userID, :parentID, :text)";
+		
+		$parameters = array(
+				":eventID" => $eventID,
+				":userID" => $userID, 
+				":parentID" => $parentID,
+				":text" => $text
+		);
+		
+		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
 
 }
