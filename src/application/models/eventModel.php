@@ -222,9 +222,10 @@ class EventModel extends Model
 	}
 	
 	public function getComments($eventID){
-		$sql = "SELECT CommentID, UserID, ParentID, Text
-				FROM Comment
-				WHERE Comment.EventID = :eventID";
+		$sql = "SELECT c.CommentID, c.UserID, c.ParentID, c.Text, u.FirstName
+				FROM Comment c, User u
+				WHERE c.UserID = u.UserID
+					AND c.EventID = :eventID";
 		
 		$parameters = array(
 				":eventID" => $eventID

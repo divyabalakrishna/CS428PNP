@@ -81,7 +81,7 @@
 						</td>
 						<td class="truncate"><?php echo $event->Description ?></td> -->
 						<td><?php echo $comment->CommentID ?></td>
-						<td><?php echo $comment->UserID ?></td>
+						<td><?php echo $comment->FirstName ?></td>
 						<td><?php echo $comment->Text ?></td>
 					</tr>
 				<?php } ?>
