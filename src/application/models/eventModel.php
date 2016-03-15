@@ -138,7 +138,8 @@ class EventModel extends Model
 				FROM Event
 				INNER JOIN Participant ON Participant.EventID = Event.EventID
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
-				WHERE Participant.UserID = :userID";
+				WHERE Participant.UserID = :userID
+					AND Event.HostID <> Participant.UserID";
 
 		if (strcasecmp($timeType, "future") == 0)
 		{
