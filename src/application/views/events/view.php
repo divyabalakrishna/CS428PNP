@@ -66,7 +66,7 @@
 			<tbody>
 				<?php foreach ($comments as $comment) { ?>
 					<tr>
-						<td><?php echo $comment->FirstName ?></td>
+						<td class="col-md-1"><?php echo $comment->FirstName ?></td>
 						<td><?php echo $comment->Text ?></td>
 					</tr>
 				<?php } ?>
