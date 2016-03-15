@@ -20,7 +20,7 @@
 </div>
 <div class="container" style="font-size: 120%;">
 	<a style="color: #E49721;" href="<?php echo URL_WITH_INDEX_FILE; ?>events/listJoined">Events Joined</a><br/>
-	<?php foreach ($hostedEvents as $event) { ?>
+	<?php foreach ($joinedEvents as $event) { ?>
 		<joined class="joined">
 			<div class="icon">
 			<img style="width: 100%;height: 100%;" src="<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png">
