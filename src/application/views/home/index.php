@@ -30,7 +30,7 @@
 				<div style="font-size: 10px;font-style: italic;"><?php echo $event->FormattedDate ?></div>
 				<div style="font-size: 10px;"><?php echo $event->FormattedTime ?></div>
 			</div>
-			<div class="details">View Details</div>
+			<div class="details"><a href="<?php echo URL_WITH_INDEX_FILE; ?>events/view/<?php echo $event->EventID ?>"> View Details</a></div>
 		</joined>
 	<?php } ?>
 </div>
