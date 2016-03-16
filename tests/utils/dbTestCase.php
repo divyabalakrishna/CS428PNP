@@ -53,7 +53,18 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 						'Reminder' => 60,
 						'NickName' => 'John',
 						'Gender' => 'M',
-						'BirthDate' => '1985-12-31')
+						'BirthDate' => '1985-12-31'),
+				array('FirstName' => 'Joe',
+						'LastName' => 'Bloggs',
+						'Email' => 'joe@email.com',
+						'Password' => password_hash('password', PASSWORD_DEFAULT),
+						'Phone' => '456-789-0123',
+						'Picture' => '3.jpg',
+						'Radius' => 5,
+						'Reminder' => 120,
+						'NickName' => 'Joe',
+						'Gender' => 'M',
+						'BirthDate' => '1980-06-15')
 			),
 			'UserTag' => array(
 				array('UserID' => 1,
@@ -100,6 +111,20 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 				array('EventID' => 2,
 						'UserID' => 2,
 						'Invited' => 0)
+			),
+			'Comment' => array(
+				array('EventID' => 1,
+						'UserID' => 1,
+						'ParentID' => 1,
+						'Text' => 'Hi'),
+				array('EventID' => 1,
+						'UserID' => 2,
+						'ParentID' => 2,
+						'Text' => 'Do I need to bring anything?'),
+				array('EventID' => 1,
+						'UserID' => 2,
+						'ParentID' => 1,
+						'Text' => 'Hello')
 			)
 		));
 	}
