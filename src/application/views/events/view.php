@@ -56,10 +56,24 @@
 			</div>
 		</div>
 		
-		<!-- TODO: Participant List -->
+		<div class="participants">
+			
+			<h3 class="page-header">Participants</h3>
+			<?php foreach ($participants as $person) { ?>
+				<div class="profile">
+					<?php if ($person->Picture == "") { ?>
+						<img class="image" src='<?php echo URL; ?>public/img/profile.png'></div>
+					<?php } else { ?>
+						<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture) ?>"/>
+					<?php } ?>
+					<div class="name"><?php echo $person->FirstName ?></div>
+				</div>
+			<?php } ?>
+		</div>
 	
+		<br/><br/><br/><br/>
 		<div class="comments">
-			<div class="heading">Comments</div>
+			<h3 class="page-header">Comments</h3>
 			<table class="table table-striped">
 				<tbody>
 					<?php foreach ($comments as $comment) { ?>
