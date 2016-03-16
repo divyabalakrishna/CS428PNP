@@ -118,7 +118,7 @@
 			});
 
 			$('#delete').click(function(){
-				if (confirm('Are you sure you want to delete this travel?'))
+				if (confirm('Are you sure you want to delete this event?'))
 				{
 					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/delete/" . $event->EventID; ?>';
 				}
