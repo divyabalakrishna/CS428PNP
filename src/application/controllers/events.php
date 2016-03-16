@@ -198,10 +198,12 @@ class Events
 	}
 
 	public function reply() {
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$eventID = $_POST["eventID"];
+
 		$GLOBALS["beans"]->eventModel->insertComment(
 				$eventID,
-				$_POST["userID"],
+				$userID,
 				$_POST["parentID"],
 				$_POST["text"]
 		);
