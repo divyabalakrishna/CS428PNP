@@ -8,28 +8,28 @@
 		<div class="form-group">
 	  		<label for="firstName" class="col-sm-2 control-label">First Name</label>
 	    	<div class="col-sm-10">
-	    		<input type="firstname" class="form-control" id="firstname" name="firstname" value="<?php echo $profileInfo->FirstName ?>" placeholder="First Name" required aria-required="true">
+			<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $profileInfo->FirstName ?>" placeholder="First Name" required aria-required="true">
 	    	</div>
 		</div>
 		<div class="form-group">
 			<label for="lastname" class="col-sm-2 control-label">Last Name</label>
 			<div class="col-sm-10">
-				<input type="lastname" class="form-control" id="lastname" name="lastname" value="<?php echo $profileInfo->LastName ?>" placeholder="Last Name" required aria-required="true">
+				<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $profileInfo->LastName ?>" placeholder="Last Name" required aria-required="true">
 	    	</div>
 	    </div>
 	    <div class="form-group">
 			<label for="nickname" class="col-sm-2 control-label">Nick Name</label>
 			<div class="col-sm-10">
-				<input type="nickname" class="form-control" id="nickname" name="nickname" value="<?php echo $profileInfo->NickName ?>" placeholder="Nick Name">
+				<input type="text" class="form-control" id="nickname" name="nickname" value="<?php echo $profileInfo->NickName ?>" placeholder="Nick Name">
 	    	</div>
 	    </div>
-	    
+
 	    <!-- Date -->
 		<div class="form-group">
 			<label for="birthdate" class="col-sm-2 control-label">Birth Date</label>
 			<div class="col-sm-10">
 				<div class="input-group date col-sm-2">
-					<input type="text" id="birthdate" name="birthdate" value="<?php echo $profileInfo->FormattedDate ?>" class="form-control" required aria-required="true" />
+					<input type="text" id="birthdate" name="birthdate" value="<?php echo $profileInfo->FormattedDate ?>" class="form-control" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 				</div>
 			</div>
@@ -49,7 +49,7 @@
 	    <div class="form-group">
 			<label for="phone" class="col-sm-2 control-label">Phone</label>
 			<div class="col-sm-10">
-				<input type="phone" class="form-control" id="phone" name="phone" value="<?php echo $profileInfo->Phone ?>" placeholder="Phone">
+				<input type="text" class="form-control" id="phone" name="phone" value="<?php echo $profileInfo->Phone ?>" placeholder="Phone">
 	    	</div>
 	    </div>
 	    
@@ -84,8 +84,7 @@
 				<?php } ?>
 	    	</div>
 	    </div>
-	    
-	  
+
 	  	<div class="form-group">
 	    	<div class="col-sm-offset-2 col-sm-10">
 	      		<button type="submit" class="btn btn-default">Save</button>
@@ -96,30 +95,22 @@
 
 <script>
 	var currentdate =  new Date();
-	
+
 	$(document).ready(function(){
-		
+
 		$('.input-group.date').datepicker({
 			todayBtn: 'linked',
 			clearBtn: true
 		});
 
-		$.validator.addMethod('atLeastOne', function() {
-			  return $('input.tag-checkbox:checked').length > 0 ? true : false;
-		}, 'Please select at least one interest.');
-
 		$('#form').validate({
 			rules: {
 				birthdate: {
 					date: true,
-					
-				},
-				user_tags: {
-					atLeastOne: true
+					pastDate: true
 				}
 			}
 		});
-		
 
 		$('#form').submit(function() {
 			var user_tags = '';

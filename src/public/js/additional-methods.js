@@ -1053,4 +1053,19 @@ $.validator.addMethod( "ziprange", function( value, element ) {
 	return this.optional( element ) || /^90[2-5]\d\{2\}-\d{4}$/.test( value );
 }, "Your ZIP-code must be in the range 902xx-xxxx to 905xx-xxxx" );
 
+$.validator.addMethod( "pastDate", function( value, element ) {
+	if (this.optional( element )) {
+		return true;
+	}
+
+	if (!/Invalid|NaN/.test(new Date(value))) {
+		var today = new Date();
+		today.setHours(0, 0, 0, 0);
+
+		return new Date(value) < today;
+	}
+
+	return false;
+}, "Please enter a past date." );
+
 }));

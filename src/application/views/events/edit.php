@@ -239,10 +239,47 @@ else {
 			});
 		});
 
+		$.validator.addMethod("todayOrFutureDate", function(value, element) {
+			if (this.optional(element)) {
+				return true;
+			}
+
+			if (!/Invalid|NaN/.test(new Date(value))) {
+				var today = new Date();
+				today.setHours(0, 0, 0, 0);
+
+				return new Date(value) >= today;
+			}
+
+			return false;
+		}, "Please enter a future date.");
+
+		$.validator.addMethod("futureTime", function(value, element) {
+			/* If date is invalid, there is no need to check the time */
+			var dateString = $('#date').val();
+			var today = new Date();
+			today.setHours(0, 0, 0, 0);
+			if (/Invalid|NaN/.test(new Date(dateString)) || (new Date(dateString) < today)) {
+				return true;
+			}
+
+			var dateTimeString = dateString + ' ' + value;
+			if (!/Invalid|NaN/.test(new Date(dateTimeString))) {
+				return new Date(dateTimeString) > new Date();
+			}
+
+			return false;
+		}, "Please enter a future time.");
+
 		$('#form').validate({
 			rules: {
 				date: {
-					date: true
+					date: true,
+					todayOrFutureDate: true
+				},
+				time: {
+					time12h: true,
+					futureTime: true
 				}
 			}
 		});

@@ -69,9 +69,6 @@ if (!isset($userID)) {
 			},
 			unhighlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			},
-			onfocusout: function (element) {
-				$(element).valid();
 			}
 		});
 
