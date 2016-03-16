@@ -190,7 +190,7 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
-	public function deleteParticipant($eventID, $userID = "") {
+	public function deleteParticipants($eventID, $userID = "") {
 		$sql = "DELETE
 				FROM Participant
 				WHERE Participant.EventID = :eventID";
@@ -218,21 +218,24 @@ class EventModel extends Model
 
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
-	
-	public function getComments($eventID){
-		$sql = "SELECT c.CommentID, c.UserID, c.ParentID, c.Text, u.FirstName
-				FROM Comment c, User u
-				WHERE c.UserID = u.UserID
-					AND c.EventID = :eventID
-				ORDER BY c.ParentID, c.CommentID";
-		
+
+	public function getComments($eventID) {
+		$sql = "SELECT Comment.*,
+					User.FirstName,
+					User.LastName,
+					User.Picture
+				FROM Comment
+				INNER JOIN User ON User.UserID = Comment.UserID
+				WHERE Comment.EventID = :eventID
+				ORDER BY Comment.ParentID, Comment.CommentID";
+
 		$parameters = array(
 				":eventID" => $eventID
 		);
-		
+
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
-	
+
 	public function addComment($userID, $eventID, $parentID, $text){
 		$sql = "INSERT INTO Comment (EventID, UserID, ParentID, Text)
 				VALUES (:eventID, :userID, :parentID, :text)";
@@ -272,12 +275,48 @@ class EventModel extends Model
 			$sql .= " AND Participant.UserID = :userID";
 		}
 
+		$sql .= " ORDER BY User.LastName, User.FirstName";
+
 		$parameters = array(':eventID' => $eventID);
 		if (is_numeric($userID)) {
 			$parameters[":userID"] = $userID;
 		}
 
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+	}
+
+	public function deleteComments($eventID, $commentID = "") {
+		$sql = "DELETE
+				FROM Comment
+				WHERE Comment.EventID = :eventID";
+
+		if (is_numeric($commentID)) {
+			$sql .= " AND Comment.ParentID = :commentID";
+		}
+
+		$parameters = array(":eventID" => $eventID);
+		if (is_numeric($commentID)) {
+			$parameters[":commentID"] = $commentID;
+		}
+
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
+
+	public function deleteMedia($eventID, $mediaID = "") {
+		$sql = "DELETE
+				FROM Media
+				WHERE Media.EventID = :eventID";
+
+		if (is_numeric($mediaID)) {
+			$sql .= " AND Media.MediaID = :mediaID";
+		}
+
+		$parameters = array(":eventID" => $eventID);
+		if (is_numeric($mediaID)) {
+			$parameters[":mediaID"] = $mediaID;
+		}
+
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
 }

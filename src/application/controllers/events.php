@@ -189,7 +189,9 @@ class Events
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 
 		if ($userID == $event->HostID) {
-			$GLOBALS["beans"]->eventModel->deleteEvent($eventID);
+			$GLOBALS["beans"]->eventModel->deleteMedia($eventID);
+			$GLOBALS["beans"]->eventModel->deleteComments($eventID);
+			$GLOBALS["beans"]->eventModel->deleteParticipants($eventID);
 			$GLOBALS["beans"]->eventModel->deleteEvent($eventID, $userID);
 		}
 
@@ -225,7 +227,7 @@ class Events
 		$participant = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
 
 		if (count($participant) > 0 && $userID != $event->HostID) {
-			$GLOBALS["beans"]->eventModel->deleteParticipant($eventID, $userID);
+			$GLOBALS["beans"]->eventModel->deleteParticipants($eventID, $userID);
 		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
