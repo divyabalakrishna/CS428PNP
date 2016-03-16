@@ -83,19 +83,20 @@ class UserModel extends Model
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 		
 		//loop through each tag and add to usertag table
-		$tags = explode(",", $user_tags);
-		foreach ($tags as $tagID) {
-			$sql = "INSERT INTO UserTag (UserID, TagID)
+		if(!is_null($user_tags)){
+			$tags = explode(",", $user_tags);
+			foreach ($tags as $tagID) {
+				$sql = "INSERT INTO UserTag (UserID, TagID)
 				VALUES (:userID, :tagID)";
-			
-			$parameters = array(
-					":userID" => $userID,
-					":tagID" => $tagID
-			);
-			
-			$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+					
+				$parameters = array(
+						":userID" => $userID,
+						":tagID" => $tagID
+				);
+					
+				$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+			}
 		}
-	
 	}
 
 	public function updatePicture($userID, $picture) {
