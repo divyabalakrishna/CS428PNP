@@ -682,4 +682,57 @@ class EventModelTest extends ModelTestCase
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	public function testInsertComment() {
+		static::$eventModel->insertComment(2, 2, "", "Stay tuned.");
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Comment' => array(
+				array('CommentID' => 4,
+						'EventID' => 2,
+						'UserID' => 2,
+						'ParentID' => 4,
+						'Text' => 'Stay tuned.')
+			)
+		)))->getTable('Comment');
+
+		$actualTable = $this->getConnection()->createQueryTable('Comment', 'SELECT * FROM Comment WHERE EventID = 2');
+
+		$this->assertEquals(4, $this->getConnection()->getRowCount('Comment'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testInsertCommentReply() {
+		static::$eventModel->insertComment(1, 1, 2, "Bring your own beverages.");
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Comment' => array(
+				array('CommentID' => 1,
+						'EventID' => 1,
+						'UserID' => 1,
+						'ParentID' => 1,
+						'Text' => 'Hi'),
+				array('CommentID' => 2,
+						'EventID' => 1,
+						'UserID' => 2,
+						'ParentID' => 2,
+						'Text' => 'Do I need to bring anything?'),
+				array('CommentID' => 3,
+						'EventID' => 1,
+						'UserID' => 2,
+						'ParentID' => 1,
+						'Text' => 'Hello'),
+				array('CommentID' => 4,
+						'EventID' => 1,
+						'UserID' => 1,
+						'ParentID' => 2,
+						'Text' => 'Bring your own beverages.')
+			)
+		)))->getTable('Comment');
+
+		$actualTable = $this->getConnection()->createQueryTable('Comment', 'SELECT * FROM Comment WHERE EventID = 1');
+
+		$this->assertEquals(4, $this->getConnection()->getRowCount('Comment'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
 }

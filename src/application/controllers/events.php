@@ -183,8 +183,7 @@ class Events
 		}
 	}
 
-	public function delete($eventID)
-	{
+	public function delete($eventID) {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 
@@ -197,16 +196,16 @@ class Events
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/listHosted');
 	}
-	
-	public function reply(){
+
+	public function reply() {
 		$eventID = $_POST["eventID"];
-		$GLOBALS["beans"]->eventModel->addComment(
-				$_POST["userID"],
+		$GLOBALS["beans"]->eventModel->insertComment(
 				$eventID,
+				$_POST["userID"],
 				$_POST["parentID"],
 				$_POST["text"]
 		);
-		
+
  		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
 

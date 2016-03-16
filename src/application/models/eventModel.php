@@ -236,29 +236,32 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
-	public function addComment($userID, $eventID, $parentID, $text){
+	public function insertComment($eventID, $userID, $parentID, $text) {
 		$sql = "INSERT INTO Comment (EventID, UserID, ParentID, Text)
 				VALUES (:eventID, :userID, :parentID, :text)";
-		
+
 		$parameters = array(
 				":eventID" => $eventID,
 				":userID" => $userID, 
 				":parentID" => $parentID,
 				":text" => $text
 		);
+
 		$commentID = $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
-		
-		if(!is_numeric($parentID)){
+
+		if (!is_numeric($parentID)) {
 			$sql = "UPDATE Comment
-				SET ParentID = :commentID
-				WHERE Comment.CommentID = :commentID";
-			
+					SET ParentID = CommentID
+					WHERE Comment.CommentID = :commentID";
+
 			$parameters = array(
 					":commentID" => $commentID
 			);
+
 			$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 		}
-		return;
+
+		return $commentID;
 	}
 
 	public function getParticipants($eventID, $userID = "")
