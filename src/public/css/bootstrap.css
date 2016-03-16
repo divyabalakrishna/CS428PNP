@@ -6943,3 +6943,26 @@ button.close {
 	margin: 0px 10px 10px 10px;
     font-weight: bold;
 }
+
+.container .participants{
+	margin: 60px 20px 60px 20px;
+    width: 87%;
+}
+.container .participants .heading{
+	margin: 0px 10px 10px 10px;
+    font-weight: bold;
+}
+
+.container .participants .profile{
+	position: relative;
+	float: left;
+	padding: 15px;
+}
+.container .participants .profile .image{
+	height: 100px;
+	width: 100px;
+}
+
+.container .participants .profile .name{
+	text-align: center;
+}
