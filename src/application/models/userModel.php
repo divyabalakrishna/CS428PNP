@@ -112,4 +112,15 @@ class UserModel extends Model
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+    public function getAllUser()
+	{
+		$sql = "SELECT UserID FROM User
+                WHERE 1";
+
+		$parameters = "";
+
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+	}
+    
+
 }
