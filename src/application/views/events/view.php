@@ -71,7 +71,7 @@ else if ($event->Capacity > count($participants)) {
 			<?php foreach ($participants as $person) { ?>
 				<div class="profile">
 					<?php if ($person->Picture == "") { ?>
-						<img class="image" src='<?php echo URL; ?>public/img/profile.png'></div>
+						<img class="image" src="<?php echo URL; ?>public/img/profile.png">
 					<?php } else { ?>
 						<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture) ?>"/>
 					<?php } ?>
