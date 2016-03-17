@@ -39,10 +39,12 @@ gmap{
 			<tbody>
 				<?php foreach ($events as $event) { ?>
 					<tr>
-						<td>
+						<td class='text-center'>
 							<a href="<?php echo URL_WITH_INDEX_FILE . "events/view/" . $event->EventID; ?>">
-				            <img style="width:50px;height:50px;" src="<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png">
-                            <?php echo $event->Name ?>
+                                <div class="image-frame"> 
+                                    <div class="image-thumb" style="background-image: url('<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png');"></div>
+                                </div>
+                                <?php echo $event->Name ?>
 							</a>
 						</td>
 						<td class="truncate"><?php echo $event->Description ?></td>
