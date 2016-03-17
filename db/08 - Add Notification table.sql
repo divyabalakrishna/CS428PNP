@@ -7,7 +7,7 @@ USE plannpla_db;
 -- Table structure for table `notification`
 --
 
-CREATE TABLE `notification` (
+CREATE TABLE `Notification` (
   `NotificationID` bigint(20) NOT NULL,
   `UserID` bigint(20) NOT NULL,
   `EventID` bigint(20) NOT NULL,
@@ -21,12 +21,12 @@ CREATE TABLE `notification` (
 --
 -- Indexes for table `notification`
 --
-ALTER TABLE `notification`
+ALTER TABLE `Notification`
   ADD PRIMARY KEY (`NotificationID`),
   ADD KEY `UserID` (`UserID`);
   
   --
 -- AUTO_INCREMENT for table `notification`
 --
-ALTER TABLE `notification`
+ALTER TABLE `Notification`
   MODIFY `NotificationID` bigint(20) NOT NULL AUTO_INCREMENT;
