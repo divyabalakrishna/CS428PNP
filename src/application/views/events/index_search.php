@@ -43,7 +43,7 @@ gmap{
 							<a href="<?php echo URL_WITH_INDEX_FILE . "events/view/" . $event->EventID; ?>">
                                 <div class="image-frame"> 
                                     <div class="image-thumb" style="background-image: url('<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png');"></div>
-                                </div>
+                                </div><br>
                                 <?php echo $event->Name ?>
 							</a>
 						</td>
