@@ -160,12 +160,14 @@ class Application
 		require APP . '/models/eventModel.php';
 		require APP . '/models/resourceModel.php';
 		require APP . '/models/userModel.php';
+		require APP . '/models/notifModel.php';
 
 		$GLOBALS["beans"]->eventModel = new EventModel($this->db);
 		$GLOBALS["beans"]->resourceModel = new ResourceModel($this->db);
 		$GLOBALS["beans"]->userModel = new UserModel($this->db);
+		$GLOBALS["beans"]->notifModel = new NotifModel($this->db);
 	}
-
+    
 	private function checkLoggedIn()
 	{
 		if (!is_numeric($GLOBALS["beans"]->siteHelper->getSession("userID")))

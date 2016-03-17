@@ -19,6 +19,7 @@ gmap{
 </style>
 
 <div class="container">
+    
 	<h2 class="page-header">Search Events</h2>
 
     <button type="button" class="btn btn-primary" id="show-map" data-target="#gmap-dialog" data-toggle="modal">Show Map</button>
@@ -40,7 +41,8 @@ gmap{
 					<tr>
 						<td>
 							<a href="<?php echo URL_WITH_INDEX_FILE . "events/view/" . $event->EventID; ?>">
-								<?php echo $event->Name ?>
+				            <img style="width:50px;height:50px;" src="<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png">
+                            <?php echo $event->Name ?>
 							</a>
 						</td>
 						<td class="truncate"><?php echo $event->Description ?></td>
@@ -63,6 +65,7 @@ gmap{
             </div>
             <div class="modal-body">
                 <div class="form-horizontal" style="width: 100%">
+                    <div id="gmap-error" class='alert alert-danger text-center hidden' role='alert'>No internet connection !!!</div>
                     <div id="gmap" style="width: 100%; height: 500px;"></div>
                     <div class="clearfix"></div>
                     <script>
@@ -82,7 +85,8 @@ gmap{
                             lon= position.coords.longitude;
                         }
                         function errorFunction() {
-                            alert("enable your location !!!");
+                            //alert("enable your location !!!");
+                            $('#gmap-error').removeClass("hidden");
                         }
 
                         getLocation();
