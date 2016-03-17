@@ -1,4 +1,13 @@
-<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
+<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); }
+
+$joinAllowed = false;
+if (!is_numeric($event->Capacity) || $event->Capacity == 0) {
+	$joinAllowed = true;
+}
+else if ($event->Capacity > count($participants)) {
+	$joinAllowed = true;
+}
+?>
 
 <div class="container">
 	<div class="detailsHeading" >
@@ -47,7 +56,7 @@
 						<button type="button" id="delete" class="btn btn-default">Delete</button>
 					<?php } else if (count($userParticipation) > 0) { ?>
 						<button type="button" id="leave" class="btn btn-default">Leave</button>
-					<?php } else if ($event->Capacity > count($participants) && count($userParticipation) == 0) { ?>
+					<?php } else if ($joinAllowed && count($userParticipation) == 0) { ?>
 						<button type="button" id="join" class="btn btn-default">Join</button>
 					<?php } else { ?>
 						This event has reached the maximum capacity.
@@ -127,7 +136,7 @@
 			$('#leave').click(function() {
 				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/leave/" . $event->EventID; ?>';
 			});
-		<?php } else if ($event->Capacity > count($participants) && count($userParticipation) == 0) { ?>
+		<?php } else if ($joinAllowed && count($userParticipation) == 0) { ?>
 			$('#join').click(function() {
 				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/join/" . $event->EventID; ?>';
 			});
