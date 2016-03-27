@@ -100,6 +100,14 @@ class SiteHelper
         return trim($result); 
     }    
 
+	public function getTagImage($tagID)
+	{
+        $imgDir = "/public/img/sports/";
+    
+		$tagName = $GLOBALS["beans"]->eventModel->getTagName($tagID);
+
+		return $imgDir . $tagName->Name . ".png";
+	}
 
     
 }

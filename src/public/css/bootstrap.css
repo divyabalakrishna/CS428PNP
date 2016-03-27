@@ -6916,13 +6916,26 @@ button.close {
     float: left;
 }
 
+.container .detailsHeading .imageTag{
+	height: 80%;
+    float: right;
+    padding: 25px;
+    border-left: 10px double white;
+    border-bottom: 10px solid white;
+    border-radius: 150px;
+    
+    -ms-transform: skew(5deg,10deg); /* IE 9 */
+    -webkit-transform: skew(5deg,10deg); /* Safari */
+    transform: skew(5deg,10deg); /* Standard syntax */
+}
+
 .container .detailsHeading .title{
 	position: absolute;
     bottom: 0;
     color: white;
     margin: 20px;
 	font-size:40px;
-	text-shadow: 2px 2px grey;
+	text-shadow: 2px 2px black;
 }
 
 .container .eventDetails{

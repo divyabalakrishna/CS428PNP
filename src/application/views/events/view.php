@@ -13,6 +13,8 @@ else if ($event->Capacity > count($participants)) {
 	<div class="detailsHeading" >
 		<?php if ($event->Image != "") { ?>
 			<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('event', $event->Image) ?>"/>
+		<?php } else { ?>
+			<img class="imageTag" src="<?php echo $GLOBALS["beans"]->siteHelper->getTagImage($event->TagID) ?>"/>
 		<?php } ?>
 		<div class="title"><?php echo $event->Name ?></div>
 	</div>
