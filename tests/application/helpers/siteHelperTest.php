@@ -17,20 +17,59 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals("PLAN n PLAY", static::$siteHelper->getSession("application"));
 	}
 
-	public function testSetAlert()
+	public function testAddAlertSingle()
 	{
-		static::$siteHelper->setAlert("info", "Hello World");
-		$alert = static::$siteHelper->getSession("alert");
-		$this->assertEquals("info", $alert->type);
-		$this->assertEquals("Hello World", $alert->message);
+		$_SESSION["alerts"] = "";
+		static::$siteHelper->addAlert("info", "Hello World");
+
+		$alerts = static::$siteHelper->getSession("alerts");
+
+		$this->assertInternalType('array', $alerts);
+		$this->assertCount(1, $alerts);
+
+		$this->assertEquals("info", $alerts[0]->type);
+		$this->assertEquals("Hello World", $alerts[0]->message);
 	}
 
-	public function testGetAlertHTML()
+	public function testAddAlertMultiple()
 	{
-		static::$siteHelper->setAlert("info", "Hello World");
+		$_SESSION["alerts"] = "";
+		static::$siteHelper->addAlert("info", "Hello World");
+		static::$siteHelper->addAlert("danger", "Error Message");
+
+		$alerts = static::$siteHelper->getSession("alerts");
+
+		$this->assertInternalType('array', $alerts);
+		$this->assertCount(2, $alerts);
+
+		$this->assertEquals("info", $alerts[0]->type);
+		$this->assertEquals("Hello World", $alerts[0]->message);
+
+		$this->assertEquals("danger", $alerts[1]->type);
+		$this->assertEquals("Error Message", $alerts[1]->message);
+	}
+
+	public function testGetAlertsHTMLSingle()
+	{
+		$_SESSION["alerts"] = "";
+		static::$siteHelper->addAlert("info", "Hello World");
+
 		$html = "<div class='alert alert-info' role='alert'>Hello World</div>";
-		$this->assertEquals($html, static::$siteHelper->getAlertHTML());
-		$this->assertEquals("", static::$siteHelper->getSession("alert"));
+
+		$this->assertEquals($html, static::$siteHelper->getAlertsHTML());
+		$this->assertEquals("", static::$siteHelper->getSession("alerts"));
+	}
+
+	public function testGetAlertsHTMLMultiple()
+	{
+		$_SESSION["alerts"] = "";
+		static::$siteHelper->addAlert("info", "Hello World");
+		static::$siteHelper->addAlert("danger", "Error Message");
+
+		$html = "<div class='alert alert-info' role='alert'>Hello World</div><div class='alert alert-danger' role='alert'>Error Message</div>";
+
+		$this->assertEquals($html, static::$siteHelper->getAlertsHTML());
+		$this->assertEquals("", static::$siteHelper->getSession("alerts"));
 	}
 
 }

@@ -38,7 +38,7 @@
 					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Sign In</h3>
 				</div>
 				<div class="modal-body">
-					<?php echo $GLOBALS["beans"]->siteHelper->getAlertHTML(); ?>
+					<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
 					<label for="email" class="sr-only">Email address</label>
 					<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
 					<br>

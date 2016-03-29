@@ -21,7 +21,7 @@ else {
 </style>
 
 <div class="container">
-	<?php echo $GLOBALS["beans"]->siteHelper->getAlertHTML(); ?>
+	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
 
 	<h2 class="page-header"><?php echo $title; ?></h2>
 

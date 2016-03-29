@@ -1,7 +1,9 @@
 <?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
 
 <div class="container">
-	<!-- Photo -->
+	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
+
+	<h2 class="page-header">Edit Profile</h2>
 
 	<form id="form" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/saveProfile" class="form-horizontal" enctype="multipart/form-data">
 		
@@ -56,13 +58,26 @@
 	    <div class="form-group">
 			<label for="email" class="col-sm-2 control-label">Email</label>
 			<div class="col-sm-10">
-				<input type="email" class="form-control" id="email" name="email" value="<?php echo $profileInfo->Email ?>" placeholder="test@test.com" required aria-required="true">
+				<input type="email" class="form-control" id="email" name="email" value="<?php echo $profileInfo->Email ?>" placeholder="Email" required aria-required="true">
 	    	</div>
 	    </div>
-	    
+
+		<div class="form-group">
+			<label for="newPassword" class="col-sm-2 control-label">New Password</label>
+			<div class="col-sm-10 form-field">
+				<input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="New Password" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="confirmNewPassword" class="col-sm-2 control-label">Confirm New Password</label>
+			<div class="col-sm-10 form-field">
+				<input type="password" id="confirmNewPassword" name="confirmNewPassword" class="form-control" placeholder="Confirm New Password" />
+			</div>
+		</div>
+
 	    <!-- Image -->
 		<div class="form-group">
-			<label for="picture" class="col-sm-2 control-label">Profile</label>
+			<label for="picture" class="col-sm-2 control-label">Picture</label>
 			<div class="col-sm-10">
 				<input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
 				<input type="file" id="picture" name="picture" accept="image/jpg,image/jpeg,image/png,image/bmp" class="form-control" />
@@ -108,6 +123,14 @@
 				birthdate: {
 					date: true,
 					pastDate: true
+				},
+				confirmNewPassword: {
+					equalTo: '#newPassword'
+				}
+			},
+			messages: {
+				confirmNewPassword: {
+					equalTo: 'Confirm new password should match new password.'
 				}
 			}
 		});

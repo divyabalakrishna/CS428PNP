@@ -19,7 +19,7 @@ class User
 
 		if ($errorMessage != "")
 		{
-			$GLOBALS["beans"]->siteHelper->setAlert("danger", $errorMessage);
+			$GLOBALS["beans"]->siteHelper->addAlert("danger", $errorMessage);
 			$GLOBALS["beans"]->siteHelper->setPopUp("#myModal");
 		}
 
@@ -91,11 +91,16 @@ class User
 				$_POST["firstname"],
 				$_POST["lastname"],
 				$_POST["email"],
+				$_POST["newPassword"],
 				$_POST["phone"],
 				$_POST["nickname"],
 				$_POST["gender"],
 				$_POST["birthdate"]
 		);
+
+		if ($_POST["newPassword"] != "") {
+			$GLOBALS["beans"]->siteHelper->addAlert("success", "Password has been successfully changed.");
+		}
 
 		// Delete existing interests
 		$GLOBALS["beans"]->userModel->deleteUserTags($userID);
@@ -117,7 +122,7 @@ class User
 			}
 		}
 		else if ($result->errorMessage != "") {
-			$GLOBALS["beans"]->siteHelper->setAlert("danger", $result->errorMessage);
+			$GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
 		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');

@@ -48,12 +48,17 @@ class UserModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
-	public function updateUser($userID, $firstName, $lastName, $email, $phone, $nickName, $gender, $birthDate) {
+	public function updateUser($userID, $firstName, $lastName, $email, $password, $phone, $nickName, $gender, $birthDate) {
 		$sql = "UPDATE User
 				SET FirstName = :firstName,
 					LastName = :lastName,
-					Email = :email,
-					Phone = :phone,
+					Email = :email,";
+
+		if ($password != "") {
+			$sql .= "Password = :password,";
+		}
+
+		$sql .= "	Phone = :phone,
 					NickName = :nickName,
 					Gender = :gender,
 					BirthDate = STR_TO_DATE(:birthDate, '%m/%d/%Y')
@@ -69,6 +74,10 @@ class UserModel extends Model
 				":gender" => $gender,
 				":birthDate" => $birthDate
 		);
+
+		if ($password != "") {
+			$parameters["password"] = password_hash($password, PASSWORD_DEFAULT);
+		}
 
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}

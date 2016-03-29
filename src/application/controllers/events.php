@@ -170,7 +170,7 @@ class Events
 				}
 			}
 			else if ($result->errorMessage != "") {
-				$GLOBALS["beans"]->siteHelper->setAlert("danger", $result->errorMessage);
+				$GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
 				$backToEdit = true;
 			}
 		}

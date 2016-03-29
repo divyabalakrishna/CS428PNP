@@ -21,27 +21,38 @@ class SiteHelper
 	 *		warning (light yellow background)
 	 *		danger (pink background)
 	 */
-	public function setAlert($type, $message)
+	public function addAlert($type, $message)
 	{
-		$_SESSION["alert"] = new stdClass();
-		$_SESSION["alert"]->type = $type;
-		$_SESSION["alert"]->message = $message;
-	}
+		$alerts = $this->getSession("alerts");
 
-	public function getAlertHTML()
-	{
-		$html = "";
-		$alert = $this->getSession("alert");
-
-		if (is_object($alert))
-		{
-			$html = "<div class='alert alert-" . $alert->type . "' role='alert'>" . $alert->message . "</div>";
+		if (!is_array($alerts)) {
+			$_SESSION["alerts"] = array();
 		}
 
-		$_SESSION["alert"] = "";
+		$alert = new stdClass();
+		$alert->type = $type;
+		$alert->message = $message;
+
+		$_SESSION["alerts"][] = $alert;
+	}
+
+	public function getAlertsHTML()
+	{
+		$html = "";
+		$alerts = $this->getSession("alerts");
+
+		if (is_array($alerts))
+		{
+			foreach($alerts as $alert) {
+				$html .= "<div class='alert alert-" . $alert->type . "' role='alert'>" . $alert->message . "</div>";
+			}
+		}
+
+		$_SESSION["alerts"] = "";
 
 		return $html;
 	}
+
 	public function setPopUp($modalID)
 	{
 		$_SESSION["popup"] = new stdClass();
