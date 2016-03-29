@@ -37,66 +37,62 @@ class UserModel extends Model
 	
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
-	
-	public function getTags($userID){
-		$sql = "SELECT TagID
+
+	public function getUserTags($userID) {
+		$sql = "SELECT UserTag.*
 				FROM UserTag
 				WHERE UserTag.UserID = :userID";
-		
+
 		$parameters = array(":userID" => $userID);
+
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
-	
-	public function updateProfile($userID, $firstname, $lastname, $email, $phone, $gender, $birthdate, $nickname, $user_tags){
-		//delete old tags
-		$sql = "DELETE
-				FROM UserTag
-				WHERE UserTag.UserID = :userID";
-		
-		$parameters = array(
-				":userID" => $userID
-		);
-		
-		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
-		
-		//update user profile information
+
+	public function updateUser($userID, $firstName, $lastName, $email, $phone, $nickName, $gender, $birthDate) {
 		$sql = "UPDATE User
-				SET FirstName = :firstname,
-					LastName = :lastname,
-					Email = :email, 
-					Phone = :phone, 
+				SET FirstName = :firstName,
+					LastName = :lastName,
+					Email = :email,
+					Phone = :phone,
+					NickName = :nickName,
 					Gender = :gender,
-					BirthDate = STR_TO_DATE(:birthdate, '%m/%d/%Y'),
-					NickName = :nickname
-				WHERE UserID = :userID";
+					BirthDate = STR_TO_DATE(:birthDate, '%m/%d/%Y')
+				WHERE User.UserID = :userID";
 
 		$parameters = array(
 				":userID" => $userID,
-				":firstname" => $firstname,
-				":lastname" => $lastname,
+				":firstName" => $firstName,
+				":lastName" => $lastName,
 				":email" => $email,
 				":phone" => $phone,
+				":nickName" => $nickName,
 				":gender" => $gender,
-				":birthdate" => $birthdate,
-				":nickname" => $nickname
+				":birthDate" => $birthDate
 		);
+
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
-		
-		//loop through each tag and add to usertag table
-		if(!is_null($user_tags)){
-			$tags = explode(",", $user_tags);
-			foreach ($tags as $tagID) {
-				$sql = "INSERT INTO UserTag (UserID, TagID)
+	}
+
+	public function deleteUserTags($userID) {
+		$sql = "DELETE
+				FROM UserTag
+				WHERE UserTag.UserID = :userID";
+
+		$parameters = array(":userID" => $userID);
+
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
+
+	public function insertUserTag($userID, $tagID) {
+		$sql = "INSERT INTO UserTag (UserID, TagID)
 				VALUES (:userID, :tagID)";
-					
-				$parameters = array(
-						":userID" => $userID,
-						":tagID" => $tagID
-				);
-					
-				$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
-			}
-		}
+
+		$parameters = array(
+				":userID" => $userID,
+				":tagID" => $tagID
+		);
+
+		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
 	public function updatePicture($userID, $picture) {
@@ -112,15 +108,11 @@ class UserModel extends Model
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-    public function getAllUser()
-	{
-		$sql = "SELECT UserID FROM User
-                WHERE 1";
+	public function getAllUserIDs() {
+		$sql = "SELECT UserID
+				FROM User";
 
-		$parameters = "";
-
-		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
 	}
-    
 
 }

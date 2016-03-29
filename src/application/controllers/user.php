@@ -73,7 +73,7 @@ class User
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
-		$tagInfo = $GLOBALS["beans"]->userModel->getTags($userID);
+		$tagInfo = $GLOBALS["beans"]->userModel->getUserTags($userID);
 		$tags = $GLOBALS["beans"]->resourceModel->getTags();
 		
 		require APP . 'views/_templates/header.php';
@@ -81,37 +81,45 @@ class User
 		require APP . 'views/_templates/footer.php';
 	}
 
-	
 	public function saveProfile(){
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		$oldImage = "";
-		
-		$GLOBALS["beans"]->userModel->updateProfile(
+		$user = $GLOBALS["beans"]->userModel->getProfile($userID);
+		$oldImage = $user->Picture;
+
+		$GLOBALS["beans"]->userModel->updateUser(
 				$userID,
 				$_POST["firstname"],
 				$_POST["lastname"],
 				$_POST["email"],
 				$_POST["phone"],
-				$_POST["gender"],
-				$_POST["birthdate"],
 				$_POST["nickname"],
-				$_POST["user_tags"]
+				$_POST["gender"],
+				$_POST["birthdate"]
 		);
-		if (!empty($_FILES['picture']['name'])) {
-			$result = $GLOBALS["beans"]->fileHelper->uploadFile("picture", "profile", "jpg,jpeg,png,bmp", "profile image", 2097152, $userID);
-			if ($result->fileUploaded) {
-				$GLOBALS["beans"]->userModel->updatePicture($userID, $result->fileName);
-					
-				if ($oldImage != "") {
-					$GLOBALS["beans"]->fileHelper->deleteUploadedFile("picture", $oldImage);
-				}
-			}
-			else if ($result->errorMessage != "") {
-				$GLOBALS["beans"]->siteHelper->setAlert("danger", $result->errorMessage);
-				$backToEdit = true;
+
+		// Delete existing interests
+		$GLOBALS["beans"]->userModel->deleteUserTags($userID);
+
+		// Insert new interests
+		$tagIDs = array_filter(explode(",", $_POST["user_tags"]), "strlen");
+		foreach ($tagIDs as $tagID) {
+			$GLOBALS["beans"]->userModel->insertUserTag($userID, $tagID);
+		}
+
+		// Profile picture
+		$result = $GLOBALS["beans"]->fileHelper->uploadFile("picture", "profile", "jpg,jpeg,png,bmp", "profile image", 2097152, $userID);
+
+		if ($result->fileUploaded) {
+			$GLOBALS["beans"]->userModel->updatePicture($userID, $result->fileName);
+
+			if ($oldImage != "" && $oldImage != $result->fileName) {
+				$GLOBALS["beans"]->fileHelper->deleteUploadedFile("picture", $oldImage);
 			}
 		}
-		
+		else if ($result->errorMessage != "") {
+			$GLOBALS["beans"]->siteHelper->setAlert("danger", $result->errorMessage);
+		}
+
 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
 

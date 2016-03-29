@@ -16,7 +16,7 @@ class Notifs
     public function genNotifications($hour, $check="")
     {
 
-        $users = $GLOBALS["beans"]->userModel->getAllUser();
+        $users = $GLOBALS["beans"]->userModel->getAllUserIDs();
 
         foreach ($users as $user) { 
 

@@ -165,7 +165,7 @@ class Events
 			if ($result->fileUploaded) {
 				$GLOBALS["beans"]->eventModel->updateEventImage($eventID, $userID, $result->fileName);
 
-				if ($oldImage != "") {
+				if ($oldImage != "" && $oldImage != $result->fileName) {
 					$GLOBALS["beans"]->fileHelper->deleteUploadedFile("event", $oldImage);
 				}
 			}
