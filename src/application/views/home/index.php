@@ -1,6 +1,6 @@
 <?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
-
 <div class="container" style="font-size: 120%;">
+    <?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
 	<a style="color:#EA7617;" href="<?php echo URL_WITH_INDEX_FILE; ?>events/listHosted">Events Created</a><br/>
 	<?php foreach ($hostedEvents as $event) { ?>
 		<created class="created">

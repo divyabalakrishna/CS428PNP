@@ -144,14 +144,13 @@ class User
 			{
         		$GLOBALS["beans"]->userModel->setActive($userID, "Yes");
 
-				$_SESSION["userID"] = $loginInfo->UserID;
 				$errorMessage = "";
+                $GLOBALS["beans"]->siteHelper->addAlert("info", "Congratulation. Your Account is now active.");
 			}
 		}
 
 		if ($errorMessage != "")
 		{
-        $errorMessage = $loginInfo->Active."|".$_POST["active"];
 			$GLOBALS["beans"]->siteHelper->addAlert("danger", $errorMessage);
 		}
 
@@ -166,7 +165,7 @@ class User
         
         $GLOBALS["beans"]->userModel->setActive($userID, $activation);
         $GLOBALS["beans"]->siteHelper->sendActivationMail($loginInfo->Email, $activation);
-        $errorMessage = "Activation code successfully sent.";
+        $errorMessage = "Activation code sent successfully.";
 		$GLOBALS["beans"]->siteHelper->addAlert("info", $errorMessage);
 
         header('location: ' . URL_WITH_INDEX_FILE);

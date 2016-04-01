@@ -135,7 +135,7 @@ if (!isset($userID)) {
                                 
                             </div>
 	                        <?php
-                                    $GLOBALS["beans"]->notifModel->updateFlag($notif->NotificationID);
+                                    //$GLOBALS["beans"]->notifModel->updateFlag($notif->NotificationID);
                                     if($notif->Flag == 0) $count++;
                                     $row++;
                                 } 
