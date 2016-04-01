@@ -36,7 +36,6 @@ class Application
 
 		// check for controller: no controller given ? then load start-page
 		if (!$this->url_controller) {
-
 			require APP . 'controllers/home.php';
 			$page = new Home();
 			$page->index();
@@ -170,7 +169,8 @@ class Application
     
 	private function checkLoggedIn()
 	{
-		if (!is_numeric($GLOBALS["beans"]->siteHelper->getSession("userID")))
+        $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		if (!is_numeric($userID))
 		{
 			$validDestination = false;
 
@@ -186,6 +186,10 @@ class Application
 				header('location: ' . URL_WITH_INDEX_FILE);
 			}
 		}
+        else if ($GLOBALS["beans"]->userModel->isActive($userID)->Active != 'Yes')
+        {
+            header('location: ' . URL_WITH_INDEX_FILE);            
+        }
 	}
 
 }

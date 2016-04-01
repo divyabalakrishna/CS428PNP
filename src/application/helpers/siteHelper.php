@@ -120,5 +120,25 @@ class SiteHelper
 		return $imgDir . $tagName->Name . ".png";
 	}
 
-    
+	public function sendActivationMail($email, $active)
+    {
+        $headers = "From: no-reply@plannplay.web.engr.illinois.com\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+        $message = "Hello,<br>welcome to Plan N Play.<br>Activation code: ".$active;
+        $message = "Hello, <p>Welcome to <b>Plan & Play</b> and thank you for signing up.<br>";
+        $message .= "Please take a moment to verify the email address associated with your <b>Plan & Play</b> account by inputing the activation code below:<p>";
+        $message .= "Email Address: ".$email."<br>";
+        $message .= "Activation Code: ".$active."<p>";
+        //$message .="<a href='http://plannplay.web.engr.illinois.edu/confirm.php?e=".$email."&a=".$active."'>CONFIRM EMAIL</a><p>";
+        $message .= "If you have not signed up for a <b>Plan & Play</b> account, please ignore this email.<p>";
+        $message .= "Thanks,<br>The <b>Plan & Play</b> Team";
+
+        $subject = "Plan & Play Account";
+        $to = $email; 
+
+        mail($to,$subject,$message,$headers);
+        
+    }
 }

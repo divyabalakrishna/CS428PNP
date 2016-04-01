@@ -49,7 +49,9 @@ class User
 
 	public function createAccount()
 	{
-		$userID = $GLOBALS["beans"]->userModel->insertUser($_POST["email"], $_POST["password1"]);
+        $activation = $GLOBALS["beans"]->stringHelper->genString();
+        
+		$userID = $GLOBALS["beans"]->userModel->insertUser($_POST["email"], $_POST["password1"], $activation);
 
 		$_SESSION["userID"] = $userID;
 
@@ -128,4 +130,46 @@ class User
 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
 
+	public function activation()
+	{
+		$errorMessage = "Activation failed, invalid code !!!.";
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$loginInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
+
+        echo $loginInfo->Active."|".$_POST["active"];
+        
+		if (strcasecmp($_POST["email"],$loginInfo->Email) == 0)
+		{
+            if (strcasecmp($_POST["active"],$loginInfo->Active) == 0)
+			{
+        		$GLOBALS["beans"]->userModel->setActive($userID, "Yes");
+
+				$_SESSION["userID"] = $loginInfo->UserID;
+				$errorMessage = "";
+			}
+		}
+
+		if ($errorMessage != "")
+		{
+        $errorMessage = $loginInfo->Active."|".$_POST["active"];
+			$GLOBALS["beans"]->siteHelper->addAlert("danger", $errorMessage);
+		}
+
+		header('location: ' . URL_WITH_INDEX_FILE);
+	}
+
+	public function resendActivation()
+	{
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+        $loginInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
+        $activation = $GLOBALS["beans"]->stringHelper->genString();
+        
+        $GLOBALS["beans"]->userModel->setActive($userID, $activation);
+        $GLOBALS["beans"]->siteHelper->sendActivationMail($loginInfo->Email, $activation);
+        $errorMessage = "Activation code successfully sent.";
+		$GLOBALS["beans"]->siteHelper->addAlert("info", $errorMessage);
+
+        header('location: ' . URL_WITH_INDEX_FILE);
+	}
+    
 }

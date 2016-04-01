@@ -16,12 +16,22 @@ class Home
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
 		if (is_numeric($userID)) {
-			$hostedEvents = $GLOBALS["beans"]->eventModel->getHostedEvents($userID, "future", 4);
-			$joinedEvents = $GLOBALS["beans"]->eventModel->getJoinedEvents($userID, "future", 5);
+            if ($GLOBALS["beans"]->userModel->isActive($userID)->Active != 'Yes')
+            {
+                $user = $GLOBALS["beans"]->userModel->getProfile($userID);
+                require APP . 'views/_templates/header.php';
+                require APP . 'views/home/activation.php';
+                require APP . 'views/_templates/footer.php';                
+            }
+            else
+            {
+                $hostedEvents = $GLOBALS["beans"]->eventModel->getHostedEvents($userID, "future", 4);
+                $joinedEvents = $GLOBALS["beans"]->eventModel->getJoinedEvents($userID, "future", 5);
 
-			require APP . 'views/_templates/header.php';
-			require APP . 'views/home/index.php';
-			require APP . 'views/_templates/footer.php';
+                require APP . 'views/_templates/header.php';
+                require APP . 'views/home/index.php';
+                require APP . 'views/_templates/footer.php';
+            }
 		}
 		else {
 			require APP . 'views/_templates/header.php';

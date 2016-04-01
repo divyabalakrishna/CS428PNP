@@ -107,6 +107,7 @@ if (!isset($userID)) {
 					<li>
 						<a href="<?php echo URL_WITH_INDEX_FILE; ?>">Home</a>
 					</li>
+                    <?php if ($GLOBALS["beans"]->userModel->isActive($userID)->Active == 'Yes') { ?>
                     <li id="notification_li">
                         <a href="#" id="notificationLink">Notification</a>
                         <div id="notificationContainer">
@@ -155,6 +156,7 @@ if (!isset($userID)) {
 					<li>
 						<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile">Profile</a>
 					</li>
+                    <?php } ?>
 					<li>
 						<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/logout">Logout</a>
 					</li>
