@@ -133,7 +133,7 @@ class SiteHelper
         $message .= " by inputing the activation code or clicking the link below:<p>";
         $message .= "Email Address: ".$email."<br>";
         $message .= "Activation Code: ".$active."<p>";
-        $message .="<a href='http://plannplay.web.engr.illinois.edu/user/active/".$email."/".$active."'>CONFIRM EMAIL</a><p>";
+        $message .="<a href='http://plannplay.web.engr.illinois.edu/index.php/user/active/".$email."/".$active."'>CONFIRM EMAIL</a><p>";
         $message .= "If you have not signed up for a <b>Plan & Play</b> account, please ignore this email.<p>";
         $message .= "Thanks,<br>The <b>Plan & Play</b> Team";
 
@@ -153,7 +153,7 @@ class SiteHelper
         $message .= "Here is your <b>Plan & Play</b> Account information:<p>";
         $message .= "Email Address: ".$email."<br>";
         $message .= "Reset Code: ".$code."<p>";
-        $message .="<a href='http://plannplay.web.engr.illinois.edu/user/reset/".$email."/".$code."'>RESET PASSWORD</a><p>";
+        $message .="<a href='http://plannplay.web.engr.illinois.edu/index.php/user/reset/".$email."/".$code."'>RESET PASSWORD</a><p>";
         $message .= "If you have not signed up for a <b>Plan & Play</b> account, please ignore this email.<p>";
         $message .= "Thanks,<br>The <b>Plan & Play</b> Team";
 
