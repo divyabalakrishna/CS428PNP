@@ -21,7 +21,7 @@ class SiteHelper
 	 *		warning (light yellow background)
 	 *		danger (pink background)
 	 */
-	public function addAlert($type, $message)
+	public function addAlert($type, $message, $id="")
 	{
 		$alerts = $this->getSession("alerts");
 
@@ -32,23 +32,25 @@ class SiteHelper
 		$alert = new stdClass();
 		$alert->type = $type;
 		$alert->message = $message;
+        $alert->id = $id;
 
 		$_SESSION["alerts"][] = $alert;
 	}
 
-	public function getAlertsHTML()
+	public function getAlertsHTML($id="")
 	{
 		$html = "";
 		$alerts = $this->getSession("alerts");
 
-		if (is_array($alerts))
-		{
-			foreach($alerts as $alert) {
-				$html .= "<div class='alert alert-" . $alert->type . "' role='alert'>" . $alert->message . "</div>";
-			}
-		}
-
-		$_SESSION["alerts"] = "";
+        if (is_array($alerts))
+        {
+            foreach($alerts as $alert) {
+                if(!isset($id) || $alert->id == $id) {
+                    $html .= "<div class='alert alert-" . $alert->type . "' role='alert'>" . $alert->message . "</div>";
+                    $_SESSION["alerts"] = "";
+                }
+            }
+        }
 
 		return $html;
 	}
@@ -126,19 +128,40 @@ class SiteHelper
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-        $message = "Hello,<br>welcome to Plan N Play.<br>Activation code: ".$active;
         $message = "Hello, <p>Welcome to <b>Plan & Play</b> and thank you for signing up.<br>";
-        $message .= "Please take a moment to verify the email address associated with your <b>Plan & Play</b> account by inputing the activation code below:<p>";
+        $message .= "Please take a moment to verify the email address associated with your <b>Plan & Play</b> account";
+        $message .= " by inputing the activation code or clicking the link below:<p>";
         $message .= "Email Address: ".$email."<br>";
         $message .= "Activation Code: ".$active."<p>";
-        //$message .="<a href='http://plannplay.web.engr.illinois.edu/confirm.php?e=".$email."&a=".$active."'>CONFIRM EMAIL</a><p>";
+        $message .="<a href='http://plannplay.web.engr.illinois.edu/user/active/".$email."/".$active."'>CONFIRM EMAIL</a><p>";
         $message .= "If you have not signed up for a <b>Plan & Play</b> account, please ignore this email.<p>";
         $message .= "Thanks,<br>The <b>Plan & Play</b> Team";
 
-        $subject = "Plan & Play Account";
+        $subject = "Plan & Play = Account Activation";
         $to = $email; 
 
-        mail($to,$subject,$message,$headers);
-        
+        mail($to,$subject,$message,$headers);        
     }
+
+	public function sendForgotMail($email, $code)
+    {
+        $headers = "From: no-reply@plannplay.web.engr.illinois.com\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+        $message = "Hello, <p>You are requesting password reset.<br>";
+        $message .= "Here is your <b>Plan & Play</b> Account information:<p>";
+        $message .= "Email Address: ".$email."<br>";
+        $message .= "Reset Code: ".$code."<p>";
+        $message .="<a href='http://plannplay.web.engr.illinois.edu/user/reset/".$email."/".$code."'>RESET PASSWORD</a><p>";
+        $message .= "If you have not signed up for a <b>Plan & Play</b> account, please ignore this email.<p>";
+        $message .= "Thanks,<br>The <b>Plan & Play</b> Team";
+
+        $subject = "Plan & Play - Reset Password Request";
+        $to = $email; 
+
+        mail($to,$subject,$message,$headers);        
+    }
+    
+    
 }

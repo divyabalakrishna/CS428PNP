@@ -19,8 +19,9 @@ class Home
             if ($GLOBALS["beans"]->userModel->isActive($userID)->Active != 'Yes')
             {
                 $user = $GLOBALS["beans"]->userModel->getProfile($userID);
+                $active = "";
                 require APP . 'views/_templates/header.php';
-                require APP . 'views/home/activation.php';
+                require APP . 'views/user/activation.php';
                 require APP . 'views/_templates/footer.php';                
             }
             else
@@ -34,6 +35,7 @@ class Home
             }
 		}
 		else {
+            $cheat=0;
 			require APP . 'views/_templates/header.php';
 			require APP . 'views/index.php';
 			require APP . 'views/_templates/footer.php';

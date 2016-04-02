@@ -21,7 +21,7 @@ if (!isset($userID)) {
 	<meta name="author" content="">
 	<link rel="icon" href="<?php echo URL; ?>public/img/icon.png">
 
-	<title>PLAN n PLAY</title>
+	<title>PLAN & PLAY</title>
 
 	<!-- Custom Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
@@ -29,7 +29,7 @@ if (!isset($userID)) {
 
 	<!-- CSS -->
 	<link href="<?php echo URL; ?>public/css/bootstrap.css" rel="stylesheet" type="text/css">
-	<?php if (is_numeric($userID)) { ?>
+	<?php if (is_numeric($userID) || (isset($cheat) && $cheat!=0)) { ?>
 		<link href="<?php echo URL; ?>public/css/bootstrap-theme.css" rel="stylesheet" type="text/css">
 	<?php } ?>
 	<link href="<?php echo URL; ?>public/css/bootstrap-datepicker3.css" rel="stylesheet">
@@ -87,8 +87,8 @@ if (!isset($userID)) {
 	</script>
 </head>
 <body>
-<?php if (is_numeric($userID)) { ?>
 	<!-- top bar -->
+    
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
@@ -104,64 +104,80 @@ if (!isset($userID)) {
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="<?php echo URL_WITH_INDEX_FILE; ?>">Home</a>
-					</li>
-                    <?php if ($GLOBALS["beans"]->userModel->isActive($userID)->Active == 'Yes') { ?>
-                    <li id="notification_li">
-                        <a href="#" id="notificationLink">Notification</a>
-                        <div id="notificationContainer">
-                            <div id="notificationTitle">Notifications</div>
-                            <?php 
-                                $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");           
-                                $notifs = $GLOBALS["beans"]->notifModel->getNotifications($userID,5);
-                                
-                                $row = 0;
-                                $count = 0;
-                                foreach ($notifs as $notif) {
-                            ?>
-                            <div id="notificationsBody" class="notifications">
-                                <div class="row">
-                                    <div class="col-sm-2 col-md-2">
-                                        <div class="image-frame"> 
-                                            <div class="image-thumb" style="background-image: url('<?php echo URL; ?><?php echo $notif->ImgLink?>');"></div>
+                    <?php if (is_numeric($userID)) { ?>
+                        <li>
+                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>">Home</a>
+                        </li>                    
+                        <?php if ($GLOBALS["beans"]->userModel->isActive($userID)->Active == 'Yes') { ?>
+                        <li id="notification_li">
+                            <a href="#" id="notificationLink">Notification</a>
+                            <div id="notificationContainer">
+                                <div id="notificationTitle">Notifications</div>
+                                <?php 
+                                    $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");           
+                                    $notifs = $GLOBALS["beans"]->notifModel->getNotifications($userID,5);
+
+                                    $row = 0;
+                                    $count = 0;
+                                    foreach ($notifs as $notif) {
+                                ?>
+                                <div id="notificationsBody" class="notifications">
+                                    <div class="row">
+                                        <div class="col-sm-2 col-md-2">
+                                            <div class="image-frame"> 
+                                                <div class="image-thumb" style="background-image: url('<?php echo URL; ?><?php echo $notif->ImgLink?>');"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-10 col-md-10">
+                                            <a href="<?php echo URL_WITH_INDEX_FILE; ?><?php echo $notif->UrlLink ?>"><?php echo $notif->Message ?></a>
                                         </div>
                                     </div>
-                                    <div class="col-sm-10 col-md-10">
-                                        <a href="<?php echo URL_WITH_INDEX_FILE; ?><?php echo $notif->UrlLink ?>"><?php echo $notif->Message ?></a>
-                                    </div>
+                                    <div style="font-size: 10px;font-style: italic;" class="    text-right"><?php echo $GLOBALS["beans"]->siteHelper->notifMsg($notif->Time); ?></div>
+
                                 </div>
-                                <div style="font-size: 10px;font-style: italic;" class="    text-right"><?php echo $GLOBALS["beans"]->siteHelper->notifMsg($notif->Time); ?></div>
-                                
+                                <?php
+                                        //$GLOBALS["beans"]->notifModel->updateFlag($notif->NotificationID);
+                                        if($notif->Flag == 0) $count++;
+                                        $row++;
+                                    } 
+                                ?>
+                            <?php if($row == 0) {?>
+                            <div id="notificationsBody" class="notifications text-center">You don't have notifications<?php echo $count; ?></div>
+                            <?php } ?>
+
+                                <div id="notificationFooter"><a href="<?php echo URL_WITH_INDEX_FILE; ?>notifs/index">See All</a></div>
                             </div>
-	                        <?php
-                                    //$GLOBALS["beans"]->notifModel->updateFlag($notif->NotificationID);
-                                    if($notif->Flag == 0) $count++;
-                                    $row++;
-                                } 
-                            ?>
-                        <?php if($row == 0) {?>
-                        <div id="notificationsBody" class="notifications text-center">You don't have notifications<?php echo $count; ?></div>
+                            <?php if($count > 0) {?>
+                            <span id="notification_count"><?php echo $count; ?></span>
+                            <?php } ?>
+                        </li>
+                        <li>
+                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch">Search</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile">Profile</a>
+                        </li>
                         <?php } ?>
-                            
-                            <div id="notificationFooter"><a href="<?php echo URL_WITH_INDEX_FILE; ?>notifs/index">See All</a></div>
-                        </div>
-                        <?php if($count > 0) {?>
-                        <span id="notification_count"><?php echo $count; ?></span>
-                        <?php } ?>
-                    </li>
-                    <li>
-                        <a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch">Search</a>
-                    </li>
-					<li>
-						<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile">Profile</a>
-					</li>
-                    <?php } ?>
-					<li>
-						<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/logout">Logout</a>
-					</li>
+                        <li>
+                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>user/logout">Logout</a>
+                        </li>
+                    <?php } else { ?>
+                        <?php if((isset($cheat) && $cheat!=0) || !isset($cheat)) {?>
+                        <li>
+                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>">Home</a>
+                        </li>                    
+                        <?php }?>
+                        <?php if(isset($cheat) && $cheat==0) {?>
+                            <li>
+                                <a href="" class="btn" data-toggle="modal" data-target="#myModal">Sign in</a>
+                            </li>
+                            <li>
+                                <a href="" class="btn" data-toggle="modal" data-target="#myModal2">Sign Up</a>
+                            </li>
+                        <?php }?>
+                    <?php }?>
+                    
 				</ul>
 			</div>
 		</div>
 	</nav>
-<?php } ?>

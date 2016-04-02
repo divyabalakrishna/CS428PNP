@@ -1,32 +1,4 @@
 <?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<img class="icon" src="<?php echo URL; ?>public/img/pnp.png" />
-		</div>
-
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="" data-toggle="modal" data-target="#myModal">Sign in</a>
-				</li>
-				<li>
-					<a href="" data-toggle="modal" data-target="#myModal2">Sign Up</a>
-				</li>
-			</ul>
-		</div>
-		<!-- /.navbar-collapse -->
-	</div>
-	<!-- /.container-fluid -->
-</nav>
 
 <!-- Modal Sign In -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -52,8 +24,16 @@
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="submit" class="btn btn-primary">Sign In</button>
+                    <div class="row">
+                        <div class="col-md-6 text-left">
+                            
+                            <a class="text-left" id="forgot" href="">Forgot Password</a>
+                        </div>                    
+                        <div class="col-md-6 text-right">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+                        </div>
+                    </div>
 				</div>
 			</form>
 		</div>
@@ -85,6 +65,32 @@
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 <!--				<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>-->
 					<button type="submit" class="btn btn-primary">Register</button>
+				</div>
+                </fieldset>
+			</form>
+		</div>
+	</div>
+</div>  
+
+<!-- Modal Forgot Password -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form class="form-group" id="forgotForm" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/forgotPassword">
+                <fieldset>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Forgot Password</h3>
+				</div>
+				<div class="modal-body">
+					<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML("#myModal3"); ?>                    
+					<label for="email" class="sr-only">Email address</label>
+                    <input type="hidden" id="existingEmail" name="existingEmail" value="<?php echo $email ?>" />
+					<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Reset Password</button>
 				</div>
                 </fieldset>
 			</form>
@@ -277,6 +283,39 @@
 				}
 			}
 		});
+
+		$("#forgotForm").validate({
+            
+			rules: {
+				email: {
+                    required: true,
+                    email: true,
+                    remote: {
+                        depends: function(element) {
+                            return $('#existingEmail').val() != $(element).val();
+                        },
+                        param: {
+                            url: '<?php echo URL_WITH_INDEX_FILE; ?>user/checkExistEmail',
+                            type: 'post'
+                        }
+                    }
+                }
+			},
+            
+			messages: {
+				email: {
+                    required: "Please enter your email",
+                    email: "Please enter correct email format",
+                    remote: "Email address is not registered."
+                }
+			}
+		});
         
+        $('#forgot').on('click', function(event) {
+            event.preventDefault(); // To prevent following the link (optional)
+            $('#myModal').modal('hide');
+            $('#myModal3').modal('show');
+          //alert("asd");
+        });
 	});
 </script>

@@ -58,6 +58,22 @@ class User
 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
 
+	public function forgotPassword()
+	{
+        $code = $GLOBALS["beans"]->stringHelper->genString();
+        
+		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);        
+        $GLOBALS["beans"]->userModel->setPassword($loginInfo->UserID, $code, "no");
+        $GLOBALS["beans"]->siteHelper->sendForgotMail($_POST["email"], $code);
+        
+        $errorMessage = "Reset password notification sent successfully. Please check your email.";
+        
+		$GLOBALS["beans"]->siteHelper->addAlert("info", $errorMessage,"#myModal3");
+        $GLOBALS["beans"]->siteHelper->setPopUp("#myModal3");
+
+		header('location: ' . URL_WITH_INDEX_FILE);
+	}
+    
 	public function checkUniqueEmail()
 	{
 		$unique = false;
@@ -71,6 +87,19 @@ class User
 		echo json_encode($unique);
 	}
 
+	public function checkExistEmail()
+	{
+		$unique = false;
+		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
+
+		if (is_numeric($loginInfo->UserID))
+		{
+			$unique = true;
+		}
+
+		echo json_encode($unique);
+	}
+    
 	public function viewProfile()
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -133,22 +162,50 @@ class User
 	public function activation()
 	{
 		$errorMessage = "Activation failed, invalid code !!!.";
-		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		$loginInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
-
-        echo $loginInfo->Active."|".$_POST["active"];
         
-		if (strcasecmp($_POST["email"],$loginInfo->Email) == 0)
-		{
-            if (strcasecmp($_POST["active"],$loginInfo->Active) == 0)
-			{
-        		$GLOBALS["beans"]->userModel->setActive($userID, "Yes");
+        $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		if (is_numeric($userID) && $_POST["password"] == "") {
+            $loginInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
 
-				$errorMessage = "";
-                $GLOBALS["beans"]->siteHelper->addAlert("info", "Congratulation. Your Account is now active.");
-			}
-		}
+            if (strcasecmp($_POST["email"],$loginInfo->Email) == 0)
+            {
+                if (strcasecmp($_POST["active"],$loginInfo->Active) == 0)
+                {
+                    $GLOBALS["beans"]->userModel->setActive($userID, "Yes");
 
+                    $errorMessage = "";
+                    $GLOBALS["beans"]->siteHelper->addAlert("info", "Congratulation. Your Account is now active.");
+                }
+            }
+        }
+        else {
+            $loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
+
+            if (strcasecmp($_POST["email"],$loginInfo->Email) == 0)
+            {
+                if (password_verify($_POST["password"],$loginInfo->Password))
+                {
+                    if (strcasecmp($_POST["active"],$loginInfo->Active) == 0)
+                    {
+                        $_SESSION["userID"] = $loginInfo->UserID;
+                        $GLOBALS["beans"]->userModel->setActive($loginInfo->UserID, "Yes");
+
+                        $errorMessage = "";
+                        $GLOBALS["beans"]->siteHelper->addAlert("info", "Congratulation. Your Account is now active.");
+                    }
+                    
+                }
+                else {
+                    $errorMessage = "Invalid password.";
+                    $GLOBALS["beans"]->siteHelper->addAlert("danger", $errorMessage);
+                    
+                    header('location: ' . URL_WITH_INDEX_FILE."/user/active/".$_POST["email"]."/".$_POST["active"]);
+                    exit();
+                }
+            }
+            
+        }
+            
 		if ($errorMessage != "")
 		{
 			$GLOBALS["beans"]->siteHelper->addAlert("danger", $errorMessage);
@@ -166,9 +223,58 @@ class User
         $GLOBALS["beans"]->userModel->setActive($userID, $activation);
         $GLOBALS["beans"]->siteHelper->sendActivationMail($loginInfo->Email, $activation);
         $errorMessage = "Activation code sent successfully.";
-		$GLOBALS["beans"]->siteHelper->addAlert("info", $errorMessage);
+		$GLOBALS["beans"]->siteHelper->addAlert("success", $errorMessage);
 
         header('location: ' . URL_WITH_INDEX_FILE);
+	}
+
+	public function active($email = "", $active = "")
+	{
+		$user = $GLOBALS["beans"]->userModel->getLoginInfo($email);
+        
+		if (strcasecmp($active,$user->Active) == 0 && $user->Active != "" && $user->Active != "Yes")
+        {
+            $cheat=1;
+            require APP . 'views/_templates/header.php';
+            require APP . 'views/user/activation.php';
+            require APP . 'views/_templates/footer.php';
+        }
+        else
+        {
+            header('location: ' . URL_WITH_INDEX_FILE);
+        }
+	}
+    
+    
+	public function reset($email = "", $password = "")
+	{
+		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($email);
+        
+		if (strcasecmp($password,$loginInfo->Password) == 0)
+        {
+            $cheat=1;
+            require APP . 'views/_templates/header.php';
+            require APP . 'views/user/reset.php';
+            require APP . 'views/_templates/footer.php';
+        }
+        else
+        {
+            header('location: ' . URL_WITH_INDEX_FILE);
+        }
+	}
+
+    public function resetPassword()
+	{
+        $activation = $GLOBALS["beans"]->stringHelper->genString();
+		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
+        
+		$GLOBALS["beans"]->userModel->setPassword($loginInfo->UserID, $_POST["password1"]);
+
+        $errorMessage = "Password changed successfully.";
+        $GLOBALS["beans"]->siteHelper->addAlert("info", $errorMessage);
+        $GLOBALS["beans"]->siteHelper->setPopUp("#myModal");
+
+		header('location: ' . URL_WITH_INDEX_FILE);
 	}
     
 }

@@ -148,5 +148,23 @@ class UserModel extends Model
 	
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
+
+	public function setPassword($userID, $password, $encrypt = 'yes') {
+		$sql = "UPDATE User
+				SET Password = :password
+				WHERE UserID = :userID";
+	
+		$parameters = array(
+				":userID" => $userID
+		);
+        
+		if ($encrypt == "yes") 
+			$parameters["password"] = password_hash($password, PASSWORD_DEFAULT);
+        else
+			$parameters["password"] = $password;
+            
+	
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
     
 }

@@ -180,6 +180,10 @@ class Application
 			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("login", $this->url_action) == 0);
 			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("createAccount", $this->url_action) == 0);
 			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("checkUniqueEmail", $this->url_action) == 0);
+			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("forgotPassword", $this->url_action) == 0);
+			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("checkExistEmail", $this->url_action) == 0);
+			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("active", $this->url_action) == 0);
+			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("reset", $this->url_action) == 0);
 
 			if (!$validDestination)
 			{
