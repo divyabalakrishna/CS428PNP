@@ -52,6 +52,7 @@ class User
         $activation = $GLOBALS["beans"]->stringHelper->genString();
         
 		$userID = $GLOBALS["beans"]->userModel->insertUser($_POST["email"], $_POST["password1"], $activation);
+        $GLOBALS["beans"]->siteHelper->sendActivationMail($_POST["email"], $activation);
 
 		$_SESSION["userID"] = $userID;
 
@@ -199,7 +200,7 @@ class User
                     $errorMessage = "Invalid password.";
                     $GLOBALS["beans"]->siteHelper->addAlert("danger", $errorMessage);
                     
-                    header('location: ' . URL_WITH_INDEX_FILE."/user/active/".$_POST["email"]."/".$_POST["active"]);
+                    header('location: ' . URL_WITH_INDEX_FILE."user/active/".$_POST["email"]."/".$_POST["active"]);
                     exit();
                 }
             }

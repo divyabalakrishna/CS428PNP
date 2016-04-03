@@ -313,9 +313,10 @@
         
         $('#forgot').on('click', function(event) {
             event.preventDefault(); // To prevent following the link (optional)
+            
             $('#myModal').modal('hide');
-            $('#myModal3').modal('show');
-          //alert("asd");
+            setTimeout(function(){$('#myModal3').modal('show')}, 500);
+            
         });
 	});
 </script>
