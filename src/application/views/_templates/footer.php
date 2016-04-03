@@ -21,10 +21,6 @@
             $(document).click(function() {
                 $("#notificationContainer").hide();
             });
-            //Popup Click
-//            $("#notificationContainer").click(function() {
-//                return false
-//            });
 
         });
     </script>

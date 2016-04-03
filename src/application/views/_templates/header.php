@@ -142,7 +142,7 @@ if (!isset($userID)) {
                                     } 
                                 ?>
                             <?php if($row == 0) {?>
-                            <div id="notificationsBody" class="notifications text-center">You don't have notifications<?php echo $count; ?></div>
+                            <div id="notificationsBody" class="notifications text-center">You don't have notifications</div>
                             <?php } ?>
 
                                 <div id="notificationFooter"><a href="<?php echo URL_WITH_INDEX_FILE; ?>notifs/index">See All</a></div>
