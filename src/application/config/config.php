@@ -53,6 +53,8 @@ define('DB_NAME', 'plannpla_db');
 define('DB_USER', 'plannpla_webapp');
 define('DB_PASS', 'pnp428');
 
+define('TEST_DB_NAME', 'plannpla_test');
+
 /**
  * Configuration for: File Upload
  */

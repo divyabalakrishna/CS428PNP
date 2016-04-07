@@ -169,10 +169,10 @@ if (!isset($userID)) {
                         <?php }?>
                         <?php if(isset($cheat) && $cheat==0) {?>
                             <li>
-                                <a href="" class="btn" data-toggle="modal" data-target="#myModal">Sign in</a>
+                                <a id="signInLink" href="" class="btn" data-toggle="modal" data-target="#myModal">Sign in</a>
                             </li>
                             <li>
-                                <a href="" class="btn" data-toggle="modal" data-target="#myModal2">Sign Up</a>
+                                <a id="signUpLink" href="" class="btn" data-toggle="modal" data-target="#myModal2">Sign Up</a>
                             </li>
                         <?php }?>
                     <?php }?>

@@ -42,7 +42,8 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 						'Reminder' => 120,
 						'NickName' => 'Jane',
 						'Gender' => 'F',
-						'BirthDate' => '1990-01-01'),	
+						'BirthDate' => '1990-01-01',
+						'Active' => 'Yes'),	
 				array('FirstName' => 'John',
 						'LastName' => 'Smith',
 						'Email' => 'jsmith@email.com',
@@ -53,7 +54,8 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 						'Reminder' => 60,
 						'NickName' => 'John',
 						'Gender' => 'M',
-						'BirthDate' => '1985-12-31'),
+						'BirthDate' => '1985-12-31',
+						'Active' => 'Yes'),
 				array('FirstName' => 'Joe',
 						'LastName' => 'Bloggs',
 						'Email' => 'joe@email.com',
@@ -64,7 +66,8 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 						'Reminder' => 120,
 						'NickName' => 'Joe',
 						'Gender' => 'M',
-						'BirthDate' => '1980-06-15')
+						'BirthDate' => '1980-06-15',
+						'Active' => 'Yes')
 			),
 			'UserTag' => array(
 				array('UserID' => 1,
