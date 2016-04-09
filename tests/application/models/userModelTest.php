@@ -22,6 +22,7 @@ class UserModelTest extends ModelTestCase {
 		$expectedObject = new stdClass();
 		$expectedObject->UserID = 2;
 		$expectedObject->Email = 'jsmith@email.com';
+		$expectedObject->Active = 'Yes';
 
 		$this->assertEquals($expectedObject, $actualObject);
 		$this->assertTrue(password_verify('abcde', $actualPassword));
@@ -41,12 +42,13 @@ class UserModelTest extends ModelTestCase {
 		$expectedObject->NickName = 'Jane';
 		$expectedObject->FormattedDate = '01/01/1990';
 		$expectedObject->Gender = 'F';
+		$expectedObject->Active = 'Yes';
 
 		$this->assertEquals($expectedObject, $actualObject);
 	}
 
 	public function testInsertUser() {
-		$userID = static::$userModel->insertUser("email@email.com", "abc123");
+		$userID = static::$userModel->insertUser('email@email.com', 'abc123', '987xyz');
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'User' => array(
@@ -60,7 +62,9 @@ class UserModelTest extends ModelTestCase {
 						'Reminder' => null,
 						'NickName' => null,
 						'Gender' => null,
-						'BirthDate' => null)
+						'BirthDate' => null,
+						'Active' => '987xyz'
+				)
 			)
 		)))->getTable('User');
 

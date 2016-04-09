@@ -26,4 +26,9 @@ class DBTestCaseWrapper extends DBTestCase {
 		parent::setUp();
 	}
 
+	// PHPUnit class exclusion is not working, so use dummy test to avoid "no tests" error
+	public function testDummy() {
+		$this->assertTrue(true);
+	}
+
 }
