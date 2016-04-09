@@ -32,104 +32,77 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 
 		return new PHPUnit_ArrayDataSet(array(
 			'User' => array(
-				array('FirstName' => 'Jane',
-						'LastName' => 'Doe',
-						'Email' => 'jdoe@email.com',
-						'Password' => password_hash('12345', PASSWORD_DEFAULT),
-						'Phone' => '123-456-7890',
-						'Picture' => '1.png',
-						'Radius' => 5,
-						'Reminder' => 120,
-						'NickName' => 'Jane',
-						'Gender' => 'F',
-						'BirthDate' => '1990-01-01',
-						'Active' => 'Yes'),	
-				array('FirstName' => 'John',
-						'LastName' => 'Smith',
-						'Email' => 'jsmith@email.com',
-						'Password' => password_hash('abcde', PASSWORD_DEFAULT),
-						'Phone' => '789-012-3456',
-						'Picture' => '2.png',
-						'Radius' => 5,
-						'Reminder' => 60,
-						'NickName' => 'John',
-						'Gender' => 'M',
-						'BirthDate' => '1985-12-31',
-						'Active' => 'Yes'),
-				array('FirstName' => 'Joe',
-						'LastName' => 'Bloggs',
-						'Email' => 'joe@email.com',
-						'Password' => password_hash('password', PASSWORD_DEFAULT),
-						'Phone' => '456-789-0123',
-						'Picture' => '3.jpg',
-						'Radius' => 5,
-						'Reminder' => 120,
-						'NickName' => 'Joe',
-						'Gender' => 'M',
-						'BirthDate' => '1980-06-15',
-						'Active' => 'Yes')
+				$this->createUserObject('Jane', 'Doe', 'jdoe@email.com', '12345', '123-456-7890', '1.png', 5, 120, 'Jane', 'F', '1990-01-01', 'Yes'),	
+				$this->createUserObject('John', 'Smith', 'jsmith@email.com', 'abcde', '789-012-3456', '2.png', 5, 60, 'John', 'M', '1985-12-31','Yes'),
+				$this->createUserObject('Joe', 'Bloggs', 'joe@email.com', 'password', '456-789-0123', '3.jpg', 5, 120, 'Joe', 'M', '1980-06-15', 'Yes')
 			),
 			'UserTag' => array(
-				array('UserID' => 1,
-						'TagID' => 1),
-				array('UserID' => 1,
-						'TagID' => 5),
-				array('UserID' => 2,
-						'TagID' => 3)
+				$this->createUserTagObject(1, 1),
+				$this->createUserTagObject(1, 5),
+				$this->createUserTagObject(2, 3)
 			),
 			'Event' => array(
-				array('HostID' => 1,
-						'Name' => 'Casual jogging',
-						'Description' => null,
-						'Time' => '2015-12-31 17:00:00',
-						'Address' => 'Illini Union, 1401 W Green St, Urbana, IL 61801',
-						'Capacity' => null,
-						'Private' => 0,
-						'TagID' => 21,
-						'Image' => '1.png',
-						'Lat' => 40.109567,
-						'Lon' => -88.227213),
-				array('HostID' => 1,
-						'Name' => 'Badminton Game',
-						'Description' => "Let's play together!",
-						'Time' => date('Y-m-d', strtotime('tomorrow')) . ' 17:00:00',
-						'Address' => 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820',
-						'Capacity' => 4,
-						'Private' => 0,
-						'TagID' => 3,
-						'Image' => '2.png',
-						'Lat' => 40.100972,
-						'Lon' => -88.236077)
+				$this->createEventObject(1, 'Casual jogging', null, '2015-12-31 17:00:00', 'Illini Union, 1401 W Green St, Urbana, IL 61801', null, 0, 21, '1.png', 40.109567, -88.227213),
+				$this->createEventObject(1, 'Badminton Game', "Let's play together!", date('Y-m-d', strtotime('tomorrow')) . ' 17:00:00', 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820', 4, 0, 3, '2.png', 40.100972, -88.236077)
 			),
 			'Participant' => array(
-				array('EventID' => 1,
-						'UserID' => 1,
-						'Invited' => 0),
-				array('EventID' => 1,
-						'UserID' => 2,
-						'Invited' => 0),
-				array('EventID' => 2,
-						'UserID' => 1,
-						'Invited' => 0),
-				array('EventID' => 2,
-						'UserID' => 2,
-						'Invited' => 0)
+				$this->createParticipantObject(1, 1, 0),
+				$this->createParticipantObject(1, 2, 0),
+				$this->createParticipantObject(2, 1, 0),
+				$this->createParticipantObject(2, 2, 0)
 			),
 			'Comment' => array(
-				array('EventID' => 1,
-						'UserID' => 1,
-						'ParentID' => 1,
-						'Text' => 'Hi'),
-				array('EventID' => 1,
-						'UserID' => 2,
-						'ParentID' => 2,
-						'Text' => 'Do I need to bring anything?'),
-				array('EventID' => 1,
-						'UserID' => 2,
-						'ParentID' => 1,
-						'Text' => 'Hello')
+				$this->createCommentObject(1, 1, 1, 'Hi'),
+				$this->createCommentObject(1, 2, 2, 'Do I need to bring anything?'),
+				$this->createCommentObject(1, 2, 1, 'Hello')
 			)
 		));
 	}
 
+	public function createUserObject($firstName, $lastName, $email, $password, $phone, $picture, $radius, $reminder, $nickName, $gender, $birthDate, $active) {
+		return array('FirstName' => $firstName,
+				'LastName' => $lastName,
+				'Email' => $email,
+				'Password' => password_hash($password, PASSWORD_DEFAULT),
+				'Phone' => $phone,
+				'Picture' => $picture,
+				'Radius' => $radius,
+				'Reminder' => $reminder,
+				'NickName' => $nickName,
+				'Gender' => $gender,
+				'BirthDate' => $birthDate,
+				'Active' => $active);
+	}
+
+	public function createUserTagObject($userID, $tagID) {
+		return array('UserID' => $userID,
+				'TagID' => $tagID);
+	}
+
+	public function createEventObject($hostID, $name, $description, $datetime, $address, $capacity, $private, $tagID, $image, $latitude, $longitude) {
+		return array('HostID' => $hostID,
+				'Name' => $name,
+				'Description' => $description,
+				'Time' => $datetime,
+				'Address' => $address,
+				'Capacity' => $capacity,
+				'Private' => $private,
+				'TagID' => $tagID,
+				'Image' => $image,
+				'Lat' => $latitude,
+				'Lon' => $longitude);
+	}
+
+	public function createParticipantObject($eventID, $userID, $invited) {
+		return array('EventID' => $eventID,
+				'UserID' => $userID,
+				'Invited' => $invited);
+	}
+
+	public function createCommentObject($eventID, $userID, $parentID, $text) {
+		return array('EventID' => $eventID,
+				'UserID' => $userID,
+				'ParentID' => $parentID,
+				'Text' => $text);
+	}
 }
