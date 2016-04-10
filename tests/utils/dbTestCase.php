@@ -42,8 +42,8 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 				$this->createUserTagObject(2, 3)
 			),
 			'Event' => array(
-				$this->createEventObject(1, 'Casual jogging', null, '2015-12-31 17:00:00', 'Illini Union, 1401 W Green St, Urbana, IL 61801', null, 0, 21, '1.png', 40.109567, -88.227213),
-				$this->createEventObject(1, 'Badminton Game', "Let's play together!", date('Y-m-d', strtotime('tomorrow')) . ' 17:00:00', 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820', 4, 0, 3, '2.png', 40.100972, -88.236077)
+				$this->createEventObject(null, 1, 'Casual jogging', null, '2015-12-31 17:00:00', 'Illini Union, 1401 W Green St, Urbana, IL 61801', null, 0, 21, '1.png', 40.109567, -88.227213),
+				$this->createEventObject(null, 1, 'Badminton Game', "Let's play together!", date('Y-m-d', strtotime('tomorrow')) . ' 17:00:00', 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820', 4, 0, 3, '2.png', 40.100972, -88.236077)
 			),
 			'Participant' => array(
 				$this->createParticipantObject(1, 1, 0),
@@ -52,9 +52,9 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 				$this->createParticipantObject(2, 2, 0)
 			),
 			'Comment' => array(
-				$this->createCommentObject(1, 1, 1, 'Hi'),
-				$this->createCommentObject(1, 2, 2, 'Do I need to bring anything?'),
-				$this->createCommentObject(1, 2, 1, 'Hello')
+				$this->createCommentObject(null, 1, 1, 1, 'Hi'),
+				$this->createCommentObject(null, 1, 2, 2, 'Do I need to bring anything?'),
+				$this->createCommentObject(null, 1, 2, 1, 'Hello')
 			)
 		));
 	}
@@ -79,8 +79,8 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 				'TagID' => $tagID);
 	}
 
-	public function createEventObject($hostID, $name, $description, $datetime, $address, $capacity, $private, $tagID, $image, $latitude, $longitude) {
-		return array('HostID' => $hostID,
+	public function createEventObject($eventID, $hostID, $name, $description, $datetime, $address, $capacity, $private, $tagID, $image, $latitude, $longitude) {
+		$event = array('HostID' => $hostID,
 				'Name' => $name,
 				'Description' => $description,
 				'Time' => $datetime,
@@ -91,6 +91,12 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 				'Image' => $image,
 				'Lat' => $latitude,
 				'Lon' => $longitude);
+
+		if (is_numeric($eventID)) {
+			$event = array_merge(array('EventID' => $eventID), $event);
+		}
+
+		return $event;
 	}
 
 	public function createParticipantObject($eventID, $userID, $invited) {
@@ -99,10 +105,16 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 				'Invited' => $invited);
 	}
 
-	public function createCommentObject($eventID, $userID, $parentID, $text) {
-		return array('EventID' => $eventID,
+	public function createCommentObject($commentID, $eventID, $userID, $parentID, $text) {
+		$comment = array('EventID' => $eventID,
 				'UserID' => $userID,
 				'ParentID' => $parentID,
 				'Text' => $text);
+
+		if (is_numeric($commentID)) {
+			$comment = array_merge(array('CommentID' => $commentID), $comment);
+		}
+
+		return $comment;
 	}
 }
