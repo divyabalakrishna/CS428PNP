@@ -18,18 +18,7 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Event' => array(
-				array('EventID' => 3,
-						'HostID' => 1,
-						'Name' => 'Mini Basketball',
-						'Description' => '2 vs 2',
-						'Time' => '2016-03-05 15:00:00',
-						'Address' => 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820',
-						'Capacity' => 4,
-						'Private' => 0,
-						'TagID' => 5,
-						'Image' => null,
-						'Lat' => 40.100972,
-						'Lon' => -88.236077)
+				parent::createEventObject(3, 1, 'Mini Basketball', '2 vs 2', '2016-03-05 15:00:00', 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820', 4, 0, 5, null, 40.100972, -88.236077)
 			)
 		)))->getTable('Event');
 
@@ -61,18 +50,7 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Event' => array(
-				array('EventID' => 1,
-						'HostID' => 1,
-						'Name' => 'Casual jogging',
-						'Description' => null,
-						'Time' => '2015-12-31 17:00:00',
-						'Address' => 'Illini Union, 1401 W Green St, Urbana, IL 61801',
-						'Capacity' => null,
-						'Private' => 0,
-						'TagID' => 21,
-						'Image' => '1.png',
-						'Lat' => 40.109567,
-						'Lon' => -88.227213)
+				parent::createEventObject(1, 1, 'Casual jogging', null, '2015-12-31 17:00:00', 'Illini Union, 1401 W Green St, Urbana, IL 61801', null, 0, 21, '1.png', 40.109567, -88.227213)
 			)
 		)))->getTable('Event');
 
@@ -87,18 +65,7 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Event' => array(
-				array('EventID' => 1,
-						'HostID' => 1,
-						'Name' => 'Test Event',
-						'Description' => null,
-						'Time' => '2016-03-05 15:00:00',
-						'Address' => 'Illini Union, 1401 W Green St, Urbana, IL 61801',
-						'Capacity' => 10,
-						'Private' => 0,
-						'TagID' => 1,
-						'Image' => '1.png',
-						'Lat' => 40.109567,
-						'Lon' => -88.227213)
+				parent::createEventObject(1, 1, 'Test Event', null, '2016-03-05 15:00:00', 'Illini Union, 1401 W Green St, Urbana, IL 61801', 10, 0, 1, '1.png', 40.109567, -88.227213)
 			)
 		)))->getTable('Event');
 
@@ -113,18 +80,7 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Event' => array(
-				array('EventID' => 1,
-						'HostID' => 1,
-						'Name' => 'Casual jogging',
-						'Description' => null,
-						'Time' => '2015-12-31 17:00:00',
-						'Address' => 'Illini Union, 1401 W Green St, Urbana, IL 61801',
-						'Capacity' => null,
-						'Private' => 0,
-						'TagID' => 21,
-						'Image' => '1.png',
-						'Lat' => 40.109567,
-						'Lon' => -88.227213)
+				parent::createEventObject(1, 1, 'Casual jogging', null, '2015-12-31 17:00:00', 'Illini Union, 1401 W Green St, Urbana, IL 61801', null, 0, 21, '1.png', 40.109567, -88.227213)
 			)
 		)))->getTable('Event');
 
@@ -467,18 +423,7 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Event' => array(
-				array('EventID' => 1,
-						'HostID' => 1,
-						'Name' => 'Casual jogging',
-						'Description' => null,
-						'Time' => '2015-12-31 17:00:00',
-						'Address' => 'Illini Union, 1401 W Green St, Urbana, IL 61801',
-						'Capacity' => null,
-						'Private' => 0,
-						'TagID' => 21,
-						'Image' => 'abc.jpg',
-						'Lat' => 40.109567,
-						'Lon' => -88.227213)
+				parent::createEventObject(1, 1, 'Casual jogging', null, '2015-12-31 17:00:00', 'Illini Union, 1401 W Green St, Urbana, IL 61801', null, 0, 21, 'abc.jpg', 40.109567,-88.227213)
 			)
 		)))->getTable('Event');
 
@@ -493,18 +438,7 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Event' => array(
-				array('EventID' => 1,
-						'HostID' => 1,
-						'Name' => 'Casual jogging',
-						'Description' => null,
-						'Time' => '2015-12-31 17:00:00',
-						'Address' => 'Illini Union, 1401 W Green St, Urbana, IL 61801',
-						'Capacity' => null,
-						'Private' => 0,
-						'TagID' => 21,
-						'Image' => '1.png',
-						'Lat' => 40.109567,
-						'Lon' => -88.227213)
+				parent::createEventObject(1, 1, 'Casual jogging', null, '2015-12-31 17:00:00', 'Illini Union, 1401 W Green St, Urbana, IL 61801', null, 0, 21, '1.png', 40.109567, -88.227213)
 			)
 		)))->getTable('Event');
 
@@ -548,15 +482,9 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Participant' => array(
-				array('EventID' => 2,
-						'UserID' => 1,
-						'Invited' => 0),
-				array('EventID' => 2,
-						'UserID' => 2,
-						'Invited' => 0),
-				array('EventID' => 2,
-						'UserID' => 3,
-						'Invited' => 0)
+				parent::createParticipantObject(2, 1, 0),
+				parent::createParticipantObject(2, 2, 0),
+				parent::createParticipantObject(2, 3, 0)
 			)
 		)))->getTable('Participant');
 
@@ -668,11 +596,7 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Comment' => array(
-				array('CommentID' => 2,
-						'EventID' => 1,
-						'UserID' => 2,
-						'ParentID' => 2,
-						'Text' => 'Do I need to bring anything?')
+				parent::createCommentObject(2, 1, 2, 2, 'Do I need to bring anything?')
 			)
 		)))->getTable('Comment');
 
@@ -687,11 +611,7 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Comment' => array(
-				array('CommentID' => 4,
-						'EventID' => 2,
-						'UserID' => 2,
-						'ParentID' => 4,
-						'Text' => 'Stay tuned.')
+				parent::createCommentObject(4, 2, 2, 4, 'Stay tuned.')
 			)
 		)))->getTable('Comment');
 
@@ -706,26 +626,10 @@ class EventModelTest extends ModelTestCase
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Comment' => array(
-				array('CommentID' => 1,
-						'EventID' => 1,
-						'UserID' => 1,
-						'ParentID' => 1,
-						'Text' => 'Hi'),
-				array('CommentID' => 2,
-						'EventID' => 1,
-						'UserID' => 2,
-						'ParentID' => 2,
-						'Text' => 'Do I need to bring anything?'),
-				array('CommentID' => 3,
-						'EventID' => 1,
-						'UserID' => 2,
-						'ParentID' => 1,
-						'Text' => 'Hello'),
-				array('CommentID' => 4,
-						'EventID' => 1,
-						'UserID' => 1,
-						'ParentID' => 2,
-						'Text' => 'Bring your own beverages.')
+				parent::createCommentObject(1, 1, 1, 1, 'Hi'),
+				parent::createCommentObject(2, 1, 2, 2, 'Do I need to bring anything?'),
+				parent::createCommentObject(3, 1, 2, 1, 'Hello'),
+				parent::createCommentObject(4, 1, 1, 2, 'Bring your own beverages.')
 			)
 		)))->getTable('Comment');
 
