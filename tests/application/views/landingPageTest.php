@@ -80,4 +80,28 @@ class LandingPageTest extends ViewTestCase {
 		$this->assertEquals('ACTIVATE', $activateButton->text());
 	}
 
+	public function testForgetPassword() {
+		$this->url($this->applicationURL);
+
+		$signInLink = $this->byId('signInLink');
+		$signInLink->click();
+		usleep(500000);
+
+		$signInForm = $this->byId('signinForm');
+		$forgetLink = $signInForm->byLinkText('Forget Password');
+		$forgetLink->click();
+		usleep(800000);
+
+		$emailField = $this->byCssSelector('#forgetForm #email');
+		$emailField->clear();
+		$this->keys('jdoe@email.com');
+
+		$form = $this->byId('forgetForm');
+		$form->submit();
+		usleep(500000);
+
+		$successMessage = $this->byCssSelector('#forgetForm div.alert');
+
+		$this->assertEquals('Reset password notification sent successfully. Please check your email.', $successMessage->text());
+	}
 }

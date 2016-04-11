@@ -3,5 +3,5 @@
 
 USE plannpla_db;
 
-ALTER TABLE `media` ADD Image VARCHAR(100) NULL;
-ALTER TABLE `media` DROP `Link`;
+ALTER TABLE Media ADD Image VARCHAR(100) NULL;
+ALTER TABLE Media DROP `Link`;

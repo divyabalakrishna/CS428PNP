@@ -1,28 +1,10 @@
-<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); }
-
-
-$title = "Recreate Event";
-$cancelURL = URL_WITH_INDEX_FILE . "events/view/". $eventID;
-
-?>
-
-<!-- JS -->
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
-<script src="<?php echo URL; ?>public/js/locationpicker.jquery.js"></script>
-<style>
-	/* style overrides for bootstrap/google map conflicts */
-	.gm-style img {max-width: none;}
-	.gm-style label {width: auto; display:inline;} 
-	.pac-container {z-index:2000 !important;}
-</style>
+<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
 
 <div class="container">
-	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
-
-	<h2 class="page-header"><?php echo $title; ?></h2>
+	<h2 class="page-header">Recreate Event</h2>
 
 	<form id="form" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/recreateSave" enctype="multipart/form-data" class="form-horizontal">
-		<input type="hidden" id="eventID" name="eventID" value="<?php echo $event->EventID ?>" />
+		<input type="hidden" id="eventID" name="eventID" value="<?php echo $eventID ?>" />
 
 		<!-- Date -->
 		<div class="form-group">
@@ -59,7 +41,7 @@ $cancelURL = URL_WITH_INDEX_FILE . "events/view/". $eventID;
 <script>
 	$(document).ready(function(){
 		$('#cancel').click(function(){
-			window.location.href = '<?php echo $cancelURL; ?>';
+			window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/view/". $eventID; ?>';
 		});
 
 		$('.input-group.date').datepicker({
@@ -117,8 +99,5 @@ $cancelURL = URL_WITH_INDEX_FILE . "events/view/". $eventID;
 				}
 			}
 		});
-//		$('#location').click(function(){
-//			alert('loca');
-//		});
 	});
 </script>

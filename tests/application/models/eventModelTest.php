@@ -639,4 +639,160 @@ class EventModelTest extends ModelTestCase
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	public function testDeleteMedia() {
+		static::$eventModel->deleteMedia(1);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Media' => array()
+		)))->getTable('Media');
+
+		$actualTable = $this->getConnection()->createQueryTable('Media', 'SELECT * FROM Media WHERE EventID = 1');
+
+		$this->assertEquals(1, $this->getConnection()->getRowCount('Media'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testDeleteMediaSpecificMedia() {
+		static::$eventModel->deleteMedia(1, 1);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Media' => array(
+				parent::createMediaObject(2, 1, 1, 'members.jpg')
+			)
+		)))->getTable('Media');
+
+		$actualTable = $this->getConnection()->createQueryTable('Media', 'SELECT * FROM Media WHERE EventID = 1');
+
+		$this->assertEquals(2, $this->getConnection()->getRowCount('Media'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testGetMedia() {
+		$actualArray = static::$eventModel->getMedia(1);
+
+		$expectedArray = array();
+		$expectedArray[] = (object)parent::createMediaObject(1, 1, 2, 'img_123.jpg');
+		$expectedArray[] = (object)parent::createMediaObject(2, 1, 1, 'members.jpg');
+
+		$this->assertEquals($expectedArray, $actualArray);
+	}
+
+	public function testGetMediaSpecificMedia() {
+		$actualArray = static::$eventModel->getMedia(1, 2);
+
+		$expectedArray = array();
+		$expectedArray[] = (object)parent::createMediaObject(2, 1, 1, 'members.jpg');
+
+		$this->assertEquals($expectedArray, $actualArray);
+	}
+
+	public function testInsertMedia() {
+		static::$eventModel->insertMedia(2, 2, 'photo.jpg');
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Media' => array(
+				parent::createMediaObject(3, 2, 1, 'img_562.png'),
+				parent::createMediaObject(4, 2, 2, 'photo.jpg')
+			)
+		)))->getTable('Media');
+
+		$actualTable = $this->getConnection()->createQueryTable('Media', 'SELECT * FROM Media WHERE EventID = 2');
+
+		$this->assertEquals(4, $this->getConnection()->getRowCount('Media'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testCopyEvent() {
+		$eventID = static::$eventModel->copyEvent(2, '04/11/2016', '10:00 AM');
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Event' => array(
+				parent::createEventObject(3, 1, 'Badminton Game', "Let's play together!", '2016-04-11 10:00:00', 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820', 4, 0, 3, null, 40.100972, -88.236077)
+			)
+		)))->getTable('Event');
+
+		$actualTable = $this->getConnection()->createQueryTable('Event', 'SELECT * FROM Event WHERE EventID = ' . $eventID);
+
+		$this->assertEquals(3, $this->getConnection()->getRowCount('Event'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testCopyParticipant() {
+		$eventID = static::$eventModel->copyEvent(2, '04/11/2016', '10:00 AM');
+		static::$eventModel->copyParticipant(2, $eventID);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Participant' => array(
+				parent::createParticipantObject($eventID, 1, 0),
+				parent::createParticipantObject($eventID, 2, 0)
+			)
+		)))->getTable('Participant');
+
+		$actualTable = $this->getConnection()->createQueryTable('Participant', 'SELECT * FROM Participant WHERE EventID = ' . $eventID);
+
+		$this->assertEquals(6, $this->getConnection()->getRowCount('Participant'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testCopyParticipantDuplicate() {
+		// This should not insert any records since the participants already join the event
+		static::$eventModel->copyParticipant(1, 2);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Participant' => array(
+				parent::createParticipantObject(2, 1, 0),
+				parent::createParticipantObject(2, 2, 0)
+			)
+		)))->getTable('Participant');
+
+		$actualTable = $this->getConnection()->createQueryTable('Participant', 'SELECT * FROM Participant WHERE EventID = 2');
+
+		$this->assertEquals(4, $this->getConnection()->getRowCount('Participant'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testGetSearchEvents() {
+		$actualArray = static::$eventModel->getSearchEvents(1, 5, 40.1, -88.2);
+
+		$expectedArray = array();
+
+		$expectedObject = new stdClass();
+		$expectedObject->EventID = 1;
+		$expectedObject->HostID = 1;
+		$expectedObject->Name = 'Casual jogging';
+		$expectedObject->Description = null;
+		$expectedObject->Time = '2015-12-31 17:00:00';
+		$expectedObject->Address = 'Illini Union, 1401 W Green St, Urbana, IL 61801';
+		$expectedObject->Capacity = null;
+		$expectedObject->Private = 0;
+		$expectedObject->TagID = 21;
+		$expectedObject->Image = '1.png';
+		$expectedObject->Lat = 40.109567;
+		$expectedObject->Lon = -88.227213;
+		$expectedObject->FormattedDateTime = '12/31/2015 05:00 PM';
+		$expectedObject->TagName = 'Running';
+		$expectedObject->distance = 1.5828691942519846;
+		$expectedArray[] = $expectedObject;
+
+		$expectedObject = new stdClass();
+		$expectedObject->EventID = 2;
+		$expectedObject->HostID = 1;
+		$expectedObject->Name = 'Badminton Game';
+		$expectedObject->Description = "Let's play together!";
+		$expectedObject->Time = date('Y-m-d', strtotime('tomorrow')) . ' 17:00:00';
+		$expectedObject->Address = 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820';
+		$expectedObject->Capacity = 4;
+		$expectedObject->Private = 0;
+		$expectedObject->TagID = 3;
+		$expectedObject->Image = '2.png';
+		$expectedObject->Lat = 40.100972;
+		$expectedObject->Lon = -88.236077;
+		$expectedObject->FormattedDateTime = date('m/d/Y', strtotime('tomorrow')) . ' 05:00 PM';
+		$expectedObject->TagName = 'Badminton';
+		$expectedObject->distance = 1.9079905786448228;
+		$expectedArray[] = $expectedObject;
+
+		$this->assertEquals($expectedArray, $actualArray);
+	}
+
 }
