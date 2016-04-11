@@ -66,7 +66,27 @@ class EventModel extends Model
 
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
-
+	
+	public function recreateEvent($eventID, $date, $time){
+		$sql = "INSERT INTO Event (HostID, Name, Description, Time, Address, Capacity, TagID, Lat, Lon)
+				SELECT HostID, Name, Description, STR_TO_DATE(:time, '%m/%d/%Y %h:%i %p'), Address, Capacity, TagID, Lat, Lon
+				FROM Event WHERE EventID = :eventID";
+		$parameters = array(
+				":eventID" => $eventID,
+				":time" => $date . " " . $time
+		);
+		$newEventID = $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+		$sql = "INSERT INTO Participant (EventID, UserID)
+				SELECT :newEventID, UserID
+				FROM Participant
+				WHERE Participant.EventID = :eventID";
+		$parameters = array(
+				":eventID" => $eventID,
+				":newEventID" => $newEventID
+		);
+		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
+	
 	public function getEvent($eventID, $hostID = "")
 	{
 		$sql = "SELECT Event.*,

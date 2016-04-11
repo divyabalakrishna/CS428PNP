@@ -102,7 +102,16 @@ class Events
 		require APP . 'views/events/recreate.php';
 		require APP . 'views/_templates/footer.php';
 	}
-
+	
+	public function recreateSave($eventID){
+		$GLOBALS["beans"]->eventModel->recreateEvent(
+				$eventID,
+				$_POST["date"],
+				$_POST["time"]
+				
+		);
+	}
+	
 	public function edit($eventID = "")
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
