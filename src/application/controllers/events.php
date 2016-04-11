@@ -89,7 +89,8 @@ class Events
 		$participants = $GLOBALS["beans"]->eventModel->getParticipants($eventID);
 		$userParticipation = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
 		$comments = $GLOBALS["beans"]->eventModel->getComments($eventID);
-
+		$media = $GLOBALS["beans"]->eventModel->getMedia($eventID);
+		
 		require APP . 'views/_templates/header.php';
 		require APP . 'views/events/view.php';
 		require APP . 'views/_templates/footer.php';
@@ -181,6 +182,21 @@ class Events
 		else {
 			header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 		}
+	}
+	
+	public function upload()
+	{
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$eventID = $_POST["eventID"];
+		$result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "media", "jpg,jpeg,png,bmp", "media image", 2097152, "");
+
+		if ($result->fileUploaded) {
+			$GLOBALS["beans"]->eventModel->uploadMedia($eventID, $userID, $result->fileName);
+		}
+		else if ($result->errorMessage != "") {
+			$GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
+		}
+		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
 
 	public function delete($eventID) {

@@ -6980,3 +6980,26 @@ button.close {
 .container .participants .profile .name{
 	text-align: center;
 }
+
+.container .media{
+	margin: 60px 20px 60px 20px;
+    width: 87%;
+}
+
+.container .media .photos{
+	width: 100%;
+    position: relative;
+    float: left;
+    padding-bottom: 30px;
+}
+
+.container .media .profile{
+	position: relative;
+	float: left;
+	padding: 15px;
+}
+
+.container .media .profile .image{
+	height: 100px;
+	width: 100px;
+}

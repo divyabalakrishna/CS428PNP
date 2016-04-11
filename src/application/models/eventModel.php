@@ -173,6 +173,19 @@ class EventModel extends Model
 
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
+	
+	public function uploadMedia($eventID, $hostID, $image) {
+		$sql = "INSERT INTO Media (EventID, UserID, Image)
+				VALUES (:eventID, :hostID, :image)";
+		
+		$parameters = array(
+				":eventID" => $eventID,
+				":hostID" => $hostID,
+				":image" => $image,
+		);
+		
+		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+	}
 
 	public function getSearchEvents($userID, $radius, $Lat, $Lon)
 	{
@@ -285,6 +298,15 @@ class EventModel extends Model
 			$parameters[":userID"] = $userID;
 		}
 
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+	}
+	
+	public function getMedia($eventID)
+	{
+		$sql = "SELECT * FROM Media	WHERE EventID = :eventID";
+		
+		$parameters = array(':eventID' => $eventID);
+			
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
