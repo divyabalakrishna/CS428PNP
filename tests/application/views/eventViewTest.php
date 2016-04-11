@@ -107,4 +107,27 @@ class EventViewTest extends ViewTestCase {
 		}
 	}
 
+	public function testInsertComment() {
+		parent::loginToSite('jdoe@email.com', '12345');
+
+		$createdDiv = $this->byCssSelector('.created');
+		$viewDetailsLink = $createdDiv->byLinkText('View Details');
+		$viewDetailsLink->click();
+
+		$commentTextArea = $this->byCssSelector('div.comments #text');
+		$commentTextArea->clear();
+		$this->keys('Anyone has extra racket?');
+
+		$form = $this->byCssSelector('div.comments #form');
+		$form->submit();
+		usleep(500000);
+
+		$row = $this->byCssSelector('div.comments table tr');
+		$nameColumn = $row->byCssSelector('td');
+		$commentColumn = $row->byCssSelector('td + td');
+
+		$this->assertEquals('Jane', $nameColumn->text());
+		$this->assertEquals('Anyone has extra racket?', $commentColumn->text());
+	}
+
 }
