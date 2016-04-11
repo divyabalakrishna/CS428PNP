@@ -39,8 +39,8 @@ class Events
 
     public function listSearch()
 	{
-         $Lat = 40.11374573;
-         $Lon = -88.224828;
+         $Lat = $GLOBALS["beans"]->siteHelper->getDefaultLat();
+         $Lon = $GLOBALS["beans"]->siteHelper->getDefaultLon();
 
          if(isset($_COOKIE['latitude'])){
               $Lat = $_COOKIE["latitude"];
@@ -63,8 +63,8 @@ class Events
 
     public function genXML()
 	{
-         $Lat = 40.11374573;
-         $Lon = -88.224828;
+         $Lat = $GLOBALS["beans"]->siteHelper->getDefaultLat();
+         $Lon = $GLOBALS["beans"]->siteHelper->getDefaultLon();
 
          if(isset($_COOKIE['latitude'])){
               $Lat = $_COOKIE["latitude"];
