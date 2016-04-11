@@ -118,7 +118,15 @@ else if ($event->Capacity > count($participants)) {
 					<?php foreach ($comments as $comment) { ?>
 						<tr>
 							<td class="col-md-1"><?php echo $comment->FirstName ?></td>
+							
+							
 							<td><?php echo $comment->Text ?></td>
+						</tr>
+						<tr>
+							<td><a onclick="reply(this, <?php echo $comment->CommentID ?>)">
+								reply
+							</a></td>
+							<td></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -174,4 +182,15 @@ else if ($event->Capacity > count($participants)) {
 
 		$('#form').validate({});
 	});
+
+	function reply(replyLink, parentID) {
+		var td = $(replyLink).parent().next();
+		var form = $('<form method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/reply" class="form-horizontal"></form>');
+		form.append('<input type="hidden" name="eventID" value="<?php echo $event->EventID ?>" />');
+		form.append('<input type="hidden" name="parentID" value="' + parentID + '" />');
+		form.append('<input type="text" name="text" required aria-required="true" />');
+		form.append('<button type="submit" class="btn btn-default" style="margin-left:5px">Save</button>');
+		td.append(form);
+		return false;
+	};
 </script>

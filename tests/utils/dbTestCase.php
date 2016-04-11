@@ -32,9 +32,9 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 
 		return new PHPUnit_ArrayDataSet(array(
 			'User' => array(
-				$this->createUserObject('Jane', 'Doe', 'jdoe@email.com', '12345', '123-456-7890', '1.png', 5, 120, 'Jane', 'F', '1990-01-01', 'Yes'),	
-				$this->createUserObject('John', 'Smith', 'jsmith@email.com', 'abcde', '789-012-3456', '2.png', 5, 60, 'John', 'M', '1985-12-31','Yes'),
-				$this->createUserObject('Joe', 'Bloggs', 'joe@email.com', 'password', '456-789-0123', '3.jpg', 5, 120, 'Joe', 'M', '1980-06-15', 'Yes')
+				$this->createUserObject(null, 'Jane', 'Doe', 'jdoe@email.com', '12345', '123-456-7890', '1.png', 5, 120, 'Jane', 'F', '1990-01-01', 'Yes'),	
+				$this->createUserObject(null, 'John', 'Smith', 'jsmith@email.com', 'abcde', '789-012-3456', '2.png', 5, 60, 'John', 'M', '1985-12-31','Yes'),
+				$this->createUserObject(null, 'Joe', 'Bloggs', 'joe@email.com', 'password', '456-789-0123', '3.jpg', 5, 120, 'Joe', 'M', '1980-06-15', 'Yes')
 			),
 			'UserTag' => array(
 				$this->createUserTagObject(1, 1),
@@ -59,8 +59,8 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 		));
 	}
 
-	public function createUserObject($firstName, $lastName, $email, $password, $phone, $picture, $radius, $reminder, $nickName, $gender, $birthDate, $active) {
-		return array('FirstName' => $firstName,
+	public function createUserObject($userID, $firstName, $lastName, $email, $password, $phone, $picture, $radius, $reminder, $nickName, $gender, $birthDate, $active) {
+		$user = array('FirstName' => $firstName,
 				'LastName' => $lastName,
 				'Email' => $email,
 				'Password' => password_hash($password, PASSWORD_DEFAULT),
@@ -72,6 +72,12 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 				'Gender' => $gender,
 				'BirthDate' => $birthDate,
 				'Active' => $active);
+
+		if (is_numeric($userID)) {
+			$user = array_merge(array('UserID' => $userID), $user);
+		}
+
+		return $user;
 	}
 
 	public function createUserTagObject($userID, $tagID) {

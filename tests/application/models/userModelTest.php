@@ -50,22 +50,11 @@ class UserModelTest extends ModelTestCase {
 	public function testInsertUser() {
 		$userID = static::$userModel->insertUser('email@email.com', 'abc123', '987xyz');
 
+		$expectedUser = parent::createUserObject(4, null, null, 'email@email.com', null, null, null, 5, null, null, null, null, '987xyz');
+		unset($expectedUser['Password']);
+
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
-			'User' => array(
-				array('UserID' => 4,
-						'FirstName' => null,
-						'LastName' => null,
-						'Email' => 'email@email.com',
-						'Phone' => null,
-						'Picture' => null,
-						'Radius' => 5,
-						'Reminder' => null,
-						'NickName' => null,
-						'Gender' => null,
-						'BirthDate' => null,
-						'Active' => '987xyz'
-				)
-			)
+			'User' => array($expectedUser)
 		)))->getTable('User');
 
 		$actualTable = $this->getConnection()->createQueryTable('User', 'SELECT * FROM User WHERE UserID = ' . $userID);
