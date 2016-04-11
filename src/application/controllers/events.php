@@ -49,6 +49,14 @@ class Events
               $Lon = $_COOKIE["longitude"];
          }
         
+         if(isset($_POST["gmap-lat2"])){
+             $Lat = $_POST["gmap-lat2"];
+         }
+
+         if(isset($_POST["gmap-lon2"])){
+             $Lon = $_POST["gmap-lon2"];
+         }
+
          $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
          $user = $GLOBALS["beans"]->userModel->getProfile($userID);
          
@@ -266,5 +274,6 @@ class Events
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
+
 
 }
