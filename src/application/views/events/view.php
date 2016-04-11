@@ -56,6 +56,7 @@ else if ($event->Capacity > count($participants)) {
 					<?php if ($userID == $event->HostID) { ?>
 						<button type="button" id="edit" class="btn btn-default">Edit</button>
 						<button type="button" id="delete" class="btn btn-default">Delete</button>
+						<button type="button" id="recreate" class="btn btn-default">Recreate</button>
 					<?php } else if (count($userParticipation) > 0) { ?>
 						<button type="button" id="leave" class="btn btn-default">Leave</button>
 					<?php } else if ($joinAllowed && count($userParticipation) == 0) { ?>
@@ -187,6 +188,13 @@ else if ($event->Capacity > count($participants)) {
 				if (confirm('Are you sure you want to delete this event?'))
 				{
 					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/delete/" . $event->EventID; ?>';
+				}
+			});
+
+			$('#recreate').click(function(){
+				if (confirm('Are you sure you want to recreate this event?'))
+				{
+					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/recreate/" . $event->EventID; ?>';
 				}
 			});
 		<?php } else if (count($userParticipation) > 0) { ?>

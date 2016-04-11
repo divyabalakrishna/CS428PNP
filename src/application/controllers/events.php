@@ -95,6 +95,13 @@ class Events
 		require APP . 'views/events/view.php';
 		require APP . 'views/_templates/footer.php';
 	}
+	
+	public function recreate($eventID)
+	{
+		require APP . 'views/_templates/header.php';
+		require APP . 'views/events/recreate.php';
+		require APP . 'views/_templates/footer.php';
+	}
 
 	public function edit($eventID = "")
 	{
