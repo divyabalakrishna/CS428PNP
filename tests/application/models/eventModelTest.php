@@ -687,7 +687,7 @@ class EventModelTest extends ModelTestCase
 	}
 
 	public function testInsertMedia() {
-		static::$eventModel->insertMedia(2, 2, "photo.jpg");
+		static::$eventModel->insertMedia(2, 2, 'photo.jpg');
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Media' => array(
@@ -699,6 +699,55 @@ class EventModelTest extends ModelTestCase
 		$actualTable = $this->getConnection()->createQueryTable('Media', 'SELECT * FROM Media WHERE EventID = 2');
 
 		$this->assertEquals(4, $this->getConnection()->getRowCount('Media'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testCopyEvent() {
+		$eventID = static::$eventModel->copyEvent(2, '04/11/2016', '10:00 AM');
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Event' => array(
+				parent::createEventObject(3, 1, 'Badminton Game', "Let's play together!", '2016-04-11 10:00:00', 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820', 4, 0, 3, null, 40.100972, -88.236077)
+			)
+		)))->getTable('Event');
+
+		$actualTable = $this->getConnection()->createQueryTable('Event', 'SELECT * FROM Event WHERE EventID = ' . $eventID);
+
+		$this->assertEquals(3, $this->getConnection()->getRowCount('Event'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testCopyParticipant() {
+		$eventID = static::$eventModel->copyEvent(2, '04/11/2016', '10:00 AM');
+		static::$eventModel->copyParticipant(2, $eventID);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Participant' => array(
+				parent::createParticipantObject($eventID, 1, 0),
+				parent::createParticipantObject($eventID, 2, 0)
+			)
+		)))->getTable('Participant');
+
+		$actualTable = $this->getConnection()->createQueryTable('Participant', 'SELECT * FROM Participant WHERE EventID = ' . $eventID);
+
+		$this->assertEquals(6, $this->getConnection()->getRowCount('Participant'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testCopyParticipantDuplicate() {
+		// This should not insert any records since the participants already join the event
+		static::$eventModel->copyParticipant(1, 2);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Participant' => array(
+				parent::createParticipantObject(2, 1, 0),
+				parent::createParticipantObject(2, 2, 0)
+			)
+		)))->getTable('Participant');
+
+		$actualTable = $this->getConnection()->createQueryTable('Participant', 'SELECT * FROM Participant WHERE EventID = 2');
+
+		$this->assertEquals(4, $this->getConnection()->getRowCount('Participant'));
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 

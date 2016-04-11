@@ -85,7 +85,12 @@ class EventModel extends Model
 		$sql = "INSERT INTO Participant (EventID, UserID)
 				SELECT :newEventID, UserID
 				FROM Participant
-				WHERE Participant.EventID = :eventID";
+				WHERE EventID = :eventID
+					AND NOT EXISTS (
+						SELECT New_Participant.UserID
+						FROM Participant New_Participant
+						WHERE New_Participant.EventID = :newEventID
+							AND New_Participant.UserID = Participant.UserID)";
 
 		$parameters = array(
 				":eventID" => $eventID,
