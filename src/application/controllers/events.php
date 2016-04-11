@@ -281,9 +281,8 @@ class Events
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
 
-<<<<<<< HEAD
 
-=======
+
 	public function deleteComment($eventID, $commentID) {
 		// We do not want to accidentally delete all comments in case commentID is blank, so change to a dummy number
 		if (!is_numeric($commentID)) {
@@ -299,5 +298,5 @@ class Events
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
->>>>>>> origin/master
+
 }
