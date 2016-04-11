@@ -86,6 +86,7 @@ class EventModel extends Model
 				":newEventID" => $newEventID
 		);
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+		return $newEventID;
 	}
 	
 	public function getEvent($eventID, $hostID = "")

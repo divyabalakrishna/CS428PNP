@@ -104,12 +104,13 @@ class Events
 	}
 	
 	public function recreateSave(){
-		$GLOBALS["beans"]->eventModel->recreateEvent(
+		$newEventID = $GLOBALS["beans"]->eventModel->recreateEvent(
 				$_POST["eventID"],
 				$_POST["date"],
 				$_POST["time"]
 				
 		);
+		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $newEventID);
 	}
 	
 	public function edit($eventID = "")
