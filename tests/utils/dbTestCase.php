@@ -56,6 +56,11 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 				$this->createCommentObject(null, 1, 1, 1, 'Hi'),
 				$this->createCommentObject(null, 1, 2, 2, 'Do I need to bring anything?'),
 				$this->createCommentObject(null, 1, 2, 1, 'Hello')
+			),
+			'Media' => array(
+				$this->createMediaObject(null, 1, 2, 'img_123.jpg'),
+				$this->createMediaObject(null, 1, 1, 'members.jpg'),
+				$this->createMediaObject(null, 2, 1, 'img_562.png')
 			)
 		));
 	}
@@ -124,4 +129,18 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 
 		return $comment;
 	}
+
+	public function createMediaObject($mediaID, $eventID, $userID, $image) {
+		$media = array('MediaID' => $mediaID,
+				'EventID' => $eventID,
+				'UserID' => $userID,
+				'Image' => $image);
+
+		if (is_numeric($mediaID)) {
+			$media = array_merge(array('MediaID' => $mediaID), $media);
+		}
+
+		return $media;
+	}
+
 }

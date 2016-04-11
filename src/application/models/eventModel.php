@@ -202,13 +202,13 @@ class EventModel extends Model
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-	public function insertMedia($eventID, $hostID, $image) {
+	public function insertMedia($eventID, $userID, $image) {
 		$sql = "INSERT INTO Media (EventID, UserID, Image)
-				VALUES (:eventID, :hostID, :image)";
+				VALUES (:eventID, :userID, :image)";
 
 		$parameters = array(
 				":eventID" => $eventID,
-				":hostID" => $hostID,
+				":userID" => $userID,
 				":image" => $image,
 		);
 
@@ -337,13 +337,22 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 	
-	public function getMedia($eventID) {
+	public function getMedia($eventID, $mediaID = "") {
 		$sql = "SELECT *
 				FROM Media
 				WHERE Media.EventID = :eventID";
 
+		if (is_numeric($mediaID)) {
+			$sql .= " AND Media.MediaID = :mediaID";
+		}
+
+		$sql .= " ORDER BY Media.MediaID";
+
 		$parameters = array(':eventID' => $eventID);
-	
+		if (is_numeric($mediaID)) {
+			$parameters[":mediaID"] = $mediaID;
+		}
+
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 

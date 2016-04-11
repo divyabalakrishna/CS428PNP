@@ -639,4 +639,67 @@ class EventModelTest extends ModelTestCase
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	public function testDeleteMedia() {
+		static::$eventModel->deleteMedia(1);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Media' => array()
+		)))->getTable('Media');
+
+		$actualTable = $this->getConnection()->createQueryTable('Media', 'SELECT * FROM Media WHERE EventID = 1');
+
+		$this->assertEquals(1, $this->getConnection()->getRowCount('Media'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testDeleteMediaSpecificMedia() {
+		static::$eventModel->deleteMedia(1, 1);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Media' => array(
+				parent::createMediaObject(2, 1, 1, 'members.jpg')
+			)
+		)))->getTable('Media');
+
+		$actualTable = $this->getConnection()->createQueryTable('Media', 'SELECT * FROM Media WHERE EventID = 1');
+
+		$this->assertEquals(2, $this->getConnection()->getRowCount('Media'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testGetMedia() {
+		$actualArray = static::$eventModel->getMedia(1);
+
+		$expectedArray = array();
+		$expectedArray[] = (object)parent::createMediaObject(1, 1, 2, 'img_123.jpg');
+		$expectedArray[] = (object)parent::createMediaObject(2, 1, 1, 'members.jpg');
+
+		$this->assertEquals($expectedArray, $actualArray);
+	}
+
+	public function testGetMediaSpecificMedia() {
+		$actualArray = static::$eventModel->getMedia(1, 2);
+
+		$expectedArray = array();
+		$expectedArray[] = (object)parent::createMediaObject(2, 1, 1, 'members.jpg');
+
+		$this->assertEquals($expectedArray, $actualArray);
+	}
+
+	public function testInsertMedia() {
+		static::$eventModel->insertMedia(2, 2, "photo.jpg");
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'Media' => array(
+				parent::createMediaObject(3, 2, 1, 'img_562.png'),
+				parent::createMediaObject(4, 2, 2, 'photo.jpg')
+			)
+		)))->getTable('Media');
+
+		$actualTable = $this->getConnection()->createQueryTable('Media', 'SELECT * FROM Media WHERE EventID = 2');
+
+		$this->assertEquals(4, $this->getConnection()->getRowCount('Media'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
 }
