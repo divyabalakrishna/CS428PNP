@@ -66,29 +66,35 @@ class EventModel extends Model
 
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
-	
-	public function recreateEvent($eventID, $date, $time){
+
+	public function copyEvent($eventID, $date, $time) {
 		$sql = "INSERT INTO Event (HostID, Name, Description, Time, Address, Capacity, TagID, Lat, Lon)
 				SELECT HostID, Name, Description, STR_TO_DATE(:time, '%m/%d/%Y %h:%i %p'), Address, Capacity, TagID, Lat, Lon
-				FROM Event 
+				FROM Event
 				WHERE EventID = :eventID";
+
 		$parameters = array(
 				":eventID" => $eventID,
 				":time" => $date . " " . $time
 		);
-		$newEventID = $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
+
+		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);;
+	}
+
+	public function copyParticipant($eventID, $newEventID) {
 		$sql = "INSERT INTO Participant (EventID, UserID)
 				SELECT :newEventID, UserID
 				FROM Participant
 				WHERE Participant.EventID = :eventID";
+
 		$parameters = array(
 				":eventID" => $eventID,
 				":newEventID" => $newEventID
 		);
+
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
-		return $newEventID;
 	}
-	
+
 	public function getEvent($eventID, $hostID = "")
 	{
 		$sql = "SELECT Event.*,
@@ -195,17 +201,17 @@ class EventModel extends Model
 
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
-	
-	public function uploadMedia($eventID, $hostID, $image) {
+
+	public function insertMedia($eventID, $hostID, $image) {
 		$sql = "INSERT INTO Media (EventID, UserID, Image)
 				VALUES (:eventID, :hostID, :image)";
-		
+
 		$parameters = array(
 				":eventID" => $eventID,
 				":hostID" => $hostID,
 				":image" => $image,
 		);
-		
+
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
@@ -331,12 +337,13 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 	
-	public function getMedia($eventID)
-	{
-		$sql = "SELECT * FROM Media	WHERE EventID = :eventID";
-		
+	public function getMedia($eventID) {
+		$sql = "SELECT *
+				FROM Media
+				WHERE Media.EventID = :eventID";
+
 		$parameters = array(':eventID' => $eventID);
-			
+	
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 

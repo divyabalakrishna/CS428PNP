@@ -102,14 +102,19 @@ class Events
 		require APP . 'views/events/recreate.php';
 		require APP . 'views/_templates/footer.php';
 	}
-	
-	public function recreateSave(){
-		$newEventID = $GLOBALS["beans"]->eventModel->recreateEvent(
+
+	public function recreateSave() {
+		$newEventID = $GLOBALS["beans"]->eventModel->copyEvent(
 				$_POST["eventID"],
 				$_POST["date"],
 				$_POST["time"]
-				
 		);
+
+		$GLOBALS["beans"]->eventModel->copyParticipant(
+				$_POST["eventID"],
+				$newEventID
+		);
+
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $newEventID);
 	}
 	
@@ -209,7 +214,7 @@ class Events
 		$result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "media", "jpg,jpeg,png,bmp", "media image", 2097152, "");
 
 		if ($result->fileUploaded) {
-			$GLOBALS["beans"]->eventModel->uploadMedia($eventID, $userID, $result->fileName);
+			$GLOBALS["beans"]->eventModel->insertMedia($eventID, $userID, $result->fileName);
 		}
 		else if ($result->errorMessage != "") {
 			$GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
