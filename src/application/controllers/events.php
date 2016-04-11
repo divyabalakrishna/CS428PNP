@@ -103,9 +103,9 @@ class Events
 		require APP . 'views/_templates/footer.php';
 	}
 	
-	public function recreateSave($eventID){
+	public function recreateSave(){
 		$GLOBALS["beans"]->eventModel->recreateEvent(
-				$eventID,
+				$_POST["eventID"],
 				$_POST["date"],
 				$_POST["time"]
 				

@@ -70,7 +70,8 @@ class EventModel extends Model
 	public function recreateEvent($eventID, $date, $time){
 		$sql = "INSERT INTO Event (HostID, Name, Description, Time, Address, Capacity, TagID, Lat, Lon)
 				SELECT HostID, Name, Description, STR_TO_DATE(:time, '%m/%d/%Y %h:%i %p'), Address, Capacity, TagID, Lat, Lon
-				FROM Event WHERE EventID = :eventID";
+				FROM Event 
+				WHERE EventID = :eventID";
 		$parameters = array(
 				":eventID" => $eventID,
 				":time" => $date . " " . $time

@@ -21,7 +21,7 @@ $cancelURL = URL_WITH_INDEX_FILE . "events/view/". $eventID;
 
 	<h2 class="page-header"><?php echo $title; ?></h2>
 
-	<form id="form" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/recreate" enctype="multipart/form-data" class="form-horizontal">
+	<form id="form" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/recreateSave" enctype="multipart/form-data" class="form-horizontal">
 		<input type="hidden" id="eventID" name="eventID" value="<?php echo $event->EventID ?>" />
 
 		<!-- Date -->
