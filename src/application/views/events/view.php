@@ -192,10 +192,7 @@ else if ($event->Capacity > count($participants)) {
 			});
 
 			$('#recreate').click(function(){
-				if (confirm('Are you sure you want to recreate this event?'))
-				{
-					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/recreate/" . $event->EventID; ?>';
-				}
+				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/recreate/" . $event->EventID; ?>';
 			});
 		<?php } else if (count($userParticipation) > 0) { ?>
 			$('#leave').click(function() {
