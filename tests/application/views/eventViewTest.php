@@ -5,23 +5,7 @@ include_once (__DIR__ . '/viewTestCase.php');
 class EventViewTest extends ViewTestCase {
 
 	public function testViewHostedEvent() {
-		$this->url($this->applicationURL);
-
-		$signInLink = $this->byId('signInLink');
-		$signInLink->click();
-		usleep(500000);
-
-		$emailField = $this->byCssSelector('#signinForm #email');
-		$emailField->clear();
-		$this->keys('jdoe@email.com');
-
-		$passwordField = $this->byCssSelector('#signinForm #password');
-		$passwordField->clear();
-		$this->keys('12345');
-
-		$form = $this->byId('signinForm');
-		$form->submit();
-		usleep(500000);
+		parent::loginToSite('jdoe@email.com', '12345');
 
 		$createdDiv = $this->byCssSelector('.created');
 		$viewDetailsLink = $createdDiv->byLinkText('View Details');
@@ -51,23 +35,7 @@ class EventViewTest extends ViewTestCase {
 	}
 
 	public function testViewJoinedEvent() {
-		$this->url($this->applicationURL);
-
-		$signInLink = $this->byId('signInLink');
-		$signInLink->click();
-		usleep(500000);
-
-		$emailField = $this->byCssSelector('#signinForm #email');
-		$emailField->clear();
-		$this->keys('jsmith@email.com');
-
-		$passwordField = $this->byCssSelector('#signinForm #password');
-		$passwordField->clear();
-		$this->keys('abcde');
-
-		$form = $this->byId('signinForm');
-		$form->submit();
-		usleep(500000);
+		parent::loginToSite('jsmith@email.com', 'abcde');
 
 		$createdDiv = $this->byCssSelector('.joined');
 		$viewDetailsLink = $createdDiv->byLinkText('View Details');
@@ -102,23 +70,7 @@ class EventViewTest extends ViewTestCase {
 	}
 
 	public function testViewOtherEvent() {
-		$this->url($this->applicationURL);
-
-		$signInLink = $this->byId('signInLink');
-		$signInLink->click();
-		usleep(500000);
-
-		$emailField = $this->byCssSelector('#signinForm #email');
-		$emailField->clear();
-		$this->keys('joe@email.com');
-
-		$passwordField = $this->byCssSelector('#signinForm #password');
-		$passwordField->clear();
-		$this->keys('password');
-
-		$form = $this->byId('signinForm');
-		$form->submit();
-		usleep(500000);
+		parent::loginToSite('joe@email.com', 'password');
 
 		$navbar = $this->byId('navbar');
 		$searchLink = $navbar->byLinkText('Search');

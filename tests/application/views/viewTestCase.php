@@ -18,6 +18,25 @@ abstract class ViewTestCase extends PHPUnit_Extensions_Selenium2TestCase {
 		static::$dbTestCaseWrapper->resetDatabase();
 	}
 
+	public function loginToSite($email, $password) {
+		$this->url($this->applicationURL);
+
+		$signInLink = $this->byId('signInLink');
+		$signInLink->click();
+		usleep(500000);
+
+		$emailField = $this->byCssSelector('#signinForm #email');
+		$emailField->clear();
+		$this->keys($email);
+
+		$passwordField = $this->byCssSelector('#signinForm #password');
+		$passwordField->clear();
+		$this->keys($password);
+
+		$form = $this->byId('signinForm');
+		$form->submit();
+		usleep(500000);
+	}
 }
 
 class DBTestCaseWrapper extends DBTestCase {
