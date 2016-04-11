@@ -120,33 +120,42 @@ else if ($event->Capacity > count($participants)) {
 					foreach ($comments as $comment) { 
 						if ($parentID != "" && $parentID != $comment->ParentID) { ?>
 							<tr>
-								<td><a onclick="reply(this, <?php echo $parentID ?>)">
-									reply
-								</a></td>
-								<td colspan="2"></td>
+								<td>
+									<a onclick="reply(this, <?php echo $parentID ?>)" style="cursor:pointer">reply</a>
+								</td>
+								<td colspan="3"></td>
 							</tr>
 						<?php }
 						if ($comment->ParentID == $comment->CommentID) { ?>
 							<tr>
 								<td class="col-md-1"><?php echo $comment->FirstName ?></td>
 								<td colspan="2"><?php echo $comment->Text ?></td>
+								<td width="1%">
+									<?php if ($comment->UserID == $userID) {?>
+										<span class="glyphicon glyphicon-remove" aria-hidden="true" style="cursor:pointer" onclick="deleteComment(<?php echo $comment->CommentID ?>)"></span>
+									<?php } ?>
+								</td>
 							</tr>
-							
 						<?php } else { ?>
 							<tr>
 								<td></td>	
 								<td class="col-md-1"><?php echo $comment->FirstName ?></td>
 								<td><?php echo $comment->Text ?></td>
+								<td width="1%">
+									<?php if ($comment->UserID == $userID) {?>
+										<span class="glyphicon glyphicon-remove" aria-hidden="true" style="cursor:pointer" onclick="deleteComment(<?php echo $comment->CommentID ?>)"></span>
+									<?php } ?>
+								</td>
 							</tr>
-						<?php } ?>
-					<?php $parentID = $comment->ParentID; 
-					} 
+						<?php }
+						$parentID = $comment->ParentID; 
+					}
 					if ($parentID != "") { ?>
 						<tr>
-							<td><a onclick="reply(this, <?php echo $parentID ?>)">
-								reply
-							</a></td>
-							<td colspan="2"></td>
+							<td>
+								<a onclick="reply(this, <?php echo $parentID ?>)" style="cursor:pointer">reply</a>
+							</td>
+							<td colspan="3"></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -207,14 +216,30 @@ else if ($event->Capacity > count($participants)) {
 		$('#form').validate({});
 	});
 
-	function reply(replyLink, parentID) {
+	reply = function(replyLink, parentID) {
 		var td = $(replyLink).parent().next();
-		var form = $('<form method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/reply" class="form-horizontal"></form>');
-		form.append('<input type="hidden" name="eventID" value="<?php echo $event->EventID ?>" />');
-		form.append('<input type="hidden" name="parentID" value="' + parentID + '" />');
-		form.append('<input type="text" name="text" required aria-required="true" />');
-		form.append('<button type="submit" class="btn btn-default" style="margin-left:5px">Save</button>');
-		td.append(form);
-		return false;
-	};
+
+		if (td.children().length == 0) {
+			var form = $('<form method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/reply" class="form-horizontal"></form>');
+			form.append('<input type="hidden" name="eventID" value="<?php echo $event->EventID ?>" />');
+			form.append('<input type="hidden" name="parentID" value="' + parentID + '" />');
+			form.append('<input type="text" name="text" required aria-required="true" />');
+			form.append('<button type="submit" class="btn btn-default" style="margin-left:5px">Save</button>');
+			form.append('<button type="button" class="btn btn-default" style="margin-left:5px" onclick="cancelReply(this)">Cancel</button>');
+
+			td.append(form);
+		}
+	}
+
+	cancelReply = function(cancelButton) {
+		var td = $(cancelButton).closest('td');
+		td.empty();
+	}
+
+	deleteComment = function(commentID) {
+		if (confirm('Are you sure you want to delete this comment?'))
+		{
+			window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/deleteComment/" . $event->EventID . "/"; ?>' + commentID;
+		}
+	}
 </script>

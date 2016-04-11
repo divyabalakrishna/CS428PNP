@@ -253,19 +253,27 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-	public function getComments($eventID) {
+	public function getComments($eventID, $commentID = "") {
 		$sql = "SELECT Comment.*,
 					User.FirstName,
 					User.LastName,
 					User.Picture
 				FROM Comment
 				INNER JOIN User ON User.UserID = Comment.UserID
-				WHERE Comment.EventID = :eventID
-				ORDER BY Comment.ParentID, Comment.CommentID";
+				WHERE Comment.EventID = :eventID";
+
+		if (is_numeric($commentID)) {
+			$sql .= " AND Comment.CommentID = :commentID";
+		}
+
+		$sql .= " ORDER BY Comment.ParentID, Comment.CommentID";
 
 		$parameters = array(
 				":eventID" => $eventID
 		);
+		if (is_numeric($commentID)) {
+			$parameters[":commentID"] = $commentID;
+		}
 
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
@@ -337,7 +345,8 @@ class EventModel extends Model
 				WHERE Comment.EventID = :eventID";
 
 		if (is_numeric($commentID)) {
-			$sql .= " AND Comment.ParentID = :commentID";
+			$sql .= " AND (Comment.ParentID = :commentID
+					OR Comment.CommentID = :commentID)";
 		}
 
 		$parameters = array(":eventID" => $eventID);
