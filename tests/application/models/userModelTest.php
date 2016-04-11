@@ -91,4 +91,42 @@ class UserModelTest extends ModelTestCase {
 
 		$this->assertTablesEqual($expectedTable, $filteredTable);
 	}
+
+	public function testUpdateUser() {
+		$userID = static::$userModel->updateUser(2, 'John', 'Smith', 'jsmith@email.com', 'a1b2c3d4e5', '789-012-3456', 'JS', 'M', '12/31/1985');
+
+		$expectedUser = parent::createUserObject(2, 'John', 'Smith', 'jsmith@email.com', 'a1b2c3d4e5', '789-012-3456', '2.png', 5, 60, 'JS', 'M', '1985-12-31','Yes');
+		unset($expectedUser['Password']);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+				'User' => array($expectedUser)
+		)))->getTable('User');
+
+		$actualTable = $this->getConnection()->createQueryTable('User', 'SELECT * FROM User WHERE UserID = 2');
+		$filteredTable = new PHPUnit_Extensions_Database_DataSet_TableFilter($actualTable, array('Password'));
+
+		$actualPassword = $actualTable->getValue(0, 'Password');
+
+		$this->assertTablesEqual($expectedTable, $filteredTable);
+		$this->assertTrue(password_verify('a1b2c3d4e5', $actualPassword));
+	}
+
+	public function testSetPasswordEncrypted() {
+		static::$userModel->setPassword(2, 'a1b2c3d4e5', 'yes');
+
+		$actualTable = $this->getConnection()->createQueryTable('User', 'SELECT Password FROM User WHERE UserID = 2');
+		$actualPassword = $actualTable->getValue(0, 'Password');
+
+		$this->assertTrue(password_verify('a1b2c3d4e5', $actualPassword));
+	}
+
+	public function testSetPasswordNotEncrypted() {
+		static::$userModel->setPassword(2, 'a1b2c3d4e5', 'no');
+
+		$actualTable = $this->getConnection()->createQueryTable('User', 'SELECT Password FROM User WHERE UserID = 2');
+		$actualPassword = $actualTable->getValue(0, 'Password');
+
+		$this->assertEquals('a1b2c3d4e5', $actualPassword);
+	}
+
 }
