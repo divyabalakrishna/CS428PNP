@@ -193,8 +193,4 @@ class EventViewTest extends ViewTestCase {
 		$this->assertEquals($originalLink, $this->getBrowserUrl());
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

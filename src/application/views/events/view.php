@@ -150,11 +150,7 @@ else if ($event->Capacity > count($participants)) {
 								</td>
 							</tr>
 						<?php }
-<<<<<<< HEAD
 						$parentID = $comment->ParentID;
-=======
-						$parentID = $comment->ParentID;
->>>>>>> origin/master
 					}
 					if ($parentID != "") { ?>
 						<tr>
@@ -248,8 +244,4 @@ else if ($event->Capacity > count($participants)) {
 			window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/deleteComment/" . $event->EventID . "/"; ?>' + commentID;
 		}
 	}
-<<<<<<< HEAD
 </script>
-=======
-</script>
->>>>>>> origin/master

@@ -129,8 +129,4 @@ class UserModelTest extends ModelTestCase {
 		$this->assertEquals('a1b2c3d4e5', $actualPassword);
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

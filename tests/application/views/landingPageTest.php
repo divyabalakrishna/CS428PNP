@@ -104,8 +104,5 @@ class LandingPageTest extends ViewTestCase {
 
 		$this->assertEquals('Reset password notification sent successfully. Please check your email.', $successMessage->text());
 	}
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> origin/master

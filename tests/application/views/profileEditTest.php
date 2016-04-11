@@ -27,8 +27,5 @@ class ProfileEditTest extends ViewTestCase {
 
 		$this->assertEquals('Password has been successfully changed.', $successMessage->text());
 	}
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> origin/master

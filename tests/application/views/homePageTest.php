@@ -36,8 +36,4 @@ class HomePageTest extends ViewTestCase {
 		$this->assertEquals('Congratulation. Your Account is now active.', $successMessage->text());
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

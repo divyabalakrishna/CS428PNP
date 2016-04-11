@@ -795,8 +795,4 @@ class EventModelTest extends ModelTestCase
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

@@ -143,8 +143,4 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 		return $media;
 	}
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master
