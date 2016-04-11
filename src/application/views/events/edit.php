@@ -109,33 +109,20 @@ else {
                                     }
                                 }
                                 function noPosition(){
-                                    $('#gmap-lat').val(40.1138767);
-                                    $('#gmap-lon').val(-88.2242376);
-
-                                    $('#gmap').locationpicker({
-                                        <?php if (is_numeric($event->Lat) && is_numeric($event->Lon)) { ?>
-                                        location: {latitude: <?php echo $event->Lat ?>, longitude: <?php echo $event->Lon ?>},
-                                        <?php } else { ?>
-                                        location: {latitude: 40.1138767, longitude: -88.2242376},
-                                        <?php } ?>
-                                        radius: 0,
-                                        inputBinding: {
-                                            latitudeInput: $('#gmap-lat'),
-                                            longitudeInput: $('#gmap-lon'),
-                                            locationNameInput: $('#gmap-address')
-                                        },
-                                        enableAutocomplete: true
-                                    });
+                                    setMap(40.1138767,-88.2242376);
                                 }
                                 function getPosition(position) {
-                                    $('#gmap-lat').val(position.coords.latitude); 
-                                    $('#gmap-lon').val(position.coords.longitude);
-                                    
+                                    setMap(position.coords.latitude,position.coords.longitude);
+                                }
+
+                                function setMap(lat,lon){
+                                    $('#gmap-lat').val(lat);
+                                    $('#gmap-lon').val(lon);
                                     $('#gmap').locationpicker({
                                         <?php if (is_numeric($event->Lat) && is_numeric($event->Lon)) { ?>
                                         location: {latitude: <?php echo $event->Lat ?>, longitude: <?php echo $event->Lon ?>},
                                         <?php } else { ?>
-                                        location: {latitude: position.coords.latitude, longitude: position.coords.longitude},
+                                        location: {latitude: lat, longitude: lon},
                                         <?php } ?>
                                         radius: 0,
                                         inputBinding: {
