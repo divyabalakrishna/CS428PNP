@@ -82,7 +82,35 @@ else if ($event->Capacity > count($participants)) {
 			<?php } ?>
 		</div>
 	
-		<br/><br/><br/><br/>
+		<br/><br/><br/>
+		
+		<!-- Media -->
+		<div class="media">
+			<h3 class="page-header">Media</h3>
+			<div class = "photos">
+			<?php foreach ($media as $image) { ?>
+				<div class="profile">
+					<?php if ($image->Image != "") { ?>
+						<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>"/>
+					<?php } ?>
+				</div>
+			<?php } ?>
+			</div>
+			
+			<form id="formUpload" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/upload" enctype="multipart/form-data" >
+				<input type="hidden" id="eventID" name="eventID" value="<?php echo $event->EventID ?>" />
+				<label class="col-sm-2 control-label">Image</label>
+				<div class="col-sm-10">
+					<input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
+					<input type="file" id="image" name="image" accept="image/jpg,image/jpeg,image/png,image/bmp" class="form-control" />
+					<p class="help-block">Max file size: 2 MB. Accepted file types: .jpg, .jpeg, .png, .bmp</p>
+					
+				</div>
+				<!-- Buttons -->
+				<button type="submit" class="btn btn-default">Upload</button>
+			</form>
+		</div>
+		
 		<div class="comments">
 			<h3 class="page-header">Comments</h3>
 			<table class="table table-striped">
