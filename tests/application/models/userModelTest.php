@@ -50,7 +50,7 @@ class UserModelTest extends ModelTestCase {
 	public function testInsertUser() {
 		$userID = static::$userModel->insertUser('email@email.com', 'abc123', '987xyz');
 
-		$expectedUser = parent::createUserObject(4, null, null, 'email@email.com', null, null, null, 5, null, null, null, null, '987xyz');
+		$expectedUser = parent::createUserObject(5, null, null, 'email@email.com', null, null, null, 5, null, null, null, null, '987xyz');
 		unset($expectedUser['Password']);
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
@@ -62,9 +62,33 @@ class UserModelTest extends ModelTestCase {
 
 		$actualPassword = $actualTable->getValue(0, 'Password');
 
-		$this->assertEquals(4, $this->getConnection()->getRowCount('User'));
+		$this->assertEquals(5, $this->getConnection()->getRowCount('User'));
 		$this->assertTablesEqual($expectedTable, $filteredTable);
 		$this->assertTrue(password_verify('abc123', $actualPassword));
 	}
 
+	public function testIsActive() {
+		$actualObject = static::$userModel->isActive(1);
+
+		$expectedObject = new stdClass();
+		$expectedObject->Active = 'Yes';
+
+		$this->assertEquals($expectedObject, $actualObject);
+	}
+
+	public function testSetActive() {
+		static::$userModel->setActive(4, 'Yes');
+
+		$expectedUser = parent::createUserObject(4, 'First', 'Last', 'firstlast@email.com', '98765', '678-901-2345', '4.jpg', 5, 60, null, 'F', '1987-04-01', 'Yes');
+		unset($expectedUser['Password']);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'User' => array($expectedUser)
+		)))->getTable('User');
+
+		$actualTable = $this->getConnection()->createQueryTable('User', 'SELECT * FROM User WHERE UserID = 4');
+		$filteredTable = new PHPUnit_Extensions_Database_DataSet_TableFilter($actualTable, array('Password'));
+
+		$this->assertTablesEqual($expectedTable, $filteredTable);
+	}
 }

@@ -34,7 +34,8 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
 			'User' => array(
 				$this->createUserObject(null, 'Jane', 'Doe', 'jdoe@email.com', '12345', '123-456-7890', '1.png', 5, 120, 'Jane', 'F', '1990-01-01', 'Yes'),	
 				$this->createUserObject(null, 'John', 'Smith', 'jsmith@email.com', 'abcde', '789-012-3456', '2.png', 5, 60, 'John', 'M', '1985-12-31','Yes'),
-				$this->createUserObject(null, 'Joe', 'Bloggs', 'joe@email.com', 'password', '456-789-0123', '3.jpg', 5, 120, 'Joe', 'M', '1980-06-15', 'Yes')
+				$this->createUserObject(null, 'Joe', 'Bloggs', 'joe@email.com', 'password', '456-789-0123', '3.jpg', 5, 120, 'Joe', 'M', '1980-06-15', 'Yes'),
+				$this->createUserObject(null, 'First', 'Last', 'firstlast@email.com', '98765', '678-901-2345', '4.jpg', 5, 60, null, 'F', '1987-04-01', 'abcde12345abcde1')
 			),
 			'UserTag' => array(
 				$this->createUserTagObject(1, 1),
