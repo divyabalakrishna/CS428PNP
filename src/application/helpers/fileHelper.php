@@ -18,8 +18,8 @@ class FileHelper
 		$fileUploaded = false;
 
 		if ($_FILES[$fieldName]["error"] == 0 && $_FILES[$fieldName]["tmp_name"] != "" && ($maxSize == 0 || $_FILES[$fieldName]["size"] <= $maxSize)) {
-			$fileExtension = pathinfo($_FILES[$fieldName]["name"], PATHINFO_EXTENSION);
-			$acceptedExtensionArray = explode(",", $acceptedExtensions);
+			$fileExtension = strtolower(pathinfo($_FILES[$fieldName]["name"], PATHINFO_EXTENSION));
+			$acceptedExtensionArray = explode(",", strtolower($acceptedExtensions));
 
 			if (in_array($fileExtension, $acceptedExtensionArray)) {
 				$uploadDirectory = UPLOAD_ROOT . $directory . DIRECTORY_SEPARATOR;

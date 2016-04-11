@@ -97,7 +97,9 @@ else if ($event->Capacity > count($participants)) {
 				</div>
 			<?php } ?>
 			</div>
-			
+
+			<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
+
 			<form id="formUpload" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/upload" enctype="multipart/form-data" >
 				<input type="hidden" id="eventID" name="eventID" value="<?php echo $event->EventID ?>" />
 				<label class="col-sm-2 control-label">Image</label>
