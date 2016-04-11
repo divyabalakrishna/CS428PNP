@@ -162,6 +162,16 @@ class SiteHelper
 
         mail($to,$subject,$message,$headers);        
     }
+
+	public function getDefaultLat()
+	{
+		return 40.11374573;
+	}
+
+	public function getDefaultLon()
+	{
+		return -88.224828;
+	}
     
     
 }
