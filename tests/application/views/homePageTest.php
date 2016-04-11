@@ -31,13 +31,9 @@ class HomePageTest extends ViewTestCase {
 		$form->submit();
 		usleep(500000);
 
-		try {
-			$this->byId('activationForm');
-			$this->fail('Activation form exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
+		$successMessage = $this->byCssSelector('div.alert');
+
+		$this->assertEquals('Congratulation. Your Account is now active.', $successMessage->text());
 	}
 
 }
