@@ -48,7 +48,7 @@
 			todayBtn: 'linked',
 			clearBtn: true
 		});
-
+		/*Input time*/
 		$('.input-group.timepicker').find('input[type="text"]').each(function() {
 			$(this).timepicker({
 				defaultTime: false
@@ -66,7 +66,7 @@
 
 				return new Date(value) >= today;
 			}
-
+			/*In case date added is in the past*/
 			return false;
 		}, "Please enter a future date.");
 
@@ -83,10 +83,11 @@
 			if (!/Invalid|NaN/.test(new Date(dateTimeString))) {
 				return new Date(dateTimeString) > new Date();
 			}
-
+			/*In case the time added is in the past*/
 			return false;
 		}, "Please enter a future time.");
-
+		
+		/*Check if the form is validated*/
 		$('#form').validate({
 			rules: {
 				date: {
