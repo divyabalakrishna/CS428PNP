@@ -115,18 +115,37 @@ else if ($event->Capacity > count($participants)) {
 			<h3 class="page-header">Comments</h3>
 			<table class="table table-striped">
 				<tbody>
-					<?php foreach ($comments as $comment) { ?>
-						<tr>
-							<td class="col-md-1"><?php echo $comment->FirstName ?></td>
+					<?php $parentID = "";
+					foreach ($comments as $comment) { 
+						if ($parentID != "" && $parentID != $comment->ParentID) { ?>
+							<tr>
+								<td><a onclick="reply(this, <?php echo $parentID ?>)">
+									reply
+								</a></td>
+								<td colspan="2"></td>
+							</tr>
+						<?php }
+						if ($comment->ParentID == $comment->CommentID) { ?>
+							<tr>
+								<td class="col-md-1"><?php echo $comment->FirstName ?></td>
+								<td colspan="2"><?php echo $comment->Text ?></td>
+							</tr>
 							
-							
-							<td><?php echo $comment->Text ?></td>
-						</tr>
+						<?php } else { ?>
+							<tr>
+								<td></td>	
+								<td class="col-md-1"><?php echo $comment->FirstName ?></td>
+								<td><?php echo $comment->Text ?></td>
+							</tr>
+						<?php } ?>
+					<?php $parentID = $comment->ParentID; 
+					} 
+					if ($parentID != "") { ?>
 						<tr>
-							<td><a onclick="reply(this, <?php echo $comment->CommentID ?>)">
+							<td><a onclick="reply(this, <?php echo $parentID ?>)">
 								reply
 							</a></td>
-							<td></td>
+							<td colspan="2"></td>
 						</tr>
 					<?php } ?>
 				</tbody>
