@@ -200,6 +200,7 @@ class Events
 		}
 	}
 	
+	
 	public function upload()
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
