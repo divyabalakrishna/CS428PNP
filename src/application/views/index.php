@@ -26,7 +26,7 @@
 				<div class="modal-footer">
                     <div class="row">
                         <div class="col-md-6 text-left">
-							<a class="text-left" id="forget" href="">Forget Password</a>
+							<a class="text-left" id="forgot" href="">Forgot Password</a>
                         </div>                    
                         <div class="col-md-6 text-right">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -71,15 +71,15 @@
 	</div>
 </div>  
 
-<!-- Modal Forget Password -->
+<!-- Modal Forgot Password -->
 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form class="form-group" id="forgetForm" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/forgotPassword">
+			<form class="form-group" id="forgotForm" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/forgotPassword">
                 <fieldset>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Forget Password</h3>
+					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Forgot Password</h3>
 				</div>
 				<div class="modal-body">
 					<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML("#myModal3"); ?>                    
@@ -283,7 +283,7 @@
 			}
 		});
 
-		$("#forgetForm").validate({
+		$("#forgotForm").validate({
             
 			rules: {
 				email: {
@@ -310,7 +310,7 @@
 			}
 		});
 
-		$('#forget').on('click', function(event) {
+		$('#forgot').on('click', function(event) {
             event.preventDefault(); // To prevent following the link (optional)
             
             $('#myModal').modal('hide');
