@@ -112,6 +112,9 @@ class Events
 	}
 
 	public function recreateSave() {
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$event = $GLOBALS["beans"]->eventModel->getEvent($_POST["eventID"]);
+
 		$newEventID = $GLOBALS["beans"]->eventModel->copyEvent(
 				$_POST["eventID"],
 				$_POST["date"],
@@ -122,6 +125,11 @@ class Events
 				$_POST["eventID"],
 				$newEventID
 		);
+
+		if ($event->Image != "") {
+			$fileName = $GLOBALS["beans"]->fileHelper->copyUploadedFile("event", $event->Image, $newEventID);
+			$GLOBALS["beans"]->eventModel->updateEventImage($newEventID, $userID, $fileName);
+		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $newEventID);
 	}
