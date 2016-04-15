@@ -13,8 +13,8 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 
 	public function testGetSession()
 	{
-		$_SESSION["application"] = "PLAN n PLAY";
-		$this->assertEquals("PLAN n PLAY", static::$siteHelper->getSession("application"));
+		$_SESSION["application"] = "PLAN & PLAY";
+		$this->assertEquals("PLAN & PLAY", static::$siteHelper->getSession("application"));
 	}
 
 	public function testAddAlertSingle()

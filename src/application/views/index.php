@@ -100,9 +100,9 @@
 <header>
 	<div class="header-content">
 		<div class="header-content-inner">
-			<h1>PLAN n PLAY</h1>
+			<h1>PLAN & PLAY</h1>
 			<hr>
-			<p>PLAN n PLAY helps you to better organize sports events and also helps you to join an event happening in your vicinity</p>
+			<p>PLAN & PLAY helps you to better organize sports events and also helps you to join an event happening in your vicinity</p>
 			<a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
 		</div>
 	</div>
@@ -114,7 +114,7 @@
 			<div class="col-lg-8 col-lg-offset-2 text-center">
 				<h2 class="section-heading">We've got what you need!</h2>
 				<hr class="light">
-				<p class="text-faded">PLAN n PLAY has everything you need to form groups and play a sport of your interest. All the events happening in the radius specified by you, is available for you to join along with screens to aid you to organize any sport of your interest!</p>
+				<p class="text-faded">PLAN & PLAY has everything you need to form groups and play a sport of your interest. All the events happening in the radius specified by you, is available for you to join along with screens to aid you to organize any sport of your interest!</p>
 				<a href="#" class="btn btn-default btn-xl">Get Started!</a>
 			</div>
 		</div>

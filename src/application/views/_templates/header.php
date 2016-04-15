@@ -99,7 +99,7 @@ if (!isset($userID)) {
 					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="<?php echo URL_WITH_INDEX_FILE; ?>">
-					<img alt="PLAN n PLAY" src="<?php echo URL; ?>public/img/pnp.png" height="35" />
+					<img alt="PLAN & PLAY" src="<?php echo URL; ?>public/img/pnp.png" height="35" />
 				</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
