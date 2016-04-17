@@ -73,4 +73,32 @@ class FileHelper
 		return UPLOAD_URL . $directory . "/" . $fileName;
 	}
 
+	public function copyUploadedFile($directory, $originalFileName, $replaceFileName = "") {
+		$uploadDirectory = UPLOAD_ROOT . $directory . DIRECTORY_SEPARATOR;
+		$extensionIndex = strpos($originalFileName, ".");
+		$extension = $GLOBALS["beans"]->stringHelper->right($originalFileName, strlen($originalFileName) - $extensionIndex - 1);
+
+		$newFileName = $replaceFileName;
+		if ($newFileName == "") {
+			$newFileName = $GLOBALS["beans"]->stringHelper->left($originalFileName, strlen($originalFileName) - $extensionIndex - 1);
+
+			$appendNumber = $GLOBALS["beans"]->stringHelper->right($newFileName, 1);
+			if (strlen($newFileName) > 1 && is_numeric($appendNumber)) {
+				$newFileName = $GLOBALS["beans"]->stringHelper->left($originalFileName, strlen($originalFileName) - 1);
+			}
+			else {
+				$appendNumber = 0;
+			}
+			while (file_exists($uploadDirectory . $newFileName . "." . $extension)) {
+				$appendNumber = $appendNumber + 1;
+				$newFileName = $newFileName . $appendNumber;
+			}
+		}
+		$newFileName = $newFileName . "." . $extension;
+
+		copy($uploadDirectory . $originalFileName, $uploadDirectory . $newFileName);
+
+		return $newFileName;
+	}
+
 }

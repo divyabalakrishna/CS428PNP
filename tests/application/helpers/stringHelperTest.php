@@ -9,7 +9,7 @@ class StringHelperTest extends PHPUnit_Framework_TestCase
 	private static $stringHelper;
 
 	public static function setUpBeforeClass() {
-		static::$string = "PLAN n PLAY";
+		static::$string = "PLAN & PLAY";
 		static::$stringHelper = new StringHelper();
 	}
 

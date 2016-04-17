@@ -256,7 +256,8 @@ class EventModel extends Model
                 ( 3959 * acos( cos( radians(".$Lat.") ) * cos( radians( lat ) ) 
                 * cos( radians( Lon ) - radians(".$Lon.") ) + sin( radians(".$Lat.") ) * sin(radians(lat)) ) ) AS distance 
                 FROM Event 
-				LEFT JOIN Tag ON Tag.TagID = Event.TagID                
+				LEFT JOIN Tag ON Tag.TagID = Event.TagID
+				WHERE Event.Time > NOW()
                 HAVING distance < ".$radius."
                 ORDER BY distance";
         

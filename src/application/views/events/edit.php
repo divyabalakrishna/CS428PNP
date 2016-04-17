@@ -40,7 +40,7 @@ else {
 		<div class="form-group">
 			<label for="description" class="col-sm-2 control-label">Description</label>
 			<div class="col-sm-10">
-				<textarea id="description" name="description" class="form-control" placeholder="Event Description"><?php echo $event->Description ?></textarea>
+				<textarea id="description" name="description" class="form-control" required aria-required="true" placeholder="Event Description"><?php echo $event->Description ?></textarea>
 			</div>
 		</div>
 

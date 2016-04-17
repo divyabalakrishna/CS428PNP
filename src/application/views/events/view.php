@@ -20,7 +20,7 @@ else if ($event->Capacity > count($participants)) {
 	</div>
 	
 	<div>
-		<div class="eventDetails">
+		<div class="form-horizontal eventDetails">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Description</label>
 				<div class="col-sm-10">
@@ -50,19 +50,22 @@ else if ($event->Capacity > count($participants)) {
 				<div class="col-sm-10">
 					<p class="form-control-static"><?php echo $event->TagName ?></p>
 				</div>
-			</div>	
+			</div>
 			<div>
 				<div>
-					<?php if ($userID == $event->HostID) { ?>
-						<button type="button" id="edit" class="btn btn-default">Edit</button>
-						<button type="button" id="delete" class="btn btn-default">Delete</button>
+					<?php if (strtotime($event->Time) > time()) {
+						if ($userID == $event->HostID) { ?>
+							<button type="button" id="edit" class="btn btn-default">Edit</button>
+							<button type="button" id="delete" class="btn btn-default">Delete</button>
+						<?php } else if (count($userParticipation) > 0) { ?>
+							<button type="button" id="leave" class="btn btn-default">Leave</button>
+						<?php } else if ($joinAllowed && count($userParticipation) == 0) { ?>
+							<button type="button" id="join" class="btn btn-default">Join</button>
+						<?php } else { ?>
+							This event has reached the maximum capacity.
+						<?php }
+					} else if ($userID == $event->HostID) { ?>
 						<button type="button" id="recreate" class="btn btn-default">Recreate</button>
-					<?php } else if (count($userParticipation) > 0) { ?>
-						<button type="button" id="leave" class="btn btn-default">Leave</button>
-					<?php } else if ($joinAllowed && count($userParticipation) == 0) { ?>
-						<button type="button" id="join" class="btn btn-default">Join</button>
-					<?php } else { ?>
-						This event has reached the maximum capacity.
 					<?php } ?>
 				</div>
 			</div>
@@ -191,28 +194,30 @@ else if ($event->Capacity > count($participants)) {
 <script>
 $('#menuHome').hide();
 	$(document).ready(function(){
-		<?php if ($userID == $event->HostID) { ?>
-			$('#edit').click(function(){
-				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/edit/" . $event->EventID; ?>';
-			});
-
-			$('#delete').click(function(){
-				if (confirm('Are you sure you want to delete this event?'))
-				{
-					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/delete/" . $event->EventID; ?>';
-				}
-			});
-
+		<?php if (strtotime($event->Time) > time()) {
+			if ($userID == $event->HostID) { ?>
+				$('#edit').click(function(){
+					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/edit/" . $event->EventID; ?>';
+				});
+	
+				$('#delete').click(function(){
+					if (confirm('Are you sure you want to delete this event?'))
+					{
+						window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/delete/" . $event->EventID; ?>';
+					}
+				});
+			<?php } else if (count($userParticipation) > 0) { ?>
+				$('#leave').click(function() {
+					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/leave/" . $event->EventID; ?>';
+				});
+			<?php } else if ($joinAllowed && count($userParticipation) == 0) { ?>
+				$('#join').click(function() {
+					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/join/" . $event->EventID; ?>';
+				});
+		<?php }
+		} else if ($userID == $event->HostID) { ?>
 			$('#recreate').click(function(){
 				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/recreate/" . $event->EventID; ?>';
-			});
-		<?php } else if (count($userParticipation) > 0) { ?>
-			$('#leave').click(function() {
-				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/leave/" . $event->EventID; ?>';
-			});
-		<?php } else if ($joinAllowed && count($userParticipation) == 0) { ?>
-			$('#join').click(function() {
-				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/join/" . $event->EventID; ?>';
 			});
 		<?php } ?>
 

@@ -80,7 +80,7 @@ class LandingPageTest extends ViewTestCase {
 		$this->assertEquals('ACTIVATE', $activateButton->text());
 	}
 
-	public function testForgetPassword() {
+	public function testForgotPassword() {
 		$this->url($this->applicationURL);
 
 		$signInLink = $this->byId('signInLink');
@@ -88,19 +88,19 @@ class LandingPageTest extends ViewTestCase {
 		usleep(500000);
 
 		$signInForm = $this->byId('signinForm');
-		$forgetLink = $signInForm->byLinkText('Forget Password');
-		$forgetLink->click();
+		$forgotLink = $signInForm->byLinkText('Forgot Password');
+		$forgotLink->click();
 		usleep(800000);
 
-		$emailField = $this->byCssSelector('#forgetForm #email');
+		$emailField = $this->byCssSelector('#forgotForm #email');
 		$emailField->clear();
 		$this->keys('jdoe@email.com');
 
-		$form = $this->byId('forgetForm');
+		$form = $this->byId('forgotForm');
 		$form->submit();
 		usleep(500000);
 
-		$successMessage = $this->byCssSelector('#forgetForm div.alert');
+		$successMessage = $this->byCssSelector('#forgotForm div.alert');
 
 		$this->assertEquals('Reset password notification sent successfully. Please check your email.', $successMessage->text());
 	}

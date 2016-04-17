@@ -26,7 +26,7 @@
 				<div class="modal-footer">
                     <div class="row">
                         <div class="col-md-6 text-left">
-							<a class="text-left" id="forget" href="">Forget Password</a>
+							<a class="text-left" id="forgot" href="">Forgot Password</a>
                         </div>                    
                         <div class="col-md-6 text-right">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -71,15 +71,15 @@
 	</div>
 </div>  
 
-<!-- Modal Forget Password -->
+<!-- Modal Forgot Password -->
 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form class="form-group" id="forgetForm" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/forgotPassword">
+			<form class="form-group" id="forgotForm" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>user/forgotPassword">
                 <fieldset>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Forget Password</h3>
+					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Forgot Password</h3>
 				</div>
 				<div class="modal-body">
 					<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML("#myModal3"); ?>                    
@@ -100,9 +100,9 @@
 <header>
 	<div class="header-content">
 		<div class="header-content-inner">
-			<h1>PLAN n PLAY</h1>
+			<h1>PLAN & PLAY</h1>
 			<hr>
-			<p>PLAN n PLAY helps you to better organize sports events and also helps you to join an event happening in your vicinity</p>
+			<p>PLAN & PLAY helps you to better organize sports events and also helps you to join an event happening in your vicinity</p>
 			<a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
 		</div>
 	</div>
@@ -114,7 +114,7 @@
 			<div class="col-lg-8 col-lg-offset-2 text-center">
 				<h2 class="section-heading">We've got what you need!</h2>
 				<hr class="light">
-				<p class="text-faded">PLAN n PLAY has everything you need to form groups and play a sport of your interest. All the events happening in the radius specified by you, is available for you to join along with screens to aid you to organize any sport of your interest!</p>
+				<p class="text-faded">PLAN & PLAY has everything you need to form groups and play a sport of your interest. All the events happening in the radius specified by you, is available for you to join along with screens to aid you to organize any sport of your interest!</p>
 				<a href="#" class="btn btn-default btn-xl">Get Started!</a>
 			</div>
 		</div>
@@ -283,7 +283,7 @@
 			}
 		});
 
-		$("#forgetForm").validate({
+		$("#forgotForm").validate({
             
 			rules: {
 				email: {
@@ -310,7 +310,7 @@
 			}
 		});
 
-		$('#forget').on('click', function(event) {
+		$('#forgot').on('click', function(event) {
             event.preventDefault(); // To prevent following the link (optional)
             
             $('#myModal').modal('hide');
