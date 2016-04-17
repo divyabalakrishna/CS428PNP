@@ -1,59 +1,130 @@
 <?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
-<div class="container" style="font-size: 120%;">
-    <?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
-	<a style="color:#EA7617;" href="<?php echo URL_WITH_INDEX_FILE; ?>events/listHosted">Events Created</a><br/>
-	<?php foreach ($hostedEvents as $event) { ?>
-		<created class="created">
-			<div class="icon">
-			<img style="width: 100%;height: 100%;" src="<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png">
-			</div>
-			<div class="content">
-				<div style="font-size: 20px;"><?php echo $event->Name ?></div>
-				<div style="font-size: 10px;font-style: italic;"><?php echo $event->FormattedDate ?></div>
-				<div style="font-size: 10px;"><?php echo $event->FormattedTime ?></div>
-			</div>
-			<div class="details"><a href="<?php echo URL_WITH_INDEX_FILE; ?>events/view/<?php echo $event->EventID ?>"> View Details</a></div>
-		</created>
-	<?php } ?>
-	<button class="create" onclick="self.location='<?php echo URL_WITH_INDEX_FILE; ?>events/edit'">+</button><br/>
-	<br/>
-</div>
-<div class="container" style="font-size: 120%;">
-	<a style="color: #E49721;" href="<?php echo URL_WITH_INDEX_FILE; ?>events/listJoined">Events Joined</a><br/>
-	<?php foreach ($joinedEvents as $event) { ?>
-		<joined class="joined">
-			<div class="icon">
-			<img style="width: 100%;height: 100%;" src="<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png">
-			</div>
-			<div class="content">
-				<div style="font-size: 20px;"><?php echo $event->Name ?></div>
-				<div style="font-size: 10px;font-style: italic;"><?php echo $event->FormattedDate ?></div>
-				<div style="font-size: 10px;"><?php echo $event->FormattedTime ?></div>
-			</div>
-			<div class="details"><a href="<?php echo URL_WITH_INDEX_FILE; ?>events/view/<?php echo $event->EventID ?>"> View Details</a></div>
-		</joined>
-	<?php } ?>
-</div>
-<br/>
-<div class="container" style="font-size: 120%;">
-	<a style="color: #E4B40F">Other Events</a><br/>
-	<other>
-		<otherEvents class="other">
-			<div class="icon">
-			<img style="width: 100%;height: 100%;" src="../public/img/tennis.png">
-			</div>
-			<div class="content">
-				<div style="font-size: 20px;">Tennis</div>
-				<div style="font-size: 10px;font-style: italic;">Sunday</div>
-				<div style="font-size: 10px;">3:00 pm</div>
-			</div>
-			<div class="details">View Details</div>
-		</otherEvents>
-	</other>
+<div class="splitter">
+	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
+	<?php $Events = $hostedEvents ?>
+    <div class="leftpaneCollapsed" id="leftpane">
+	    <button class="buttons" id="hosted">Hosted</button>
+	    <button class="buttons" id="past">Past</button>
+	    <button class="buttons" id="joined">Joined</button>
+	    <button class="buttons" id="feed">Feed</button>
+	    <button class="buttons" id="create">create</button>
+    </div>
+    <div class="rightpane rightpaneExpanded" id="rightpane">
+    	<?php foreach ($Events as $event) { ?>
+		    <div class = "tiles">
+		    	<input type="hidden" id="eventIDTile" name="eventID" value="<?php echo $event->EventID ?>" />
+			    <div class="icon">
+			    	<img style="width: 100%;height: 100%;" src="<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png">
+				</div>
+				<div class="content">
+					<div class="title"><?php echo $event->Name ?></div>
+					<div class="desc"><?php echo $event->Description ?></div>
+					<div class="desc"><?php echo $event->Address ?></div>
+					<div class="desc"><?php echo $event->FormattedDate ?></div>
+					<div class="desc"><?php echo $event->FormattedTime ?></div>
+				</div>
+		    </div>
+	    <?php } ?>
+    </div>
 </div>
 <script>
+	$('#menuHome').show();
+	function tileClick(){
+		var eventID = $(this).children()[0].value;
+		self.location='<?php echo URL_WITH_INDEX_FILE; ?>events/view/' + eventID;
+	}
     $(function() {
-
+    	$(document).ready(function(){
+    		$('#menuHome').click(function(){
+				if(this.toggle){
+            		this.toggle = 0;
+            		$('#rightpane').css('width','100%');
+            		$('#leftpane').removeClass('leftpaneExpanded');
+        			$('#leftpane').addClass('leftpaneCollapsed');
+				}
+				else{
+					this.toggle = 1;
+					$('#rightpane').css('width','85%');
+					$('#leftpane').removeClass('leftpaneCollapsed');
+        			$('#leftpane').addClass('leftpaneExpanded');
+				}
+    		});
+    		$('.tiles').click(tileClick);
+    		$('#create').click(function(){
+    			self.location='<?php echo URL_WITH_INDEX_FILE; ?>events/edit';
+        	});
+    		$('#feed').click(function(){
+    			
+    		});
+    		$('#joined').click(function(){
+    			<?php $Events = $joinedEvents ?>
+    			$('#rightpane').empty();
+    			<?php foreach ($Events as $event) { ?>
+				   var tile =  '<div class = "tiles">' +
+				   		'<input type="hidden" id="eventIDTile" name="eventID" value="<?php echo $event->EventID ?>" />'+
+					    '<div class="icon">'+
+					    	'<img style="width: 100%;height: 100%;" src="<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png">'+
+						'</div>'+
+						'<div class="content">'+
+							'<div class="title"><?php echo $event->Name ?></div>'+
+							'<div class="desc"><?php echo $event->Description ?></div>'+
+							'<div class="desc"><?php echo $event->Address ?></div>'+
+							'<div class="desc"><?php echo $event->FormattedDate ?></div>'+
+							'<div class="desc"><?php echo $event->FormattedTime ?></div>'+
+						'</div>'+
+				    '</div>';
+				    
+				    $('#rightpane').append(tile);
+				    $('.tiles').click(tileClick);
+			    <?php } ?>
+    		});
+    		$('#past').click(function(){
+    			<?php $Events = $pastEvents ?>
+    			$('#rightpane').empty();
+    			debugger;
+    			<?php foreach ($Events as $event) { ?>
+				   var tile =  '<div class = "tiles">' +
+				   		'<input type="hidden" id="eventIDTile" name="eventID" value="<?php echo $event->EventID ?>" />'+
+					    '<div class="icon">'+
+					    	'<img style="width: 100%;height: 100%;" src="<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png">'+
+						'</div>'+
+						'<div class="content">'+
+							'<div class="title"><?php echo $event->Name ?></div>'+
+							'<div class="desc"><?php echo $event->Description ?></div>'+
+							'<div class="desc"><?php echo $event->Address ?></div>'+
+							'<div class="desc"><?php echo $event->FormattedDate ?></div>'+
+							'<div class="desc"><?php echo $event->FormattedTime ?></div>'+
+						'</div>'+
+				    '</div>';
+				    
+				    $('#rightpane').append(tile);
+				    $('.tiles').click(tileClick);
+			    <?php } ?>
+    		});
+    		$('#hosted').click(function(){
+    			<?php $Events = $hostedEvents ?>
+    			$('#rightpane').empty();
+    			<?php foreach ($Events as $event) { ?>
+				   var tile =  '<div class = "tiles">' +
+				   		'<input type="hidden" id="eventIDTile" name="eventID" value="<?php echo $event->EventID ?>" />'+
+					    '<div class="icon">'+
+					    	'<img style="width: 100%;height: 100%;" src="<?php echo URL; ?>public/img/sports/<?php echo $event->TagName ?>.png">'+
+						'</div>'+
+						'<div class="content">'+
+							'<div class="title"><?php echo $event->Name ?></div>'+
+							'<div class="desc"><?php echo $event->Description ?></div>'+
+							'<div class="desc"><?php echo $event->Address ?></div>'+
+							'<div class="desc"><?php echo $event->FormattedDate ?></div>'+
+							'<div class="desc"><?php echo $event->FormattedTime ?></div>'+
+						'</div>'+
+				    '</div>';
+				    
+				    $('#rightpane').append(tile);
+				    $('.tiles').click(tileClick);
+			    <?php } ?>
+    		});
+        });
+    	
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
         }

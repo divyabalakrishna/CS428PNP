@@ -1582,27 +1582,24 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
-.container {
+.containerHeader {
+  width:100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
 }
-@media (min-width: 768px) {
-  .container {
-    width: 750px;
-  }
+
+.container {
+  width:100%;
+  position: relative;
+  left: 10%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
-}
+
 .container-fluid {
   padding-right: 15px;
   padding-left: 15px;
@@ -6760,151 +6757,11 @@ button.close {
 }
 /*# sourceMappingURL=bootstrap.css.map */
 
-.create{
-	position: relative;
-    width: 200px;
-    height: 130px;
-    background-color: white;
-    border-radius: 10px;
-    font-size: 60px;
-    color: #EA7617;
-    border-color: #EA7617;
-    margin: 10px;
-}
-
-.created{
-	position: relative;
-    width: 200px;
-    height: 130px;
-    float: left;
-    background-color: #EA7617;
-    margin: 10px;
-    border-radius: 10px;
-}
-
-.created .icon{
-	float: left;
-    position: relative;
-    width: 40%;
-    height: 76%;
-    padding:10px;
-}
-
-.created .content{
-	float: left;
-    position: relative;
-    width: 60%;
-    height: 76%;
-    color: white;
-    text-align: center;
-    padding:10px;
-}
-
-.created .details{
-	background-color: white;
-    height: 17%;
-    width: 95%;
-    position: relative;
-    float: left;
-    margin: 5px;
-    border-radius: 3px;
-    font-size: 15px;
-    color: #EA7617;
-    cursor:pointer;
-}
-
-.joined{
-	position: relative;
-    width: 200px;
-    height: 130px;
-    float: left;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #E49721;
-    -moz-border-radius: 50% / 250px;
-    -webkit-border-radius: 40% / 250px;
-    border-radius: 200% / 250px;
-}
-
-.joined .icon{
-	float: left;
-    position: relative;
-    width: 43%;
-    height: 76%;
-    padding: 15px 0px 5px 30px;
-}
-
-.joined .content{
-	float: left;
-    position: relative;
-    width: 55%;
-    height: 76%;
-    color: white;
-    text-align: center;
-    padding: 15px 5px 0px 0px;
-}
-
-.joined .details{
-	background-color: white;
-    height: 14%;
-    width: 54%;
-    position: relative;
-    float: left;
-    margin: 0px 5px 5px 49px;
-    border-radius: 3px;
-    font-size: 15px;
-    color: #E49721;
-    cursor:pointer;
-}
-
-.other{
-	position: relative;
-    width: 200px;
-    height: 130px;
-    float: left;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #E4B40F;
-    -moz-border-radius: 50% / 250px;
-    -webkit-border-radius: 40% / 250px;
-}
-
-.other .icon{
-	float: left;
-    position: relative;
-    width: 43%;
-    height: 76%;
-    padding: 15px 0px 5px 30px;
-}
-
-.other .content{
-	float: left;
-    position: relative;
-    width: 55%;
-    height: 76%;
-    color: white;
-    text-align: center;
-    padding: 15px 5px 0px 0px;
-}
-
-.other .details{
-	background-color: white;
-    height: 14%;
-    width: 60%;
-    position: relative;
-    float: left;
-    margin: 0px 5px 5px 40px;
-    border-radius: 3px;
-    font-size: 15px;
-    color: #E4B40F;
-    cursor:pointer;
-}
-
 .container .detailsHeading{
 	position:relative;
 	text-align: center;
     height: 350px;
-    width:90%;
+    width:70%;
     background: grey; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(white, grey); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(white, grey); /* For Opera 11.1 to 12.0 */
@@ -7002,4 +6859,24 @@ button.close {
 .container .media .profile .image{
 	height: 100px;
 	width: 100px;
+}
+
+.containerHeader .navbar-header .menuHome{
+	position: relative;
+    float: left;
+    padding: 9px 10px;
+    margin-top: 8px;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #9d9d9d;
+}
+
+.containerHeader .navbar-header .menuHome:hover{
+	color: white;
+	text-decoration: none;
+	cursor: pointer;
 }

@@ -38,6 +38,7 @@ if (!isset($userID)) {
 	<link href="<?php echo URL; ?>public/css/animate.min.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo URL; ?>public/css/creative.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo URL; ?>public/css/notification.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo URL; ?>public/css/home.css" rel="stylesheet" type="text/css">
 
 	<!-- JS -->
 	<script src="<?php echo URL; ?>public/js/jquery.js"></script>
@@ -90,14 +91,11 @@ if (!isset($userID)) {
 	<!-- top bar -->
     
 	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
+		<div class="containerHeader">
 			<div class="navbar-header">
-				<button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" type="button">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
+				<a id="menuHome" class="menuHome">
+					Menu
+				</a>
 				<a class="navbar-brand" href="<?php echo URL_WITH_INDEX_FILE; ?>">
 					<img alt="PLAN n PLAY" src="<?php echo URL; ?>public/img/pnp.png" height="35" />
 				</a>
@@ -181,3 +179,5 @@ if (!isset($userID)) {
 			</div>
 		</div>
 	</nav>
+	
+</body>

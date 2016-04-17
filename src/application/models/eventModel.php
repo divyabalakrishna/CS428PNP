@@ -191,6 +191,34 @@ class EventModel extends Model
 
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
+	
+	public function getPastEvents()
+	{
+		$sql = "SELECT EVENT.*,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
+					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime,
+					Tag.Name AS TagName
+				FROM Event
+				LEFT JOIN Tag ON Tag.TagID = Event.TagID
+				WHERE Event.Time <= NOW()";
+	
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
+	}
+	
+	public function getFeed()
+	{
+		$sql = "SELECT EVENT.*,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
+					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime,
+					Tag.Name AS TagName
+				FROM Event
+				LEFT JOIN Tag ON Tag.TagID = Event.TagID
+				WHERE Event.Time <= NOW()";
+	
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
+	}
 
 	public function updateEventImage($eventID, $hostID, $image) {
 		$sql = "UPDATE Event

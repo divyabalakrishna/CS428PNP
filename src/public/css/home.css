@@ -1,0 +1,74 @@
+.splitter{
+	position: relative;
+    width: 100%;
+    height: 100%;
+    padding-right: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+}
+
+.splitter .leftpaneExpanded{
+	diaplay: bloack;
+	position: relative;
+	float: left;
+	width: 15%;
+	height: 100%;
+	background-color: #f0ad4e;
+	text-align:center;
+	padding-top: 10px;
+}
+
+.splitter .leftpaneCollapsed{
+	display:none;
+}
+
+.splitter .rightpane{
+	position: relative;
+	float: left;
+	padding-left: 20px;
+	height: 100%;
+	overflow: auto;
+}
+
+.splitter .leftpaneExpanded .buttons{
+	width: 85%;
+    background-color: #F7CE95;
+    border: transparent;
+    margin: 8px;
+    font-size: 15px;
+    border-radius: 5px;
+    color: #755722; 
+}
+
+.splitter .rightpane .tiles{
+	position: relative;
+    float: left;
+    width: 240px;
+    height: 320px;
+    background-color: #f05f40;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.splitter .rightpane .tiles .icon{
+	padding: 10px;
+    height: 40%;
+}
+
+.splitter .rightpane .tiles .content{
+	height: 60%;
+	padding: 10px;
+	color: white;
+}
+
+.splitter .rightpane .tiles .title{
+	font-size: 25px;
+    font-weight: 600;
+    padding: 5px;
+}
+
+.splitter .rightpane .tiles .desc{
+	font-size: 12px;
+	padding: 4px;
+}

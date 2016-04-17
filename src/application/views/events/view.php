@@ -189,6 +189,7 @@ else if ($event->Capacity > count($participants)) {
 
 
 <script>
+$('#menuHome').hide();
 	$(document).ready(function(){
 		<?php if ($userID == $event->HostID) { ?>
 			$('#edit').click(function(){
