@@ -219,7 +219,7 @@ class EventModel extends Model
 		
 		$parameters = array(":userID" => $userID);
 	
-		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
 	public function updateEventImage($eventID, $hostID, $image) {
