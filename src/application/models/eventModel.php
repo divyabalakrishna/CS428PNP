@@ -206,7 +206,7 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
 	}
 	
-	public function getFeed()
+	public function getFeed($userID)
 	{
 		$sql = "SELECT EVENT.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
@@ -215,7 +215,9 @@ class EventModel extends Model
 					Tag.Name AS TagName
 				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
-				WHERE Event.Time <= NOW()";
+				WHERE Event.Time > NOW() AND Event.HostID != :userID";
+		
+		$parameters = array(":userID" => $userID);
 	
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
 	}

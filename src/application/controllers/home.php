@@ -29,7 +29,7 @@ class Home
                 $hostedEvents = $GLOBALS["beans"]->eventModel->getHostedEvents($userID, "future", 4);
                 $joinedEvents = $GLOBALS["beans"]->eventModel->getJoinedEvents($userID, "future", 5);
                 $pastEvents = $GLOBALS["beans"]->eventModel->getPastEvents();
-                
+                $joinableEvents = $GLOBALS["beans"]->eventModel->getFeed($userID);
                 
                 require APP . 'views/_templates/header.php';
                 require APP . 'views/home/index.php';
