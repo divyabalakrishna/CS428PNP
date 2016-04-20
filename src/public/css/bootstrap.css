@@ -6762,7 +6762,7 @@ button.close {
 	position:relative;
 	text-align: center;
     height: 350px;
-    width:70%;
+    width:100%;
     background: grey; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(white, grey); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(white, grey); /* For Opera 11.1 to 12.0 */

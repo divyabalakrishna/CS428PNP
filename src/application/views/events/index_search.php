@@ -224,6 +224,7 @@ gmap{
 
 
 <script>
+$('#menuHome').hide();
 	$(document).ready(function(){
 		$('#clear').click(function(){
 			window.location.href = '<?php echo URL_WITH_INDEX_FILE; ?>events/listJoined';

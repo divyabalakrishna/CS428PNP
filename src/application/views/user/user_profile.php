@@ -109,6 +109,7 @@
 </div>
 
 <script>
+	$('#menuHome').hide();
 	var currentdate =  new Date();
 
 	$(document).ready(function(){
