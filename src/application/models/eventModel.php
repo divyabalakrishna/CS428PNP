@@ -215,8 +215,12 @@ class EventModel extends Model
 					Tag.Name AS TagName
 				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
-				LEFT JOIN Participant ON Event.EventID = Participant.EventID
-				WHERE Event.Time > NOW() AND Event.HostID != :userID AND Participant.UserID != :userID";
+				WHERE NOT EXISTS (
+                    	SELECT Participant.UserID 
+                    	FROM Participant 
+                    	WHERE Participant.EventID = Event.EventID 
+                    		AND Participant.UserID = :userID) 
+					AND Event.HostID <> :userID AND Event.Time > NOW()";
 		
 		$parameters = array(":userID" => $userID);
 	
