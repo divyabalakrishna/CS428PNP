@@ -199,7 +199,13 @@ class Application
 		}
         else if ($GLOBALS["beans"]->userModel->isActive($userID)->Active != 'Yes')
         {
-            header('location: ' . URL_WITH_INDEX_FILE);            
+			$validDestination = false;
+			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("active", $this->url_action) == 0);
+            
+			if (!$validDestination)
+			{
+				header('location: ' . URL_WITH_INDEX_FILE);
+			}
         }
 	}
 

@@ -235,7 +235,9 @@ class User
         
 		if (strcasecmp($active,$user->Active) == 0 && $user->Active != "" && $user->Active != "Yes")
         {
-            $cheat=1;
+            $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+            
+            if(!is_numeric($userID)) $cheat=1;
             require APP . 'views/_templates/header.php';
             require APP . 'views/user/activation.php';
             require APP . 'views/_templates/footer.php';
