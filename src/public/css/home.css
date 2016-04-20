@@ -41,6 +41,15 @@
     color: #755722; 
 }
 
+.splitter .leftpaneExpanded .tagList{
+	margin: 10px;
+}
+.splitter .leftpaneExpanded .tagList .tag{
+	color:#a94442;
+	font-size:2rem;
+	cursor: pointer;
+}
+
 .splitter .rightpane .tiles{
 	position: relative;
     float: left;
@@ -52,8 +61,9 @@
 }
 
 .splitter .rightpane .tiles .icon{
-	padding: 10px;
-    height: 40%;
+	padding: 10px 40px 10px 50px;
+    height: 41%;
+    width: 100%;
 }
 
 .splitter .rightpane .tiles .content{
