@@ -80,7 +80,7 @@
 			<label for="picture" class="col-sm-2 control-label">Picture</label>
 			<div class="col-sm-10">
 				<input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
-				<input type="file" id="picture" name="picture" accept="image/jpg,image/jpeg,image/png,image/bmp" class="form-control" />
+				<input type="file" id="picture" name="picture[]" accept="image/jpg,image/jpeg,image/png,image/bmp" class="form-control" />
 				<p class="help-block">Max file size: 2 MB. Accepted file types: .jpg, .jpeg, .png, .bmp</p>
 				<?php if ($profileInfo->Picture != "") { ?>
 					<img src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $profileInfo->Picture) ?>" height="100" />
