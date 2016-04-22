@@ -194,7 +194,7 @@ class EventModel extends Model
 	
 	public function getPastEvents()
 	{
-		$sql = "SELECT EVENT.*,
+		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime,
@@ -208,7 +208,7 @@ class EventModel extends Model
 	
 	public function getFeed($userID)
 	{
-		$sql = "SELECT EVENT.*,
+		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime,
