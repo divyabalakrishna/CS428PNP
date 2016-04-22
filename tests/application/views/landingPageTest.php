@@ -23,7 +23,7 @@ class LandingPageTest extends ViewTestCase {
 		$form->submit();
 		usleep(500000);
 
-		$errorMessage = $this->byCssSelector('#signinForm div.alert');
+		$errorMessage = $this->byCssSelector('#signinForm div.alert span');
 
 		$this->assertEquals('Invalid email or password.', $errorMessage->text());
 	}
@@ -100,7 +100,7 @@ class LandingPageTest extends ViewTestCase {
 		$form->submit();
 		usleep(500000);
 
-		$successMessage = $this->byCssSelector('#forgotForm div.alert');
+		$successMessage = $this->byCssSelector('#forgotForm div.alert span');
 
 		$this->assertEquals('Reset password notification sent successfully. Please check your email.', $successMessage->text());
 	}

@@ -15,7 +15,7 @@ class HomePageTest extends ViewTestCase {
 		$form->submit();
 		usleep(500000);
 
-		$errorMessage = $this->byCssSelector('#activationForm div.alert');
+		$errorMessage = $this->byCssSelector('#activationForm div.alert span');
 
 		$this->assertEquals('Activation failed, invalid code !!!.', $errorMessage->text());
 	}
@@ -31,7 +31,7 @@ class HomePageTest extends ViewTestCase {
 		$form->submit();
 		usleep(500000);
 
-		$successMessage = $this->byCssSelector('div.alert');
+		$successMessage = $this->byCssSelector('div.alert span');
 
 		$this->assertEquals('Congratulation. Your Account is now active.', $successMessage->text());
 	}

@@ -46,7 +46,8 @@ class SiteHelper
         {
             foreach($alerts as $alert) {
                 if(!isset($id) || $alert->id == $id) {
-                    $html .= "<div class='alert alert-" . $alert->type . "' role='alert'>" . $alert->message ;
+                    $html .= "<div class='alert alert-" . $alert->type . "' role='alert'>";
+                    $html .= "<span>" . $alert->message . "</span>";
                     $html .= "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
                     $html .= "</div>";
                     $_SESSION["alerts"] = "";

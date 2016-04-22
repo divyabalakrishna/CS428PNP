@@ -23,7 +23,7 @@ class ProfileEditTest extends ViewTestCase {
 		$form->submit();
 		usleep(500000);
 
-		$successMessage = $this->byCssSelector('div.alert');
+		$successMessage = $this->byCssSelector('div.alert span');
 
 		$this->assertEquals('Password has been successfully changed.', $successMessage->text());
 	}

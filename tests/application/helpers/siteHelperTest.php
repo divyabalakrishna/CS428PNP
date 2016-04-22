@@ -65,7 +65,7 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 	{
 		$this->addDummyAlert();
 
-		$html = "<div class='alert alert-info' role='alert'>Hello World</div>";
+		$html = "<div class='alert alert-info' role='alert'><span>Hello World</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
 
 		$this->checkAlert($html);
 	}
@@ -75,7 +75,7 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 		$this->addDummyAlert();
 		static::$siteHelper->addAlert("danger", "Error Message");
 
-		$html = "<div class='alert alert-info' role='alert'>Hello World</div><div class='alert alert-danger' role='alert'>Error Message</div>";
+		$html = "<div class='alert alert-info' role='alert'><span>Hello World</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='alert alert-danger' role='alert'><span>Error Message</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
 
 		$this->checkAlert($html);
 	}
