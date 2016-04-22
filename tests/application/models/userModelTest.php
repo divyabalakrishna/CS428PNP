@@ -12,7 +12,7 @@ class UserModelTest extends ModelTestCase {
 		parent::setGlobalVariables();
 	}
 
-	public function testLoginInfo() {
+	public function testGetLoginInfo() {
 		$actualObject = static::$userModel->getLoginInfo('jsmith@email.com');
 
 		// Password requires a separate method to check so store the value and remove it from the object
