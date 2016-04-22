@@ -241,12 +241,14 @@ else if ($event->Capacity > count($participants)) {
 			<h3 class="page-header">Participants</h3>
 			<?php foreach ($participants as $person) { ?>
 				<div class="profile">
-					<?php if ($person->Picture == "") { ?>
-						<img class="image" src="<?php echo URL; ?>public/img/profile.png">
-					<?php } else { ?>
-						<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture) ?>"/>
-					<?php } ?>
-					<div class="name"><?php echo $person->FirstName ?></div>
+					<a href="<?php echo URL_WITH_INDEX_FILE . "user/viewParticipantProfile/" . $person->UserID; ?>" data-toggle="modal" data-target="#showModal">
+						<?php if ($person->Picture == "") { ?>
+							<img class="image" src="<?php echo URL; ?>public/img/profile.png">
+						<?php } else { ?>
+							<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture) ?>"/>
+						<?php } ?>
+						<div class="name"><?php echo $person->FirstName ?></div>
+					</a>
 				</div>
 			<?php } ?>
 		</div>
