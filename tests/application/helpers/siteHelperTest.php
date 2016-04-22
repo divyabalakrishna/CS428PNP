@@ -48,14 +48,14 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals("danger", $alerts[1]->type);
 		$this->assertEquals("Error Message", $alerts[1]->message);
 	}
-	
+
 	private function addDummyAlert()
 	{
 		$_SESSION["alerts"] = "";
 		static::$siteHelper->addAlert("info", "Hello World");
 	}
-	
-	private function checkAlert()
+
+	private function checkAlert($html)
 	{
 		$this->assertEquals($html, static::$siteHelper->getAlertsHTML());
 		$this->assertEquals("", static::$siteHelper->getSession("alerts"));
@@ -63,21 +63,21 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 
 	public function testGetAlertsHTMLSingle()
 	{
-		addDummyAlert();
-		
+		$this->addDummyAlert();
+
 		$html = "<div class='alert alert-info' role='alert'>Hello World</div>";
-		
-		checkAlert();
+
+		$this->checkAlert($html);
 	}
 
 	public function testGetAlertsHTMLMultiple()
 	{
-		addDummyAlert();
+		$this->addDummyAlert();
 		static::$siteHelper->addAlert("danger", "Error Message");
 
 		$html = "<div class='alert alert-info' role='alert'>Hello World</div><div class='alert alert-danger' role='alert'>Error Message</div>";
-		
-		checkAlert();
+
+		$this->checkAlert($html);
 	}
 
 }
