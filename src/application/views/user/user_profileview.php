@@ -3,7 +3,7 @@
 <div class="container">
 	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
 
-	<h2 class="page-header">View Profile</h2>
+	<h2 class="page-header"><?php echo $profileInfo->FirstName ?> <?php echo $profileInfo->LastName ?>'s Profile</h2>
 	
 	<div class="form-group">
 		<label for="picture" class="col-sm-2 control-label">Picture</label>
@@ -13,15 +13,7 @@
 			<?php } ?>
 		</div>
 	</div>
-		
-	<div class="form-group">
-  		<label for="firstName" class="col-sm-2 control-label">First Name</label>
-  		<label for="firstName" class="control-label"><?php echo $profileInfo->FirstName ?></label>
-	</div>
-	<div class="form-group">
-		<label for="lastname" class="col-sm-2 control-label">Last Name</label>
-		<label for="lastname" class="control-label"><?php echo $profileInfo->LastName ?></label>
-    </div>
+
     <div class="form-group">
 		<label for="nickname" class="col-sm-2 control-label">Nick Name</label>
 		<label for="nickname" class="control-label"><?php echo $profileInfo->NickName ?></label>
@@ -66,7 +58,7 @@
     <!-- Buttons -->
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<button type="button" class="btn btn-default" onClick="javascript: history.back()">Close</button>
+			<button type="button" class="btn btn-default" onClick="javascript: history.back()">Back</button>
 		</div>
 	</div>
 </div>
