@@ -11,14 +11,15 @@ class FileHelper
 	 * $acceptedExtensions: comma separated list of accepted extensions (without the dot).
 	 * $errorMessageSubject: to be appended into the error message "Unable to upload <subject>" if upload is unsuccessful.
 	 */
-	public function uploadFile($fieldName, $directory, $acceptedExtensions, $errorMessageSubject, $maxSize = 0, $replaceFileName = "")
+	public function uploadFile($fieldName, $directory, $acceptedExtensions, $errorMessageSubject, $maxSize = 0, $replaceFileName = "", $index = 0)
 	{
 		$fileName = "";
-		$errorMessage = "Unable to upload " . $errorMessageSubject;
+		$errorMessage = "Unable to upload " . $errorMessageSubject . " " . $_FILES[$fieldName]["name"][$index];
 		$fileUploaded = false;
 
-		if ($_FILES[$fieldName]["error"] == 0 && $_FILES[$fieldName]["tmp_name"] != "" && ($maxSize == 0 || $_FILES[$fieldName]["size"] <= $maxSize)) {
-			$fileExtension = strtolower(pathinfo($_FILES[$fieldName]["name"], PATHINFO_EXTENSION));
+        
+		if ($_FILES[$fieldName]["error"][$index] == 0 && $_FILES[$fieldName]["tmp_name"][$index] != "" && ($maxSize == 0 || $_FILES[$fieldName]["size"][$index] <= $maxSize)) {
+			$fileExtension = strtolower(pathinfo($_FILES[$fieldName]["name"][$index], PATHINFO_EXTENSION));
 			$acceptedExtensionArray = explode(",", strtolower($acceptedExtensions));
 
 			if (in_array($fileExtension, $acceptedExtensionArray)) {
@@ -27,7 +28,7 @@ class FileHelper
 					mkdir($uploadDirectory, 0755, true);
 				}
 
-				$fileName = $_FILES[$fieldName]["name"];
+				$fileName = $_FILES[$fieldName]["name"][$index];
 				if (trim($replaceFileName) != "") {
 					$fileName = $replaceFileName . "." . $fileExtension;
 				}
@@ -35,21 +36,24 @@ class FileHelper
 				if (file_exists($uploadDirectory . $fileName)) {
 					unlink($uploadDirectory . $fileName);
 				}
-				move_uploaded_file($_FILES[$fieldName]["tmp_name"], $uploadDirectory . $fileName);
+				move_uploaded_file($_FILES[$fieldName]["tmp_name"][$index], $uploadDirectory . $fileName);
 
 				$fileUploaded = true;
 			}
 			else {
-				$errorMessage .= ": The uploaded file is not in the accepted file types.";
+				$errorMessage .= ": The uploaded file is not in the accepted file types." . $fileExtension;
 			}
 		}
-		else if ($_FILES[$fieldName]["error"] == UPLOAD_ERR_INI_SIZE || $_FILES[$fieldName]["error"] == UPLOAD_ERR_FORM_SIZE || ($maxSize > 0 && $_FILES[$fieldName]["size"] > $maxSize)) {
+        else if ($_FILES[$fieldName]["name"][$index] == "") {
+            $errorMessage = "";
+        }
+		else if ($_FILES[$fieldName]["error"][$index] == UPLOAD_ERR_INI_SIZE || $_FILES[$fieldName]["error"][$index] == UPLOAD_ERR_FORM_SIZE || ($maxSize > 0 && $_FILES[$fieldName]["size"] > $maxSize)) {
 			$errorMessage .= ": The uploaded file exceeds the max size limit.";
 		}
-		else if ($_FILES[$fieldName]["error"] == UPLOAD_ERR_NO_FILE || $_FILES[$fieldName]["error"] == 0) {
+		else if ($_FILES[$fieldName]["error"][$index] == UPLOAD_ERR_NO_FILE || $_FILES[$fieldName]["error"][$index] == 0) {
 			$errorMessage = "";
 		}
-		else if ($_FILES[$fieldName]["error"] != 0) {
+		else if ($_FILES[$fieldName]["error"][$index] != 0) {
 			$errorMessage .= ".";
 		}
 

@@ -480,3 +480,53 @@ body {
     height: 50px;
     width: auto;
 }
+
+.image-frame-car {
+/*  background: grey;*/
+  border: 1px solid #b2b2b2;
+  border-radius: 9px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 2px;
+  margin-right: .5em;
+  margin-bottom: .3em;
+}  
+
+.image-thumb-car {
+  background-size:cover;
+  background-repeat:no-repeat;
+  border-radius: 8px;
+  width:200px;
+  height:200px;
+
+}    
+/*
+
+@media (max-width: 767px) {
+  .image-thumb-car {
+  }
+}
+
+@media (min-width: 768px) {
+  .image-thumb-car {
+      width:200px;
+      height:200px;
+  }
+}
+@media (min-width: 992px) {
+  .image-thumb-car {
+      width:130px;
+      height:130px;
+  }
+}
+*/
+@media (min-width: 1200px) {
+  .image-thumb-car {
+      width:160px;
+      height:160px;
+  }
+}
+
+.showImage {
+	width: 100%;		/* desired width */
+}

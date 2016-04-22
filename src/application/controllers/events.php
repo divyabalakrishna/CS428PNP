@@ -227,14 +227,22 @@ class Events
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$eventID = $_POST["eventID"];
-		$result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "media", "jpg,jpeg,png,bmp", "media image", 2097152, "");
+        
+        $total = count($_FILES['image']['name']);
+        
+        // Loop through each file
+        for($i=0; $i<$total; $i++) {
+            $newName = $eventID."-".$userID."-".$GLOBALS["beans"]->stringHelper->genString(); 
+            $result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "media", "jpg,jpeg,png,bmp", "media image", 2097152, $newName,$i);
 
-		if ($result->fileUploaded) {
-			$GLOBALS["beans"]->eventModel->insertMedia($eventID, $userID, $result->fileName);
-		}
-		else if ($result->errorMessage != "") {
-			$GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
-		}
+            if ($result->fileUploaded) {
+                $GLOBALS["beans"]->eventModel->insertMedia($eventID, $userID, $result->fileName);
+            }
+            else if ($result->errorMessage != "") {
+                $GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
+            }
+        }
+        
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
 
@@ -289,8 +297,6 @@ class Events
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
 
-
-
 	public function deleteComment($eventID, $commentID) {
 		// We do not want to accidentally delete all comments in case commentID is blank, so change to a dummy number
 		if (!is_numeric($commentID)) {
@@ -302,6 +308,21 @@ class Events
 
 		if (count($comment) > 0 && $userID == $comment[0]->UserID) {
 			$GLOBALS["beans"]->eventModel->deleteComments($eventID, $commentID);
+		}
+
+		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
+	}
+    
+	public function deleteMedia($eventID, $mediaID) {
+		if (!is_numeric($mediaID)) {
+			$mediaID = -1;
+		}
+
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$media = $GLOBALS["beans"]->eventModel->getMedia($eventID,$mediaID);
+        
+		if ($userID == $media[0]->UserID) {
+			$GLOBALS["beans"]->eventModel->deleteMedia($eventID, $mediaID);
 		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
