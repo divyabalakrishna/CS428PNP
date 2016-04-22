@@ -112,6 +112,15 @@ class User
 		require APP . 'views/user/user_profile.php';
 		require APP . 'views/_templates/footer.php';
 	}
+	
+	public function viewParticipantProfile($userID) 
+	{
+		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
+		$tagInfo = $GLOBALS["beans"]->userModel->getUserTags($userID);
+		$tags = $GLOBALS["beans"]->resourceModel->getTags();
+		
+		require APP . 'views/user/user_profileview.php';
+	}
 
 	public function saveProfile(){
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
