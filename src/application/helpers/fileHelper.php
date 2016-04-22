@@ -56,6 +56,7 @@ class FileHelper
 		else if ($_FILES[$fieldName]["error"][$index] != 0) {
 			$errorMessage .= ".";
 		}
+        print_r($_FILES[$fieldName]);
 
 		$result = new stdClass();
 		$result->fileName = $fileName;
@@ -68,7 +69,7 @@ class FileHelper
 	public function deleteUploadedFile($directory, $fileName) {
 		$uploadDirectory = UPLOAD_ROOT . $directory . DIRECTORY_SEPARATOR;
 
-		if (file_exists($uploadDirectory . $fileName)) {
+        if (file_exists($uploadDirectory . $fileName)) {
 			unlink($uploadDirectory . $fileName);
 		}
 	}
