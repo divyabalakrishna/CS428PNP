@@ -64,5 +64,11 @@
 			<?php } ?>
     	</div>
     </div>
-
+    
+    <form id="form" method="post" action="" class="form-horizontal" enctype="multipart/form-data">
+    	<!-- Buttons -->
+    	<div class="col-sm-offset-2 col-sm-10">
+      		<button type="submit" class="btn btn-default">Close</button>
+    	</div>
+    </form>
 </div>

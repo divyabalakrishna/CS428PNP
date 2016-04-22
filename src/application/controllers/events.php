@@ -60,10 +60,10 @@ class Events
         $Old = false;
 
         if(isset($_POST["tag"])){
-            tag = true;
+            $Tag = true;
         }
         if(isset($_POST["old"])){
-            old = true;
+            $Old = true;
         }
 
          $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
