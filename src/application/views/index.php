@@ -11,17 +11,14 @@
 				</div>
 				<div class="modal-body">
 					<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
-					<label for="email" class="sr-only">Email address</label>
-					<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
-					<br>
-					<label for="password" class="sr-only">Password</label>
-					<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-<!--					<div class="checkbox">
-						<label>
-							<input type="checkbox" value="remember-me"> Remember me
-						</label>
+					<div class="form-group">
+						<label for="email" class="sr-only">Email address</label>
+						<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
 					</div>
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
+					<div class="form-group" style="margin-bottom:0 !important">
+						<label for="password" class="sr-only">Password</label>
+						<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+					</div>
 				</div>
 				<div class="modal-footer">
                     <div class="row">
@@ -50,15 +47,19 @@
 					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Sign Up - New User</h3>
 				</div>
 				<div class="modal-body">
-					<label for="email" class="sr-only">Email address</label>
-                    <input type="hidden" id="existingEmail" name="existingEmail" value="<?php echo $email ?>" />
-					<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
-					<br>
-					<label for="password1" class="sr-only">Password</label>
-					<input type="password" id="password1" name="password1" class="form-control" placeholder="Password" required>
-					<br>
-					<label for="password2" class="sr-only">Re-type Password</label>
-					<input type="password" id="password2" name="password2" class="form-control" placeholder="Re-type Password" required>
+					<div class="form-group">
+						<label for="email" class="sr-only">Email address</label>
+						<input type="hidden" id="existingEmail" name="existingEmail" value="<?php echo $email ?>" />
+						<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
+					</div>
+					<div class="form-group">
+						<label for="password1" class="sr-only">Password</label>
+						<input type="password" id="password1" name="password1" class="form-control" placeholder="Password" required>
+					</div>
+					<div class="form-group" style="margin-bottom:0 !important">
+						<label for="password2" class="sr-only">Re-type Password</label>
+						<input type="password" id="password2" name="password2" class="form-control" placeholder="Re-type Password" required>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -82,10 +83,12 @@
 					<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Forgot Password</h3>
 				</div>
 				<div class="modal-body">
-					<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML("#myModal3"); ?>                    
-					<label for="email" class="sr-only">Email address</label>
-                    <input type="hidden" id="existingEmail" name="existingEmail" value="<?php echo $email ?>" />
-					<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
+					<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML("#myModal3"); ?>
+					<div class="form-group" style="margin-bottom:0 !important">
+						<label for="email" class="sr-only">Email address</label>
+						<input type="hidden" id="existingEmail" name="existingEmail" value="<?php echo $email ?>" />
+						<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
