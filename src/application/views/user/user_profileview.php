@@ -3,8 +3,11 @@
 <div class="container">
 	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
 
-	<h2 class="page-header">View Profile</h2>
-
+	<h2 class="page-header">
+		View Profile
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	</h2>
+	
 	<div class="form-group">
 		<label for="picture" class="col-sm-2 control-label">Picture</label>
 		<div class="col-sm-10">
@@ -64,11 +67,4 @@
 			<?php } ?>
     	</div>
     </div>
-    
-    <form id="form" method="post" action="" class="form-horizontal" enctype="multipart/form-data">
-    	<!-- Buttons -->
-    	<div class="col-sm-offset-2 col-sm-10">
-      		<button type="submit" class="btn btn-default">Close</button>
-    	</div>
-    </form>
 </div>
