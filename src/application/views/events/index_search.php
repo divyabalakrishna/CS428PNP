@@ -9,9 +9,8 @@
     .gm-style label {width: auto; display:inline;} 
     .pac-container {z-index:2000 !important;}
     .col-sm-10 {float: right;}
-    #search{
 
-    }
+
     
 gmap{
     width:100%;
@@ -37,6 +36,14 @@ gmap{
 				</div>
 			</div>
         </div>
+        <div class="form-group">
+			<div class="col-sm-10">
+                        <div id="check">
+						<input type="checkbox"  name="tag">Filter by Tags
+                        <input type="checkbox"  name="old">Show Past Events
+                        </div>
+	    	</div>
+	    </div>
    </div>
 
     <div id="gmap-dialog2" class="modal fade">

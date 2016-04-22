@@ -56,6 +56,15 @@ class Events
          if(isset($_POST["gmap-lon2"])){
              $Lon = $_POST["gmap-lon2"];
          }
+        $Tag = false;
+        $Old = false;
+
+        if(isset($_POST["tag"])){
+            tag = true;
+        }
+        if(isset($_POST["old"])){
+            old = true;
+        }
 
          $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
          $user = $GLOBALS["beans"]->userModel->getProfile($userID);
