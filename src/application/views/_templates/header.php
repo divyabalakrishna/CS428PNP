@@ -93,9 +93,6 @@ if (!isset($userID)) {
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="containerHeader">
 			<div class="navbar-header">
-				<a id="menuHome" class="menuHome">
-					Menu
-				</a>
 				<a class="navbar-brand" href="<?php echo URL_WITH_INDEX_FILE; ?>">
 					<img alt="PLAN & PLAY" src="<?php echo URL; ?>public/img/pnp.png" height="35" />
 				</a>

@@ -1,7 +1,7 @@
 <?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
 <div class="splitter">
 	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
-    <div class="leftpaneCollapsed" id="leftpane">
+	<div class="leftpaneExpanded" id="leftpane">
     	<div class="content" id="content">
 		    <button class="buttons" id="hosted">Hosted</button>
 		    <button class="buttons" id="past">Past</button>
@@ -17,7 +17,6 @@
 </div>
 <script>
 	var that = this;
-	$('#menuHome').show();
 	function tileClick(){
 		var eventID = $(this).children()[0].value;
 		self.location='<?php echo URL_WITH_INDEX_FILE; ?>events/view/' + eventID;
@@ -82,22 +81,6 @@
     $(function() {
     	$(document).ready(function(){
     		getFeed();
-    		$('#menuHome').click(function(){
-				if(this.toggle){
-            		this.toggle = 0;
-            		$('#rightpane').css('width','100%');
-            		//$('#content').css('display','block');
-            		$('#leftpane').removeClass('leftpaneExpanded');
-        			$('#leftpane').addClass('leftpaneCollapsed');
-				}
-				else{
-					this.toggle = 1;
-					$('#rightpane').css('width','85%');
-					//$('#content').css('display','none');
-					$('#leftpane').removeClass('leftpaneCollapsed');
-        			$('#leftpane').addClass('leftpaneExpanded');
-				}
-    		});
     		$('.tiles').click(tileClick);
     		$('#create').click(function(){
     			self.location='<?php echo URL_WITH_INDEX_FILE; ?>events/edit';
