@@ -119,7 +119,9 @@ class User
 		$tagInfo = $GLOBALS["beans"]->userModel->getUserTags($userID);
 		$tags = $GLOBALS["beans"]->resourceModel->getTags();
 		
+		require APP . 'views/_templates/header.php';
 		require APP . 'views/user/user_profileview.php';
+		require APP . 'views/_templates/footer.php';
 	}
 
 	public function saveProfile(){

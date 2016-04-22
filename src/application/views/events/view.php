@@ -241,7 +241,7 @@ else if ($event->Capacity > count($participants)) {
 			<h3 class="page-header">Participants</h3>
 			<?php foreach ($participants as $person) { ?>
 				<div class="profile">
-					<a href="<?php echo URL_WITH_INDEX_FILE . "user/viewParticipantProfile/" . $person->UserID; ?>" data-toggle="modal" data-target="#showModalParticipant">
+					<a href="<?php echo URL_WITH_INDEX_FILE . "user/viewParticipantProfile/" . $person->UserID; ?>">
 						<?php if ($person->Picture == "") { ?>
 							<img class="image" src="<?php echo URL; ?>public/img/profile.png">
 						<?php } else { ?>
@@ -253,14 +253,6 @@ else if ($event->Capacity > count($participants)) {
 			<?php } ?>
 		</div>
 	   <br><br>
-	   
-	   <!-- Modal Show Participant -->
-        <div class="modal fade" id="showModalParticipant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                </div>
-            </div>
-        </div>
 	    
 		<!-- Media -->
 		<div class="media">
@@ -532,13 +524,6 @@ $('#menuHome').hide();
                 
             }
           
-        })        
-
-        $('#showModalParticipant').on('show.bs.modal', function (event) {
-        	var button = $(event.relatedTarget) // Button that triggered the modal
-        	var imgSrc = button.data('whatever') // Extract info from data-* attributes
-        	var modal = $(this);
-        	$("#showProfile").attr('src',imgSrc); 
         })        
         
     });

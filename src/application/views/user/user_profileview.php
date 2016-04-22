@@ -3,10 +3,7 @@
 <div class="container">
 	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
 
-	<h2 class="page-header">
-		View Profile
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	</h2>
+	<h2 class="page-header">View Profile</h2>
 	
 	<div class="form-group">
 		<label for="picture" class="col-sm-2 control-label">Picture</label>
@@ -59,12 +56,17 @@
     <div class="form-group">
     	<input type="hidden" id="user_tags" name="user_tags" />
     	<label for="interests" class="col-sm-2 control-label">Interests</label>
-		<div class="col-sm-10">
-			<?php foreach ($tags as $tag) { ?>
-				<label class="checkbox-inline">
-					<input type="checkbox" class="tag-checkbox" id="inlineCheckbox1" value="<?php echo $tag->TagID; ?>" <?php foreach ($tagInfo as $usertag) { if ($usertag->TagID == $tag->TagID) { ?>checked<?php }} ?> disabled readonly> <?php echo $tag->Name; ?>
-				</label>
-			<?php } ?>
-    	</div>
+			<?php foreach ($tags as $tag) { 
+				foreach ($tagInfo as $usertag) { if ($usertag->TagID == $tag->TagID) {
+			?>
+				<label class="control-label"><?php echo $tag->Name ?></label>
+			<?php } } }?>
     </div>
+    
+    <!-- Buttons -->
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="button" class="btn btn-default" onClick="javascript: history.back()">Close</button>
+		</div>
+	</div>
 </div>
