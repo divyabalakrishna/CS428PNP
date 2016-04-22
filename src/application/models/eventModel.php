@@ -105,9 +105,12 @@ class EventModel extends Model
 		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
-					Tag.Name AS TagName
+					Tag.Name AS TagName,
+					FirstName AS HostFirstName,
+					LastName AS HostLastName
 				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
+				LEFT JOIN User ON Event.HostID = User.UserID
 				WHERE Event.EventID = :eventID";
 
 		if (is_numeric($hostID)) {
