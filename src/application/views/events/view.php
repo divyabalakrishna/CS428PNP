@@ -9,168 +9,6 @@ else if ($event->Capacity > count($participants)) {
 }
 ?>
 
-<style >
-.carousel-pnp .carousel-control {
-  width: 4%;
-  background-image: none;
-}
-.carousel-pnp .carousel-control.left {
-  margin-left: 15px;
-}
-.carousel-pnp .carousel-control.right {
-  margin-right: 15px;
-}
-
-.carousel-showmanymoveone .carousel-control {
-  width: 4%;
-  background-image: none;
-}
-.carousel-showmanymoveone .carousel-control.left {
-  margin-left: 15px;
-}
-.carousel-showmanymoveone .carousel-control.right {
-  margin-right: 15px;
-}
-
-.carousel-showmanymoveone .cloneditem-2,
-.carousel-showmanymoveone .cloneditem-3,
-.carousel-showmanymoveone .cloneditem-4,
-.carousel-showmanymoveone .cloneditem-5 {
-  display: none;
-}
-
-@media all and (min-width: 768px) {
-  .carousel-showmanymoveone .carousel-inner > .active.left,
-  .carousel-showmanymoveone .carousel-inner > .prev {
-    left: -33.3%;
-  }
-  .carousel-showmanymoveone .carousel-inner > .active.right,
-  .carousel-showmanymoveone .carousel-inner > .next {
-    left: 33.3%;
-  }
-  .carousel-showmanymoveone .carousel-inner > .left,
-  .carousel-showmanymoveone .carousel-inner > .prev.right,
-  .carousel-showmanymoveone .carousel-inner > .active {
-    left: 0;
-  }
-  .carousel-showmanymoveone .carousel-inner .cloneditem-1,
-  .carousel-showmanymoveone .carousel-inner .cloneditem-2 {
-    display: block;
-  }
-}
-@media all and (min-width: 768px) and (transform-3d), all and (min-width: 768px) and (-webkit-transform-3d) {
-  .carousel-showmanymoveone .carousel-inner > .item.active.right,
-  .carousel-showmanymoveone .carousel-inner > .item.next {
-    -webkit-transform: translate3d(33.3%, 0, 0);
-            transform: translate3d(33.3%, 0, 0);
-    left: 0;
-  }
-  .carousel-showmanymoveone .carousel-inner > .item.active.left,
-  .carousel-showmanymoveone .carousel-inner > .item.prev {
-    -webkit-transform: translate3d(-33.3%, 0, 0);
-            transform: translate3d(-33.3%, 0, 0);
-    left: 0;
-  }
-  .carousel-showmanymoveone .carousel-inner > .item.left,
-  .carousel-showmanymoveone .carousel-inner > .item.prev.right,
-  .carousel-showmanymoveone .carousel-inner > .item.active {
-    -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-    left: 0;
-  }
-}
-@media all and (min-width: 992px) {
-  .carousel-showmanymoveone .carousel-inner > .active.left,
-  .carousel-showmanymoveone .carousel-inner > .prev {
-    left: -25%;
-  }
-  .carousel-showmanymoveone .carousel-inner > .active.right,
-  .carousel-showmanymoveone .carousel-inner > .next {
-    left: 25%;
-  }
-  .carousel-showmanymoveone .carousel-inner > .left,
-  .carousel-showmanymoveone .carousel-inner > .prev.right,
-  .carousel-showmanymoveone .carousel-inner > .active {
-    left: 0;
-  }
-
-  .carousel-showmanymoveone .carousel-inner .cloneditem-2,
-  .carousel-showmanymoveone .carousel-inner .cloneditem-3 {
-    display: block;
-  }
-
-}
-@media all and (min-width: 992px) and (transform-3d), all and (min-width: 992px) and (-webkit-transform-3d) {
-  .carousel-showmanymoveone .carousel-inner > .item.active.right,
-  .carousel-showmanymoveone .carousel-inner > .item.next {
-    -webkit-transform: translate3d(25%, 0, 0);
-            transform: translate3d(25%, 0, 0);
-    left: 0;
-  }
-  .carousel-showmanymoveone .carousel-inner > .item.active.left,
-  .carousel-showmanymoveone .carousel-inner > .item.prev {
-    -webkit-transform: translate3d(-25%, 0, 0);
-            transform: translate3d(-25%, 0, 0);
-    left: 0;
-  }
-  .carousel-showmanymoveone .carousel-inner > .item.left,
-  .carousel-showmanymoveone .carousel-inner > .item.prev.right,
-  .carousel-showmanymoveone .carousel-inner > .item.active {
-    -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-    left: 0;
-  }
-}
-
-@media all and (min-width: 1200px) {
-  .carousel-showmanymoveone .carousel-inner > .active.left,
-  .carousel-showmanymoveone .carousel-inner > .prev {
-    left: -16.6%;
-  }
-  .carousel-showmanymoveone .carousel-inner > .active.right,
-  .carousel-showmanymoveone .carousel-inner > .next {
-    left: 16.6%;
-  }
-  .carousel-showmanymoveone .carousel-inner > .left,
-  .carousel-showmanymoveone .carousel-inner > .prev.right,
-  .carousel-showmanymoveone .carousel-inner > .active {
-    left: 0;
-  }
-
-  .carousel-showmanymoveone .carousel-inner .cloneditem-2,
-  .carousel-showmanymoveone .carousel-inner .cloneditem-3,
-  .carousel-showmanymoveone .carousel-inner .cloneditem-4,
-  .carousel-showmanymoveone .carousel-inner .cloneditem-5 {
-    display: block;
-  }
-
-}
-@media all and (min-width: 1200px) and (transform-3d), all and (min-width: 1200px) and (-webkit-transform-3d) {
-  .carousel-showmanymoveone .carousel-inner > .item.active.right,
-  .carousel-showmanymoveone .carousel-inner > .item.next {
-    -webkit-transform: translate3d(16.6%, 0, 0);
-            transform: translate3d(16.6%, 0, 0);
-    left: 0;
-  }
-  .carousel-showmanymoveone .carousel-inner > .item.active.left,
-  .carousel-showmanymoveone .carousel-inner > .item.prev {
-    -webkit-transform: translate3d(-16.6%, 0, 0);
-            transform: translate3d(-16.6%, 0, 0);
-    left: 0;
-  }
-  .carousel-showmanymoveone .carousel-inner > .item.left,
-  .carousel-showmanymoveone .carousel-inner > .item.prev.right,
-  .carousel-showmanymoveone .carousel-inner > .item.active {
-    -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-    left: 0;
-  }
-}
-    
-    
-    
-</style>
-
 
 <div class="container">
 	<div class="detailsHeading well" >
@@ -182,7 +20,6 @@ else if ($event->Capacity > count($participants)) {
 		<div class="title"><?php echo $event->Name ?></div>
 	</div>
 	
-<!--	<div>-->
 		<div class="form-horizontal eventDetails">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Description</label>
@@ -212,6 +49,12 @@ else if ($event->Capacity > count($participants)) {
 				<label class="col-sm-2 control-label">Type</label>
 				<div class="col-sm-10">
 					<p class="form-control-static"><?php echo $event->TagName ?></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Host</label>
+				<div class="col-sm-10">
+					<p class="form-control-static"><?php echo $event->HostFirstName." ".$event->HostLastName ?></p>
 				</div>
 			</div>
 			<div>
@@ -268,16 +111,40 @@ else if ($event->Capacity > count($participants)) {
                             $cnt=0; $act="active";
                             foreach ($media as $image) { 
                                 if ($image->Image != "") { 
+                                    
+                                    $ext = explode(".", strtolower($image->Image));
+                                    if ($ext[1] == "mp4") 
+                                    {
                         ?>
-                                <div class="item <?php echo "$act"; ?> ">
-                                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                        <a class="image-frame-car" href="" data-toggle="modal" data-target="#showModal" data-id="<?php echo $image->MediaID;?>" data-owner="<?php echo $image->UserID;?>" data-whatever="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>">
-                                            <div class="image-thumb-car" style="background-image: url('<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>');"></div>
-                                        </a>
-                                    </div>
-                                </div> 
+                                    <div class="item <?php echo "$act"; ?> ">
+                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                            <a class="image-frame-car" href="" data-toggle="modal" data-target="#showModal" data-id="<?php echo $image->MediaID;?>" data-owner="<?php echo $image->UserID;?>" data-whatever="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" data-type="video">
+                                                <video class="image-thumb-car">
+                                                  <source src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" type="video/mp4">
+                                                  <source src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" type="video/ogg">
+                                                  Your browser does not support HTML5 video.
+                                                </video>
+                                            </a>
+                                        </div>
+                                    </div> 
 
-                                <?php } if ($cnt=="active" && count($media) >= 6) { $act=""; } ?>
+                        <?php
+                                    }
+                                    else
+                                    {
+                        ?>
+                                    <div class="item <?php echo "$act"; ?> ">
+                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                            <a class="image-frame-car" href="" data-toggle="modal" data-target="#showModal" data-id="<?php echo $image->MediaID;?>" data-owner="<?php echo $image->UserID;?>" data-whatever="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" data-type="image">
+                                                <div class="image-thumb-car" style="background-image: url('<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>');"></div>
+                                            </a>
+                                        </div>
+                                    </div>                         
+                        <?php
+                                    }
+                                } 
+                                if ($cnt=="active" && count($media) >= 6) { $act=""; } 
+                        ?>
                         <?php } ?>                            
 
                     </div>
@@ -313,7 +180,7 @@ else if ($event->Capacity > count($participants)) {
                             <input type="hidden" id="eventID" name="eventID" value="<?php echo $event->EventID ?>" />
                             <label for="image" class="sr-only">Image</label>
                             <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
-                            <input type="file" id="image" name="image[]" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple class="form-control" />
+                            <input type="file" id="image" name="image[]" accept="image/jpg,image/jpeg,image/png,image/bmp,video/mp4" multiple class="form-control" />
                             <p class="help-block">Max file size: 2 MB. Accepted file types: .jpg, .jpeg, .png, .bmp</p>
                             <br>
                         </div>
@@ -337,6 +204,11 @@ else if ($event->Capacity > count($participants)) {
                         </div>
                         <div class="modal-body text-center">
                             <img id="showImage" name="showImage" class="showImage" src="">
+                            <video width="100%" id="showVideo" autoplay style="display:none" controls>
+                                <source src="" type="video/mp4"></source>
+                                Your browser does not support HTML5 video.
+                            </video>
+                            
                         </div>
                         
                         <div class="modal-footer">
@@ -419,7 +291,6 @@ else if ($event->Capacity > count($participants)) {
 				</div>
 			</form>
 		</div>
-<!--	</div>-->
 	
 </div>
 
@@ -513,6 +384,7 @@ else if ($event->Capacity > count($participants)) {
             var imgSrc = button.data('whatever') // Extract info from data-* attributes
             var mediaId = button.data('id') // Extract info from data-* attributes
             var owner = button.data('owner') // Extract info from data-* attributes
+            var type = button.data('type') // Extract info from data-* attributes            
             var modal = $(this);
             var userId = <?php echo $userID; ?>;
 
@@ -520,11 +392,22 @@ else if ($event->Capacity > count($participants)) {
             if (userId == owner) {
                 $("#deleteMedia").attr('onclick',"deleteMedia("+mediaId+")"); 
                 $("#deleteMedia").attr('style',"display:block"); 
-                
             }
-          
-        })        
-        
+            if (type == "video") {
+                $("#showImage").attr('style',"display:none");
+                $("#showVideo").attr("src", imgSrc);
+                $("#showVideo").attr('style',"display:block");
+            }
+            else
+            {
+                $("#showImage").attr('style',"display:block");            
+                $("#showVideo").attr('style',"display:none");            
+                $("#showVideo")[0].pause();
+            }
+        });        
+        $('#showModal').on('hide.bs.modal', function (event) {
+                $("#showVideo")[0].pause();
+        });
     });
     
 </script>

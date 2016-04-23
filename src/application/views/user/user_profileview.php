@@ -4,15 +4,14 @@
 	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
 
 	<h2 class="page-header"><?php echo $profileInfo->FirstName ?> <?php echo $profileInfo->LastName ?>'s Profile</h2>
-	
-	<div class="form-group">
-		<label for="picture" class="col-sm-2 control-label">Picture</label>
-		<div class="col-sm-10">
-			<?php if ($profileInfo->Picture != "") { ?>
+	<?php if ($profileInfo->Picture != "") { ?>
+		<div class="form-group">
+			<label for="picture" class="col-sm-2 control-label">Picture</label>
+			<div class="col-sm-10">
 				<img src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $profileInfo->Picture) ?>" height="200" />
-			<?php } ?>
+			</div>
 		</div>
-	</div>
+	<?php } ?>
 
     <div class="form-group">
 		<label for="nickname" class="col-sm-2 control-label">Nick Name</label>
@@ -33,11 +32,6 @@
 		</label>
 		
 		
-    </div>
-    
-    <div class="form-group">
-		<label for="phone" class="col-sm-2 control-label">Phone</label>
-		<label for="phone" class="control-label"><?php echo $profileInfo->Phone ?></label>
     </div>
     
     <div class="form-group">
