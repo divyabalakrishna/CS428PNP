@@ -21,8 +21,15 @@
 		var eventID = $(this).children()[0].value;
 		self.location='<?php echo URL_WITH_INDEX_FILE; ?>events/view/' + eventID;
 	}
-	function tagFilter(){
+	function tagFilter(event){
 		var tag = $(this)[0].text.substring(1);
+		if(that.selected){
+			$("#"+that.selected).removeClass('tagSelected');
+			$("#"+that.selected).addClass('tag');
+		}
+		that.selected = event.target.id;
+		$("#"+that.selected).removeClass('tag');
+		$("#"+that.selected).addClass('tagSelected');
 		load(tag);
 	}
 	function loadTags(data){
@@ -38,38 +45,48 @@
 			}
 			if(!present){
 				tagsList[tagsList.length] = data[i].TagName;
-				var tag = '<a class="tag">#' + data[i].TagName + '</a><br/>';
+				var tag = '<a class="tag" ' + 'id="tag' + i +'">#' + data[i].TagName + '</a><br/>';
 				$('#tagsList').append(tag);
 				$('.tag').click(tagFilter);
 			}
 		}
 	}
+
+	function loadData(data){
+		var tile =  '<div class = "tiles">' +
+	   		'<input type="hidden" id="eventIDTile" name="eventID" value="'+ data.EventID+'" />'+
+		    '<div class="icon">'+
+		    	'<img style="width: 100%;height: 100%;" src="<?php echo URL; ?>public/img/sports/' + data.TagName + '.png">'+
+			'</div>'+
+			'<div class="content">'+
+				'<div class="title">'+ data.Name +'</div>';
+		if(data.Description != null){
+			tile = tile + '<div class="desc">'+ data.Description + '</div>';
+		}
+		tile = tile + '<div class="desc">'+ data.Address + '</div>'+
+				'<div class="desc">'+ data.FormattedDate + '</div>'+
+				'<div class="desc">'+ data.FormattedTime +'</div>'+
+			'</div>'+
+	    '</div>';
+	    
+	    $('#rightpane').append(tile);
+	    $('.tiles').click(tileClick);
+	}
 	function load(filter=""){
 		$('#rightpane').empty();
 		
 		for(i = 0; i < that.data.length; i++){
-			if(that.data[i].TagName != filter){
-				var tile =  '<div class = "tiles">' +
-			   		'<input type="hidden" id="eventIDTile" name="eventID" value="'+ that.data[i].EventID+'" />'+
-				    '<div class="icon">'+
-				    	'<img style="width: 100%;height: 100%;" src="<?php echo URL; ?>public/img/sports/' + that.data[i].TagName + '.png">'+
-					'</div>'+
-					'<div class="content">'+
-						'<div class="title">'+ that.data[i].Name +'</div>';
-				if(that.data[i].Description != null){
-					tile = tile + '<div class="desc">'+ that.data[i].Description + '</div>';
+			if(filter == ""){
+				loadData(that.data[i]);
+				loadTags(data);
+			}
+			else{
+				if(that.data[i].TagName == filter){
+					loadData(that.data[i]);
 				}
-				tile = tile + '<div class="desc">'+ that.data[i].Address + '</div>'+
-						'<div class="desc">'+ that.data[i].FormattedDate + '</div>'+
-						'<div class="desc">'+ that.data[i].FormattedTime +'</div>'+
-					'</div>'+
-			    '</div>';
-			    
-			    $('#rightpane').append(tile);
-			    $('.tiles').click(tileClick);
-			}	
+			}
 		}
-		loadTags(data);
+		
 	}
 	function getFeed(){
 		<?php $Events = $joinableEvents;
