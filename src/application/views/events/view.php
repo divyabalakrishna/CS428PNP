@@ -51,6 +51,12 @@ else if ($event->Capacity > count($participants)) {
 					<p class="form-control-static"><?php echo $event->TagName ?></p>
 				</div>
 			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Host</label>
+				<div class="col-sm-10">
+					<p class="form-control-static"><?php echo $event->HostFirstName." ".$event->HostLastName ?></p>
+				</div>
+			</div>
 			<div>
 				<div>
 					<?php if (strtotime($event->Time) > time()) {
