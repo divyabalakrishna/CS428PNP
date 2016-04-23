@@ -74,9 +74,9 @@ class User
 
 		header('location: ' . URL_WITH_INDEX_FILE);
 	}
-    
-	public function checkUniqueEmail()
-	{
+
+    public function emailExist()
+    {
 		$unique = false;
 		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
 
@@ -84,21 +84,18 @@ class User
 		{
 			$unique = true;
 		}
-
-		echo json_encode($unique);
+        
+        return $unique;
+    }
+    
+	public function checkUniqueEmail()
+	{
+		echo json_encode($this->emailExist());
 	}
 
 	public function checkExistEmail()
 	{
-		$unique = false;
-		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
-
-		if (is_numeric($loginInfo->UserID))
-		{
-			$unique = true;
-		}
-
-		echo json_encode($unique);
+		echo json_encode(!$this->emailExist());
 	}
     
 	public function viewProfile()
