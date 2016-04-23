@@ -101,11 +101,16 @@ if (!isset($userID)) {
 				<ul class="nav navbar-nav navbar-right">
                     <?php if (is_numeric($userID)) { ?>
                         <li>
-                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>">Home</a>
+                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>">
+                            <img src="<?php echo URL; ?>public/img/home_icon.png" alt="Home" style="width:28px;height:26px;"> 
+                            </a>
                         </li>                    
                         <?php if ($GLOBALS["beans"]->userModel->isActive($userID)->Active == 'Yes') { ?>
                         <li id="notification_li">
-                            <a href="#" id="notificationLink">Notification</a>
+                            <!--Notification icon-->
+                            <a href="#" id="notificationLink">
+  								<img src="<?php echo URL; ?>public/img/notification_icon.png" alt="Notification" style="width:25px;height:25px;"> 
+  							</a>
                             <div id="notificationContainer">
                                 <div id="notificationTitle">Notifications</div>
                                 <?php 
@@ -147,14 +152,23 @@ if (!isset($userID)) {
                             <?php } ?>
                         </li>
                         <li>
-                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch">Search</a>
+                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch">
+                            <!-- Search Icon on Menu Bar -->
+                            <img src="<?php echo URL; ?>public/img/search_icon.png" alt="Search" style="width:25px;height:24.5px;"> 
+                            </a>
                         </li>
                         <li>
-                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile">Profile</a>
+                        <!-- Profile Icon on Menu Bar -->
+                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile">
+                            <img src="<?php echo URL; ?>public/img/profile_icon.png" alt="Profile" style="width:27px;height:27px;"> 
+                            </a>
                         </li>
                         <?php } ?>
                         <li>
-                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>user/logout">Logout</a>
+                        <!-- Logout Icon on Menu Bar -->
+                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>user/logout">
+                            <img src="<?php echo URL; ?>public/img/logout_icon.png" alt="Logout" style="width:27px;height:27px;"> 
+                            </a>
                         </li>
                     <?php } else { ?>
                         <?php if((isset($cheat) && $cheat!=0) || !isset($cheat)) {?>
