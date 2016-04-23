@@ -101,6 +101,10 @@ class Events
 
 	public function view($eventID)
 	{
+        if (!is_numeric($eventID)) {
+            header('location: ' . URL_WITH_INDEX_FILE);            
+        }
+        
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 		$participants = $GLOBALS["beans"]->eventModel->getParticipants($eventID);
@@ -242,7 +246,7 @@ class Events
         // Loop through each file
         for($i=0; $i<$total; $i++) {
             $newName = $eventID."-".$userID."-".$GLOBALS["beans"]->stringHelper->genString(); 
-            $result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "media", "jpg,jpeg,png,bmp", "media image", 2097152, $newName,$i);
+            $result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "media", "jpg,jpeg,png,bmp,mp4", "media image", 8097152, $newName,$i);
 
             if ($result->fileUploaded) {
                 $GLOBALS["beans"]->eventModel->insertMedia($eventID, $userID, $result->fileName);
@@ -251,8 +255,8 @@ class Events
                 $GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
             }
         }
-        
-		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
+		
+        header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
 
 	public function delete($eventID) {
@@ -332,6 +336,7 @@ class Events
         
 		if ($userID == $media[0]->UserID) {
 			$GLOBALS["beans"]->eventModel->deleteMedia($eventID, $mediaID);
+            $GLOBALS["beans"]->fileHelper->deleteUploadedFile("media", $media[0]->Image);
 		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
