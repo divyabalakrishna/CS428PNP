@@ -157,7 +157,15 @@ else if ($event->Capacity > count($participants)) {
             </div>
             <br>
             <div class="row text-center">
+                <?php 
+                    $showUpload = false;
+                    foreach ($userParticipation as $participant) {
+                        if($participant->UserID == $userID) { $showUpload = true; break; }
+                    }
+                    if ($showUpload) {
+                ?>
                 <button type="submit" class="btn btn-default" data-toggle="modal" data-target="#uploadModal">Upload New Media</button>
+                <?php } ?>
             </div>
 
 		</div>
