@@ -56,7 +56,6 @@ class FileHelper
 		else if ($_FILES[$fieldName]["error"][$index] != 0) {
 			$errorMessage .= ".";
 		}
-        print_r($_FILES[$fieldName]);
 
 		$result = new stdClass();
 		$result->fileName = $fileName;
