@@ -348,7 +348,6 @@ class Events {
 		foreach ($participants as $user) { 
 
 			if ($user->UserID != $userID) {
-				echo "notif " . $user->UserID . "<br>";
 
 				if ($event->Image) {
 					$imgLink = "/uploads/event/" . $event->Image;
