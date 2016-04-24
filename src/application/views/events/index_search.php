@@ -31,7 +31,7 @@ gmap{
     <div class="form-group">
     	<div class="col-sm-10">
 				<div class="input-group col-sm-12">
-					<input type="text" id="address" name="address"  class="form-control" required aria-required="true" placeholder="Search A Location">
+					<input type="text" id="address" name="address"  class="form-control"  placeholder="Search A Location">
 					<span class="input-group-addon"><a id="location" href="" data-target="#gmap-dialog2" data-toggle="modal"><i class="glyphicon glyphicon-map-marker"></i></a></span>
 				</div>
 			</div>

@@ -71,7 +71,7 @@ class Events
          
          if(!$user->Radius) $user->Radius = 2;
         
-		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon);
+		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon, $Tag, $Old);
 
 		 require APP . 'views/_templates/header.php';
 		 require APP . 'views/events/index_search.php';
