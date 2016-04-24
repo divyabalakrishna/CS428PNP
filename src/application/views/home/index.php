@@ -7,7 +7,7 @@
 			<button class="buttons" id="past">Past</button>
 			<button class="buttons" id="joined">Joined</button>
 			<button class="buttons" id="feed">Feed</button>
-			<button class="buttons" id="create">create</button>
+			<button class="buttons" id="create">Create</button>
 			<div id="tagsList" class="tagList"></div>
 		</div>
 	</div>
