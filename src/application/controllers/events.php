@@ -240,6 +240,7 @@ class Events
 	{
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$eventID = $_POST["eventID"];
+        $success = false;
         
         $total = count($_FILES['image']['name']);
         
@@ -250,11 +251,15 @@ class Events
 
             if ($result->fileUploaded) {
                 $GLOBALS["beans"]->eventModel->insertMedia($eventID, $userID, $result->fileName);
+                $success = true;
             }
             else if ($result->errorMessage != "") {
                 $GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
             }
         }
+        
+        // Add notification to all participants
+        if($success) $this->addUploadNotif($eventID);
 		
         header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
@@ -341,5 +346,31 @@ class Events
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
+    
+    public function addUploadNotif($eventID)
+    {
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
+		$participants = $GLOBALS["beans"]->eventModel->getParticipants($eventID);
+
+        foreach ($participants as $user) { 
+
+            if($user->UserID != $userID) {
+                echo "notif " . $user->UserID . "<br>";
+                if($event->Image)
+                    $imgLink = "/uploads/event/" . $event->Image;
+                else 
+                    $imgLink = "/public/img/sports/" . $event->TagName . ".png";
+                //Insert Notifications
+                $GLOBALS["beans"]->notifModel->insertNotif(
+                        $user->UserID,
+                        $event->EventID,
+                        "Your friend was uploading a new media on ". $event->Name . ".",
+                        "/events/view/" . $event->EventID,
+                        $imgLink
+                );
+            }
+        }
+    }
 
 }

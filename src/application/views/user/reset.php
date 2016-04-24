@@ -14,10 +14,10 @@
 					<input type="email" id="email" name="email" class="form-control" placeholder="Email address" value="<?php echo $email ?>" readonly required>
 					<br>
 					<label for="password1" class="sr-only">Password</label>
-					<input type="password" id="password1" name="password1" class="form-control" placeholder="Password" required>
+					<input type="password" id="password1" name="password1" class="form-control" placeholder="New Password" required>
 					<br>
 					<label for="password2" class="sr-only">Re-type Password</label>
-					<input type="password" id="password2" name="password2" class="form-control" placeholder="Re-type Password" required>
+					<input type="password" id="password2" name="password2" class="form-control" placeholder="Re-type New Password" required>
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary">Reset</button>

@@ -18,7 +18,7 @@
     overflow: visible;
     position: absolute;
     top: 52 px;
-    margin-left: -170px;
+    margin-left: -190px;
     width: 400px;
     z-index: -1;
     display: none;
@@ -33,7 +33,7 @@
     border: 10px solid black;
     border-color: transparent transparent white;
     margin-top: -20px;
-    margin-left: 188px;
+    margin-left: 208px;
 }
 #notificationTitle {
     background-color: #e9eaed;
@@ -62,7 +62,7 @@
     background: #cc0000;
     color: #ffffff;
     font-weight: bold;
-    margin-left: 96px;
+    margin-left: 36px;
     border-radius: 9px;
     position: absolute;
     margin-top: -40px;

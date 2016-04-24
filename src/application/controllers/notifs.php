@@ -20,7 +20,7 @@ class Notifs
 
         foreach ($users as $user) { 
 
-            echo "asd" . $user->UserID . "<br>";
+            echo "notif " . $user->UserID . "<br>";
     		$events = $GLOBALS["beans"]->notifModel->getJoinedEvents($user->UserID, $hour, $check);
 
             foreach ($events as $event) { 
@@ -40,4 +40,5 @@ class Notifs
             }
         }
     }
+        
 }

@@ -159,7 +159,7 @@ else if ($event->Capacity > count($participants)) {
             <div class="row text-center">
                 <?php 
                     $showUpload = false;
-                    foreach ($userParticipation as $participant) {
+                    foreach ($participants as $participant) {
                         if($participant->UserID == $userID) { $showUpload = true; break; }
                     }
                     if ($showUpload) {
