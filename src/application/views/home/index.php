@@ -80,7 +80,9 @@
 
 	function load(filter = "") {
 		$('#rightpaneContent').empty();
-		
+		if(that.data.length == 0){
+			$('#tagsList').empty();
+		}
 		for (i = 0; i < that.data.length; i++) {
 			if (filter == "") {
 				loadData(that.data[i]);
