@@ -7,8 +7,7 @@ class ProfileEditTest extends ViewTestCase {
 	public function testChangePassword() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
-		$navbar = $this->byId('navbar');
-		$searchLink = $navbar->byLinkText('Profile');
+		$searchLink = $this->byId('profileLink');
 		$searchLink->click();
 
 		$newPasswordField = $this->byId('newPassword');

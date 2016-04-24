@@ -18,6 +18,10 @@ abstract class ViewTestCase extends PHPUnit_Extensions_Selenium2TestCase {
 		static::$dbTestCaseWrapper->resetDatabase();
 	}
 
+	public function setUpPage() {
+		$this->currentWindow()->maximize();
+	}
+
 	public function loginToSite($email, $password) {
 		$this->url($this->applicationURL);
 

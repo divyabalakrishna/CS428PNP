@@ -16,6 +16,7 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetSessionNotExists() {
+		$_SESSION['test'] = '';
 		$this->assertEquals('', static::$siteHelper->getSession('application'));
 	}
 
@@ -79,7 +80,7 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase {
 	public function testSetPopUp() {
 		static::$siteHelper->setPopUp('abc');
 
-		$this->assertTrue(array_key_exists($_SESSION, 'popup'));
+		$this->assertTrue(array_key_exists('popup', $_SESSION));
 		$this->assertEquals('abc', $_SESSION['popup']->modalID);
 	}
 

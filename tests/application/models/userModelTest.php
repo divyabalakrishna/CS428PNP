@@ -129,4 +129,86 @@ class UserModelTest extends ModelTestCase {
 		$this->assertEquals('a1b2c3d4e5', $actualPassword);
 	}
 
+	public function testDeleteUserTags() {
+		static::$userModel->deleteUserTags(1);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+				'UserTag' => array()
+		)))->getTable('UserTag');
+
+		$actualTable = $this->getConnection()->createQueryTable('UserTag', 'SELECT * FROM UserTag WHERE UserID = 1');
+
+		$this->assertEquals(1, $this->getConnection()->getRowCount('UserTag'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
+	public function testGetAllUserIDs() {
+		$actualArray = static::$userModel->getAllUserIDs();
+	
+		$expectedArray = array();
+	
+		$expectedObject = new stdClass();
+		$expectedObject->UserID = 1;
+		$expectedArray[] = $expectedObject;
+	
+		$expectedObject = new stdClass();
+		$expectedObject->UserID = 2;
+		$expectedArray[] = $expectedObject;
+
+		$expectedObject = new stdClass();
+		$expectedObject->UserID = 3;
+		$expectedArray[] = $expectedObject;
+
+		$expectedObject = new stdClass();
+		$expectedObject->UserID = 4;
+		$expectedArray[] = $expectedObject;
+
+		$this->assertEquals($expectedArray, $actualArray);
+	}
+
+	public function testGetUserTags() {
+		$actualArray = static::$userModel->getUserTags(1);
+
+		$expectedArray = array();
+		$expectedArray[] = (object)$this->createUserTagObject(1, 1);
+		$expectedArray[] = (object)$this->createUserTagObject(1, 5);
+	
+		$this->assertEquals($expectedArray, $actualArray);
+	}
+
+	public function testUpdatePicture() {
+		static::$userModel->updatePicture(1, 'abc.jpg');
+
+		$expectedUser = parent::createUserObject(1, 'Jane', 'Doe', 'jdoe@email.com', '12345', '123-456-7890', 'abc.jpg', 5, 120, 'Jane', 'F', '1990-01-01', 'Yes');
+		unset($expectedUser['Password']);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'User' => array(
+				$expectedUser
+			)
+		)))->getTable('User');
+
+		$actualTable = $this->getConnection()->createQueryTable('User', 'SELECT * FROM User WHERE UserID = 1');
+		$filteredTable = new PHPUnit_Extensions_Database_DataSet_TableFilter($actualTable, array('Password'));
+
+		$this->assertTablesEqual($expectedTable, $filteredTable);
+	}
+
+	public function testInsertUserTag() {
+		static::$userModel->insertUserTag(1, 6);
+
+		$expectedTable = (new PHPUnit_ArrayDataSet(array(
+			'UserTag' => array(
+				parent::createUserTagObject(1, 1),
+				parent::createUserTagObject(1, 5),
+				parent::createUserTagObject(1, 6)
+			)
+		)))->getTable('UserTag');
+
+		$actualTable = $this->getConnection()->createQueryTable('UserTag', 'SELECT * FROM UserTag WHERE UserID = 1');
+	
+		$this->assertEquals(4, $this->getConnection()->getRowCount('UserTag'));
+		$this->assertTablesEqual($expectedTable, $actualTable);
+	}
+
 }

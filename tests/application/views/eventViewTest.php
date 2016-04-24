@@ -7,18 +7,18 @@ class EventViewTest extends ViewTestCase {
 	public function testViewHostedEvent() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
-		$createdDiv = $this->byCssSelector('.created');
-		$viewDetailsLink = $createdDiv->byLinkText('View Details');
-		$viewDetailsLink->click();
+		$hostedButton = $this->byId('hosted');
+		$hostedButton->click();
+		usleep(500000);
+
+		$eventDiv = $this->byCssSelector('div.tiles');
+		$eventDiv->click();
 
 		$editButton = $this->byId('edit');
 		$this->assertEquals('EDIT', $editButton->text());
 
 		$deleteButton = $this->byId('delete');
 		$this->assertEquals('DELETE', $deleteButton->text());
-
-		$recreateButton = $this->byId('recreate');
-		$this->assertEquals('RECREATE', $recreateButton->text());
 
 		try {
 			$this->byId('join');
@@ -35,14 +35,25 @@ class EventViewTest extends ViewTestCase {
 		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
 			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
 		}
+
+		try {
+			$this->byId('recreate');
+			$this->fail('Recreate button exists.');
+		}
+		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
+			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
+		}
 	}
 
 	public function testViewJoinedEvent() {
 		parent::loginToSite('jsmith@email.com', 'abcde');
 
-		$createdDiv = $this->byCssSelector('.joined');
-		$viewDetailsLink = $createdDiv->byLinkText('View Details');
-		$viewDetailsLink->click();
+		$joinedButton = $this->byId('joined');
+		$joinedButton->click();
+		usleep(500000);
+
+		$eventDiv = $this->byCssSelector('div.tiles');
+		$eventDiv->click();
 
 		$editButton = $this->byId('leave');
 		$this->assertEquals('LEAVE', $editButton->text());
@@ -83,13 +94,8 @@ class EventViewTest extends ViewTestCase {
 	public function testViewOtherEvent() {
 		parent::loginToSite('joe@email.com', 'password');
 
-		$navbar = $this->byId('navbar');
-		$searchLink = $navbar->byLinkText('Search');
-		$searchLink->click();
-		usleep(500000);
-
-		$viewDetailsLink = $this->byCssSelector('.table-striped tr a');
-		$viewDetailsLink->click();
+		$eventDiv = $this->byCssSelector('div.tiles');
+		$eventDiv->click();
 
 		$editButton = $this->byId('join');
 		$this->assertEquals('JOIN', $editButton->text());
@@ -130,9 +136,12 @@ class EventViewTest extends ViewTestCase {
 	public function testInsertComment() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
-		$createdDiv = $this->byCssSelector('.created');
-		$viewDetailsLink = $createdDiv->byLinkText('View Details');
-		$viewDetailsLink->click();
+		$hostedButton = $this->byId('hosted');
+		$hostedButton->click();
+		usleep(500000);
+
+		$eventDiv = $this->byCssSelector('div.tiles');
+		$eventDiv->click();
 
 		$commentTextArea = $this->byCssSelector('div.comments #text');
 		$commentTextArea->clear();
@@ -153,9 +162,12 @@ class EventViewTest extends ViewTestCase {
 	public function testRecreateForm() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
-		$createdDiv = $this->byCssSelector('.created');
-		$viewDetailsLink = $createdDiv->byLinkText('View Details');
-		$viewDetailsLink->click();
+		$pastButton = $this->byId('past');
+		$pastButton->click();
+		usleep(500000);
+
+		$eventDiv = $this->byCssSelector('div.tiles');
+		$eventDiv->click();
 
 		$originalLink = $this->getBrowserUrl();
 
@@ -173,9 +185,12 @@ class EventViewTest extends ViewTestCase {
 	public function testRecreateCancel() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
-		$createdDiv = $this->byCssSelector('.created');
-		$viewDetailsLink = $createdDiv->byLinkText('View Details');
-		$viewDetailsLink->click();
+		$pastButton = $this->byId('past');
+		$pastButton->click();
+		usleep(500000);
+
+		$eventDiv = $this->byCssSelector('div.tiles');
+		$eventDiv->click();
 
 		$originalLink = $this->getBrowserUrl();
 

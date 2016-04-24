@@ -36,4 +36,48 @@ class HomePageTest extends ViewTestCase {
 		$this->assertEquals('Congratulation. Your Account is now active.', $successMessage->text());
 	}
 
+	public function testViewHosted() {
+		parent::loginToSite('jdoe@email.com', '12345');
+
+		$hostedButton = $this->byId('hosted');
+		$hostedButton->click();
+		usleep(500000);
+
+		$eventTitle = $this->byCssSelector('div.tiles div.title');
+		$this->assertEquals('Badminton Game', $eventTitle->text());
+	}
+
+	public function testViewPast() {
+		parent::loginToSite('jdoe@email.com', '12345');
+
+		$pastButton = $this->byId('past');
+		$pastButton->click();
+		usleep(500000);
+
+		$eventTitle = $this->byCssSelector('div.tiles div.title');
+		$this->assertEquals('Casual jogging', $eventTitle->text());
+	}
+
+	public function testViewJoined() {
+		parent::loginToSite('jsmith@email.com', 'abcde');
+
+		$joinedButton = $this->byId('joined');
+		$joinedButton->click();
+		usleep(500000);
+
+		$eventTitle = $this->byCssSelector('div.tiles div.title');
+		$this->assertEquals('Badminton Game', $eventTitle->text());
+	}
+
+	public function testViewFeed() {
+		parent::loginToSite('joe@email.com', 'password');
+
+		$feedButton = $this->byId('feed');
+		$feedButton->click();
+		usleep(500000);
+
+		$eventTitle = $this->byCssSelector('div.tiles div.title');
+		$this->assertEquals('Badminton Game', $eventTitle->text());
+	}
+
 }

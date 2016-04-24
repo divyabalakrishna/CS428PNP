@@ -756,10 +756,54 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
-	public function testGetSearchEvents() {
-		$actualArray = static::$eventModel->getSearchEvents(1, 5, 40.1, -88.2);
+	public function testGetSearchEventsFuture() {
+		$actualArray = static::$eventModel->getSearchEvents(1, 5, 40.1, -88.2, '', false);
 
 		$expectedArray = array();
+
+		$expectedObject = new stdClass();
+		$expectedObject->EventID = 2;
+		$expectedObject->HostID = 1;
+		$expectedObject->Name = 'Badminton Game';
+		$expectedObject->Description = "Let's play together!";
+		$expectedObject->Time = date('Y-m-d', strtotime('tomorrow')) . ' 17:00:00';
+		$expectedObject->Address = 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820';
+		$expectedObject->Capacity = 4;
+		$expectedObject->Private = 0;
+		$expectedObject->TagID = 3;
+		$expectedObject->Image = '2.png';
+		$expectedObject->Lat = 40.100972;
+		$expectedObject->Lon = -88.236077;
+		$expectedObject->FormattedDateTime = date('m/d/Y', strtotime('tomorrow')) . ' 05:00 PM';
+		$expectedObject->TagName = 'Badminton';
+		$expectedObject->Distance = 1.9079905786448228;
+		$expectedArray[] = $expectedObject;
+
+		$this->assertEquals($expectedArray, $actualArray);
+	}
+
+	public function testGetSearchEventsPast() {
+		$actualArray = static::$eventModel->getSearchEvents(1, 5, 40.1, -88.2, '', true);
+
+		$expectedArray = array();
+
+		$expectedObject = new stdClass();
+		$expectedObject->EventID = 1;
+		$expectedObject->HostID = 1;
+		$expectedObject->Name = 'Casual jogging';
+		$expectedObject->Description = null;
+		$expectedObject->Time = '2015-12-31 17:00:00';
+		$expectedObject->Address = 'Illini Union, 1401 W Green St, Urbana, IL 61801';
+		$expectedObject->Capacity = null;
+		$expectedObject->Private = 0;
+		$expectedObject->TagID = 21;
+		$expectedObject->Image = '1.png';
+		$expectedObject->Lat = 40.109567;
+		$expectedObject->Lon = -88.227213;
+		$expectedObject->FormattedDateTime = '12/31/2015 05:00 PM';
+		$expectedObject->TagName = 'Running';
+		$expectedObject->Distance = 1.5828691942519846;
+		$expectedArray[] = $expectedObject;
 
 		$expectedObject = new stdClass();
 		$expectedObject->EventID = 2;

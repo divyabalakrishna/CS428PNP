@@ -118,7 +118,8 @@ class UserModel extends Model {
 
 	public function getAllUserIDs() {
 		$sql = "SELECT UserID
-				FROM User";
+				FROM User
+				ORDER BY UserID";
 
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
 	}

@@ -47,12 +47,12 @@ class LandingPageTest extends ViewTestCase {
 		$form->submit();
 		usleep(500000);
 
-		$logoutLink = $this->byLinkText('Logout');
+		$hostedButton = $this->byId('hosted');
 
-		$this->assertEquals('Logout', $logoutLink->text());
+		$this->assertEquals('Hosted', $hostedButton->text());
 	}
 
-	public function testSignUp() {
+	public function testSignUpSuccessful() {
 		$this->url($this->applicationURL);
 
 		$signUpLink = $this->byId('signUpLink');
@@ -78,6 +78,34 @@ class LandingPageTest extends ViewTestCase {
 		$activateButton = $this->byCssSelector('#activationForm button');
 
 		$this->assertEquals('ACTIVATE', $activateButton->text());
+	}
+
+	public function testSignUpInvalid() {
+		$this->url($this->applicationURL);
+
+		$signUpLink = $this->byId('signUpLink');
+		$signUpLink->click();
+		usleep(500000);
+
+		$emailField = $this->byCssSelector('#signupForm #email');
+		$emailField->clear();
+		$this->keys('jdoe@email.com');
+
+		$passwordField = $this->byCssSelector('#signupForm #password1');
+		$passwordField->clear();
+		$this->keys('abc123');
+
+		$confirmPasswordField = $this->byCssSelector('#signupForm #password2');
+		$confirmPasswordField->clear();
+		$this->keys('abc123');
+
+		$form = $this->byId('signupForm');
+		$form->submit();
+		usleep(500000);
+
+		$errorMessage = $this->byCssSelector('#signupForm #email-error');
+
+		$this->assertEquals('There is an existing account with this email.', $errorMessage->text());
 	}
 
 	public function testForgotPassword() {
