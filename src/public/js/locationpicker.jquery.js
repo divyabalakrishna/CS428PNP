@@ -19,7 +19,7 @@
           var point = new google.maps.LatLng(
               parseFloat(markers[i].getAttribute("lat")),
               parseFloat(markers[i].getAttribute("lon")));
-          var html = "<b><a href='../events/view/"+ id +"'><img src='../../public/img/sports/"+ tag +".png' height='30px'> " + name + "</a></b> <br/>" + address;
+          var html = "<b><a href='../events/view/"+ id +"'><img class='image-thumb-small' src='../../public/img/sports/"+ tag +".png'> " + name + "</a></b> <br/>" + address;
           //var icon = customIcons[type] || {};
           var marker = new google.maps.Marker({
             map: map,

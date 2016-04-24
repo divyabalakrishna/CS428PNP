@@ -44,7 +44,7 @@ if (!isset($userID)) {
 	<script src="<?php echo URL; ?>public/js/jquery.js"></script>
 	<script src="<?php echo URL; ?>public/js/jquery.validate.js"></script>
 	<script src="<?php echo URL; ?>public/js/additional-methods.js"></script>
-	<script src="<?php echo URL; ?>application/views/home/temp.js"></script>
+	<script src="<?php echo URL; ?>public/js/notification.js"></script>
 
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -105,6 +105,7 @@ if (!isset($userID)) {
                             <img src="<?php echo URL; ?>public/img/home_icon.png" alt="Home" style="width:28px;height:26px;"> 
                             </a>
                         </li>                    
+                        <!-- NOTIFICATION SECTION -->
                         <?php if ($GLOBALS["beans"]->userModel->isActive($userID)->Active == 'Yes') { ?>
                         <li id="notification_li">
                             <!--Notification icon-->
@@ -120,6 +121,11 @@ if (!isset($userID)) {
                                     $row = 0;
                                     $count = 0;
                                     foreach ($notifs as $notif) {
+                                        if ($notif->Flag == 1)
+                                            $rowclass = "read";
+                                        else
+                                            $rowclass = "";
+                                            
                                 ?>
                                 <div id="notificationsBody" class="notifications">
                                     <div class="row">
@@ -129,15 +135,16 @@ if (!isset($userID)) {
                                             </div>
                                         </div>
                                         <div class="col-sm-10 col-md-10">
-                                            <a href="<?php echo URL_WITH_INDEX_FILE; ?><?php echo $notif->UrlLink ?>"><?php echo $notif->Message ?></a>
+                                            <a class="<?php echo $rowclass; ?>" href="javascript:updateNotifFlag(<?php echo $notif->NotificationID; ?>,'<?php echo $notif->UrlLink; ?>')"><?php echo $notif->Message ?></a>
                                         </div>
                                     </div>
                                     <div style="font-size: 10px;font-style: italic;" class="    text-right"><?php echo $GLOBALS["beans"]->siteHelper->notifMsg($notif->Time); ?></div>
 
                                 </div>
                                 <?php
-                                        //$GLOBALS["beans"]->notifModel->updateFlag($notif->NotificationID);
-                                        if($notif->Flag == 0) $count++;
+                                        if($notif->Flag == 0) {
+                                            $count++;
+                                        }
                                         $row++;
                                     } 
                                 ?>
@@ -151,6 +158,7 @@ if (!isset($userID)) {
                             <span id="notification_count"><?php echo $count; ?></span>
                             <?php } ?>
                         </li>
+                        <!-- END NOTIFICATION SECTION -->
                         <li>
                             <a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch">
                             <!-- Search Icon on Menu Bar -->

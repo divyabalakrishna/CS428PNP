@@ -549,6 +549,17 @@ body {
   background-color: black;
 }    
 
+.image-thumb-small {
+  border-radius: 5px;
+  width:35px;
+  height:35px;
+  background-color: gray;
+}    
+
 .showImage {
 	width: 100%;		/* desired width */
+}
+
+.read {
+    color: #c8c5c5;
 }

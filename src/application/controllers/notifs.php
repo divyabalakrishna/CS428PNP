@@ -40,5 +40,10 @@ class Notifs
             }
         }
     }
-        
+
+    public function updateFlag($notifID)
+    {
+        $GLOBALS["beans"]->notifModel->updateFlag($notifID);
+    }
+    
 }
