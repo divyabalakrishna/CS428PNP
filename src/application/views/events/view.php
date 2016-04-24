@@ -57,8 +57,8 @@ else if ($event->Capacity > count($participants)) {
 					<p class="form-control-static"><?php echo $event->HostFirstName." ".$event->HostLastName ?></p>
 				</div>
 			</div>
-			<div>
-				<div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
 					<?php if (strtotime($event->Time) > time()) {
 						if ($userID == $event->HostID) { ?>
 							<button type="button" id="edit" class="btn btn-default">Edit</button>
