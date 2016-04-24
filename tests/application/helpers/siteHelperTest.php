@@ -2,8 +2,7 @@
 
 include_once(__DIR__ . "/../../../src/application/helpers/siteHelper.php");
 
-class SiteHelperTest extends PHPUnit_Framework_TestCase
-{
+class SiteHelperTest extends PHPUnit_Framework_TestCase {
 
 	private static $siteHelper;
 
@@ -11,14 +10,16 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 		static::$siteHelper = new SiteHelper();
 	}
 
-	public function testGetSession()
-	{
+	public function testGetSession() {
 		$_SESSION["application"] = "PLAN & PLAY";
 		$this->assertEquals("PLAN & PLAY", static::$siteHelper->getSession("application"));
 	}
 
-	public function testAddAlertSingle()
-	{
+	public function testGetSessionNotExists() {
+		$this->assertEquals("", static::$siteHelper->getSession("application"));
+	}
+
+	public function testAddAlertSingle() {
 		$_SESSION["alerts"] = "";
 		static::$siteHelper->addAlert("info", "Hello World");
 
@@ -31,8 +32,7 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals("Hello World", $alerts[0]->message);
 	}
 
-	public function testAddAlertMultiple()
-	{
+	public function testAddAlertMultiple() {
 		$_SESSION["alerts"] = "";
 		static::$siteHelper->addAlert("info", "Hello World");
 		static::$siteHelper->addAlert("danger", "Error Message");
@@ -49,20 +49,17 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals("Error Message", $alerts[1]->message);
 	}
 
-	private function addDummyAlert()
-	{
+	private function addDummyAlert() {
 		$_SESSION["alerts"] = "";
 		static::$siteHelper->addAlert("info", "Hello World");
 	}
 
-	private function checkAlert($html)
-	{
+	private function checkAlert($html) {
 		$this->assertEquals($html, static::$siteHelper->getAlertsHTML());
 		$this->assertEquals("", static::$siteHelper->getSession("alerts"));
 	}
 
-	public function testGetAlertsHTMLSingle()
-	{
+	public function testGetAlertsHTMLSingle() {
 		$this->addDummyAlert();
 
 		$html = "<div class='alert alert-info' role='alert'><span>Hello World</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
@@ -70,14 +67,20 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase
 		$this->checkAlert($html);
 	}
 
-	public function testGetAlertsHTMLMultiple()
-	{
+	public function testGetAlertsHTMLMultiple() {
 		$this->addDummyAlert();
-		static::$siteHelper->addAlert("danger", "Error Message");
+		static::$siteHelper->addAlert('danger', 'Error Message');
 
 		$html = "<div class='alert alert-info' role='alert'><span>Hello World</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div><div class='alert alert-danger' role='alert'><span>Error Message</span><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>";
 
 		$this->checkAlert($html);
+	}
+
+	public function testSetPopUp() {
+		static::$siteHelper->setPopUp('abc');
+
+		$this->assertTrue(array_key_exists($_SESSION, "popup"));
+		$this->assertEquals('abc', $_SESSION["popup"]->modalID);
 	}
 
 }

@@ -108,6 +108,8 @@ class EventModelTest extends ModelTestCase
 		$expectedObject->FormattedDate = '12/31/2015';
 		$expectedObject->FormattedTime = '05:00 PM';
 		$expectedObject->TagName = 'Running';
+		$expectedObject->HostFirstName = 'Jane';
+		$expectedObject->HostLastName = 'Doe';
 
 		$this->assertEquals($expectedObject, $actualObject);
 	}
@@ -131,6 +133,8 @@ class EventModelTest extends ModelTestCase
 		$expectedObject->FormattedDate = '12/31/2015';
 		$expectedObject->FormattedTime = '05:00 PM';
 		$expectedObject->TagName = 'Running';
+		$expectedObject->HostFirstName = 'Jane';
+		$expectedObject->HostLastName = 'Doe';
 
 		$this->assertEquals($expectedObject, $actualObject);
 	}
@@ -155,6 +159,8 @@ class EventModelTest extends ModelTestCase
 		$expectedObject->FormattedDate = '';
 		$expectedObject->FormattedTime = '';
 		$expectedObject->TagName = '';
+		$expectedObject->HostFirstName = '';
+		$expectedObject->HostLastName = '';
 
 		$this->assertEquals($expectedObject, $actualObject);
 	}
@@ -757,24 +763,6 @@ class EventModelTest extends ModelTestCase
 		$expectedArray = array();
 
 		$expectedObject = new stdClass();
-		$expectedObject->EventID = 1;
-		$expectedObject->HostID = 1;
-		$expectedObject->Name = 'Casual jogging';
-		$expectedObject->Description = null;
-		$expectedObject->Time = '2015-12-31 17:00:00';
-		$expectedObject->Address = 'Illini Union, 1401 W Green St, Urbana, IL 61801';
-		$expectedObject->Capacity = null;
-		$expectedObject->Private = 0;
-		$expectedObject->TagID = 21;
-		$expectedObject->Image = '1.png';
-		$expectedObject->Lat = 40.109567;
-		$expectedObject->Lon = -88.227213;
-		$expectedObject->FormattedDateTime = '12/31/2015 05:00 PM';
-		$expectedObject->TagName = 'Running';
-		$expectedObject->distance = 1.5828691942519846;
-		$expectedArray[] = $expectedObject;
-
-		$expectedObject = new stdClass();
 		$expectedObject->EventID = 2;
 		$expectedObject->HostID = 1;
 		$expectedObject->Name = 'Badminton Game';
@@ -790,6 +778,33 @@ class EventModelTest extends ModelTestCase
 		$expectedObject->FormattedDateTime = date('m/d/Y', strtotime('tomorrow')) . ' 05:00 PM';
 		$expectedObject->TagName = 'Badminton';
 		$expectedObject->distance = 1.9079905786448228;
+		$expectedArray[] = $expectedObject;
+
+		$this->assertEquals($expectedArray, $actualArray);
+	}
+
+	public function testGetFeed() {
+		$actualArray = static::$eventModel->getFeed(3);
+
+		$expectedArray = array();
+
+		$expectedObject = new stdClass();
+		$expectedObject->EventID = 2;
+		$expectedObject->HostID = 1;
+		$expectedObject->Name = 'Badminton Game';
+		$expectedObject->Description = "Let's play together!";
+		$expectedObject->Time = date('Y-m-d', strtotime('tomorrow')) . ' 17:00:00';
+		$expectedObject->Address = 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820';
+		$expectedObject->Capacity = 4;
+		$expectedObject->Private = 0;
+		$expectedObject->TagID = 3;
+		$expectedObject->Image = '2.png';
+		$expectedObject->Lat = 40.100972;
+		$expectedObject->Lon = -88.236077;
+		$expectedObject->FormattedDate = date('m/d/Y', strtotime('tomorrow'));
+		$expectedObject->FormattedTime = '05:00 PM';
+		$expectedObject->FormattedDateTime = date('m/d/Y', strtotime('tomorrow')) . ' 05:00 PM';
+		$expectedObject->TagName = 'Badminton';
 		$expectedArray[] = $expectedObject;
 
 		$this->assertEquals($expectedArray, $actualArray);

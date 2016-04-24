@@ -106,8 +106,8 @@ class EventModel extends Model
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
 					Tag.Name AS TagName,
-					FirstName AS HostFirstName,
-					LastName AS HostLastName  
+					User.FirstName AS HostFirstName,
+					User.LastName AS HostLastName  
 				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
 				LEFT JOIN User ON Event.HostID = User.UserID
