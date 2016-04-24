@@ -41,6 +41,17 @@ abstract class ViewTestCase extends PHPUnit_Extensions_Selenium2TestCase {
 		$form->submit();
 		usleep(500000);
 	}
+
+	public function assertNotExists($elementID, $errorElementName) {
+		try {
+			$this->byId($elementID);
+			$this->fail($errorElementName . ' exists.');
+		}
+		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
+			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
+		}
+	}
+
 }
 
 class DBTestCaseWrapper extends DBTestCase {

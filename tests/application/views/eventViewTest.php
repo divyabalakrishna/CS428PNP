@@ -20,29 +20,9 @@ class EventViewTest extends ViewTestCase {
 		$deleteButton = $this->byId('delete');
 		$this->assertEquals('DELETE', $deleteButton->text());
 
-		try {
-			$this->byId('join');
-			$this->fail('Join button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
-
-		try {
-			$this->byId('leave');
-			$this->fail('Leave button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
-
-		try {
-			$this->byId('recreate');
-			$this->fail('Recreate button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
+		$this->assertNotExists('recreate', 'Recreate button');
+		$this->assertNotExists('join', 'Join button');
+		$this->assertNotExists('leave', 'Leave button');
 	}
 
 	public function testViewJoinedEvent() {
@@ -58,37 +38,10 @@ class EventViewTest extends ViewTestCase {
 		$editButton = $this->byId('leave');
 		$this->assertEquals('LEAVE', $editButton->text());
 
-		try {
-			$this->byId('edit');
-			$this->fail('Edit button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
-
-		try {
-			$this->byId('delete');
-			$this->fail('Delete button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
-
-		try {
-			$this->byId('recreate');
-			$this->fail('Recreate button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
-
-		try {
-			$this->byId('join');
-			$this->fail('Join button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
+		$this->assertNotExists('edit', 'Edit button');
+		$this->assertNotExists('delete', 'Delete button');
+		$this->assertNotExists('recreate', 'Recreate button');
+		$this->assertNotExists('join', 'Join button');
 	}
 
 	public function testViewOtherEvent() {
@@ -100,37 +53,10 @@ class EventViewTest extends ViewTestCase {
 		$editButton = $this->byId('join');
 		$this->assertEquals('JOIN', $editButton->text());
 
-		try {
-			$this->byId('edit');
-			$this->fail('Edit button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
-
-		try {
-			$this->byId('delete');
-			$this->fail('Delete button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
-
-		try {
-			$this->byId('recreate');
-			$this->fail('Recreate button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
-
-		try {
-			$this->byId('leave');
-			$this->fail('Leave button exists.');
-		}
-		catch(PHPUnit_Extensions_Selenium2TestCase_WebDriverException $exception) {
-			$this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $exception ->getCode());
-		}
+		$this->assertNotExists('edit', 'Edit button');
+		$this->assertNotExists('delete', 'Delete button');
+		$this->assertNotExists('recreate', 'Recreate button');
+		$this->assertNotExists('leave', 'Leave button');
 	}
 
 	public function testInsertComment() {
