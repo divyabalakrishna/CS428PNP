@@ -442,14 +442,4 @@ class EventModel extends Model {
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-	public function getTagName($tagID) {
-		$sql = "SELECT Name
-				FROM Tag
-				WHERE TagID = :tagID";
-
-		$parameters = array(":tagID" => $tagID);
-
-		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
-	}
-
 }

@@ -110,14 +110,6 @@ class SiteHelper {
 		return trim($result); 
 	}
 
-	public function getTagImage($tagID) {
-		$imgDir = "/public/img/sports/";
-
-		$tagName = $GLOBALS["beans"]->eventModel->getTagName($tagID);
-
-		return $imgDir . $tagName->Name . ".png";
-	}
-
 	public function sendActivationMail($email, $active) {
 		$headers = "From: no-reply@plannplay.web.engr.illinois.com\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
