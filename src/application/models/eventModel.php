@@ -258,7 +258,10 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-	public function getSearchEvents($userID, $radius, $Lat, $Lon)
+
+
+
+	public function getSearchEvents($userID, $radius, $Lat, $Lon, $Tag, $Old)
 	{
 
         $sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
@@ -271,8 +274,28 @@ class EventModel extends Model
                 HAVING distance < ".$radius."
                 ORDER BY distance";
         
+        if($Old){
+            $sql = str_replace('WHERE Event.Time > NOW()','',$sql);
+        }
+
+
+
 		$parameters = array(":userID" => $userID);
-		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+		$query = $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+        if($Tag){
+
+            function tagToID($tag){
+                return $tag->TagID;
+            }
+            $tags = $GLOBALS["beans"]->userModel->getUserTags($userID);
+            $TagIDs = array_map("tagToID", $tags);
+            foreach($query as $i => $event ){
+                if(!in_array($event->TagID,$TagIDs)){
+                    unset($query[$i]);
+                }
+            }
+        }
+        return $query;
 	}
 
 	public function deleteParticipants($eventID, $userID = "") {
