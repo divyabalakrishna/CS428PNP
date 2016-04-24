@@ -1,10 +1,8 @@
 <?php
 
-class UserModel extends Model
-{
+class UserModel extends Model {
 
-	public function getLoginInfo($email)
-	{
+	public function getLoginInfo($email) {
 		$sql = "SELECT UserID, Email, Password, Active
 				FROM User
 				WHERE Email = :email";
@@ -27,7 +25,7 @@ class UserModel extends Model
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 	
-	public function getProfile($userID){
+	public function getProfile($userID) {
 		$sql = "SELECT FirstName, LastName, Email, Phone, Picture, Radius, Reminder, NickName, 
 					DATE_FORMAT(BirthDate, '%m/%d/%Y') AS FormattedDate, 
 					Gender, Active
@@ -124,16 +122,15 @@ class UserModel extends Model
 
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
 	}
-    
-	public function isActive($userID)
-	{
+
+	public function isActive($userID) {
 		$sql = "SELECT Active
 				FROM User
 				WHERE UserID = :userID";
 
 		$parameters = array(":userID" => $userID);
-        
-        return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
+
+		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 
 	public function setActive($userID, $active) {
@@ -157,14 +154,15 @@ class UserModel extends Model
 		$parameters = array(
 				":userID" => $userID
 		);
-        
-		if ($encrypt == "yes") 
+
+		if ($encrypt == "yes") {
 			$parameters["password"] = password_hash($password, PASSWORD_DEFAULT);
-        else
+		}
+		else {
 			$parameters["password"] = $password;
-            
-	
+		}
+
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
-    
+
 }

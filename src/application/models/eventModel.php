@@ -1,11 +1,10 @@
 <?php
 
-class EventModel extends Model
-{
+class EventModel extends Model {
 
-	public function insertEvent($hostID, $name, $description, $date, $time, $address, $capacity, $tagID, $lat, $lon) {
+	public function insertEvent($hostID, $name, $description, $date, $time, $address, $capacity, $tagID, $latitude, $longitude) {
 		$sql = "INSERT INTO Event (HostID, Name, Description, Time, Address, Capacity, TagID, Lat, Lon)
-				VALUES (:hostID, :name, :description, STR_TO_DATE(:time, '%m/%d/%Y %h:%i %p'), :address, :capacity, :tagID, :lat, :lon)";
+				VALUES (:hostID, :name, :description, STR_TO_DATE(:time, '%m/%d/%Y %h:%i %p'), :address, :capacity, :tagID, :latitude, :longitude)";
 
 		$parameters = array(
 				":hostID" => $hostID,
@@ -15,14 +14,14 @@ class EventModel extends Model
 				":address" => $address,
 				":capacity" => $capacity,
 				":tagID" => $tagID,
-                ":lat" => $lat,
-                ":lon" => $lon
+				":latitude" => $latitude,
+				":longitude" => $longitude
 		);
 
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-	public function updateEvent($eventID, $hostID, $name, $description, $date, $time, $address, $capacity, $tagID, $lat, $lon) {
+	public function updateEvent($eventID, $hostID, $name, $description, $date, $time, $address, $capacity, $tagID, $latitude, $longitude) {
 		$sql = "UPDATE Event
 				SET Name = :name,
 					Description = :description,
@@ -30,9 +29,8 @@ class EventModel extends Model
 					Address = :address,
 					Capacity = :capacity,
 					TagID = :tagID,
-                    Lat = :lat,
-                    Lon = :lon
-                    
+					Lat = :latitude,
+					Lon = :longitude
 				WHERE Event.EventID = :eventID
 					AND Event.HostID = :hostID";
 
@@ -45,9 +43,8 @@ class EventModel extends Model
 				":address" => $address,
 				":capacity" => $capacity,
 				":tagID" => $tagID,
-				":lat" => $lat,
-				":lon" => $lon
-            
+				":latitude" => $latitude,
+				":longitude" => $longitude
 		);
 
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
@@ -100,14 +97,13 @@ class EventModel extends Model
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-	public function getEvent($eventID, $hostID = "")
-	{
+	public function getEvent($eventID, $hostID = "") {
 		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
 					Tag.Name AS TagName,
 					User.FirstName AS HostFirstName,
-					User.LastName AS HostLastName  
+					User.LastName AS HostLastName
 				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
 				LEFT JOIN User ON Event.HostID = User.UserID
@@ -125,8 +121,7 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 
-	public function getHostedEvents($hostID, $timeType = "", $limit="")
-	{
+	public function getHostedEvents($hostID, $timeType = "", $limit = "") {
 		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
@@ -142,12 +137,10 @@ class EventModel extends Model
 				) ParticipantSummary ON ParticipantSummary.EventID = Event.EventID
 				WHERE Event.HostID = :hostID";
 
-		if (strcasecmp($timeType, "future") == 0)
-		{
+		if (strcasecmp($timeType, "future") == 0) {
 			$sql .= " AND Event.Time > NOW()";
 		}
-		else if (strcasecmp($timeType, "past") == 0)
-		{
+		else if (strcasecmp($timeType, "past") == 0) {
 			$sql .= " AND Event.Time <= NOW()";
 		}
 
@@ -162,8 +155,7 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
-	public function getJoinedEvents($userID, $timeType = "", $limit="")
-	{
+	public function getJoinedEvents($userID, $timeType = "", $limit = "") {
 		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
@@ -175,12 +167,10 @@ class EventModel extends Model
 				WHERE Participant.UserID = :userID
 					AND Event.HostID <> Participant.UserID";
 
-		if (strcasecmp($timeType, "future") == 0)
-		{
+		if (strcasecmp($timeType, "future") == 0) {
 			$sql .= " AND Event.Time > NOW()";
 		}
-		else if (strcasecmp($timeType, "past") == 0)
-		{
+		else if (strcasecmp($timeType, "past") == 0) {
 			$sql .= " AND Event.Time <= NOW()";
 		}
 
@@ -195,8 +185,7 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 	
-	public function getPastEvents()
-	{
+	public function getPastEvents() {
 		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
@@ -209,8 +198,7 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
 	}
 	
-	public function getFeed($userID)
-	{
+	public function getFeed($userID) {
 		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
 					DATE_FORMAT(Event.Time, '%h:%i %p') AS FormattedTime,
@@ -219,11 +207,13 @@ class EventModel extends Model
 				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
 				WHERE NOT EXISTS (
-                    	SELECT Participant.UserID 
-                    	FROM Participant 
-                    	WHERE Participant.EventID = Event.EventID 
-                    		AND Participant.UserID = :userID) 
-					AND Event.HostID <> :userID AND Event.Time > NOW()";
+						SELECT Participant.UserID 
+						FROM Participant 
+						WHERE Participant.EventID = Event.EventID 
+							AND Participant.UserID = :userID
+					) 
+					AND Event.HostID <> :userID
+					AND Event.Time > NOW()";
 		
 		$parameters = array(":userID" => $userID);
 	
@@ -258,44 +248,39 @@ class EventModel extends Model
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-
-
-
-	public function getSearchEvents($userID, $radius, $Lat, $Lon, $Tag, $Old)
-	{
-
-        $sql = "SELECT Event.*,DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
-    					Tag.Name AS TagName,
-                ( 3959 * acos( cos( radians(".$Lat.") ) * cos( radians( lat ) ) 
-                * cos( radians( Lon ) - radians(".$Lon.") ) + sin( radians(".$Lat.") ) * sin(radians(lat)) ) ) AS distance 
-                FROM Event 
+	public function getSearchEvents($userID, $radius, $latitude, $longitude, $tag, $old) {
+		$sql = "SELECT Event.*,
+					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
+					Tag.Name AS TagName,
+					(3959 * ACOS(COS(RADIANS(" . $latitude . ")) * COS(RADIANS(Lat)) * COS(RADIANS(Lon) - RADIANS(" . $longitude . ")) + SIN(RADIANS(" . $latitude . ") ) * SIN(RADIANS(Lat)))) AS Distance
+				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
 				WHERE Event.Time > NOW()
-                HAVING distance < ".$radius."
-                ORDER BY distance";
-        
-        if($Old){
-            $sql = str_replace('WHERE Event.Time > NOW()','',$sql);
-        }
+				HAVING distance < " . $radius . "
+				ORDER BY distance";
 
-
+		if ($old) {
+			$sql = str_replace('WHERE Event.Time > NOW()','',$sql);
+		}
 
 		$parameters = array(":userID" => $userID);
-		$query = $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
-        if($Tag){
 
-            function tagToID($tag){
-                return $tag->TagID;
-            }
-            $tags = $GLOBALS["beans"]->userModel->getUserTags($userID);
-            $TagIDs = array_map("tagToID", $tags);
-            foreach($query as $i => $event ){
-                if(!in_array($event->TagID,$TagIDs)){
-                    unset($query[$i]);
-                }
-            }
-        }
-        return $query;
+		$query = $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+
+		if ($tag) {
+			function tagToID($tag) {
+				return $tag->TagID;
+			}
+			$tags = $GLOBALS["beans"]->userModel->getUserTags($userID);
+			$tagIDs = array_map("tagToID", $tags);
+			foreach ($query as $i => $event) {
+				if (!in_array($event->TagID, $tagIDs)) {
+					unset($query[$i]);
+				}
+			}
+		}
+
+		return $query;
 	}
 
 	public function deleteParticipants($eventID, $userID = "") {
@@ -380,8 +365,7 @@ class EventModel extends Model
 		return $commentID;
 	}
 
-	public function getParticipants($eventID, $userID = "")
-	{
+	public function getParticipants($eventID, $userID = "") {
 		$sql = "SELECT Participant.*,
 					User.FirstName,
 					User.LastName,
@@ -457,16 +441,15 @@ class EventModel extends Model
 
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
-    
-	public function getTagName($tagID) {
 
+	public function getTagName($tagID) {
 		$sql = "SELECT Name
 				FROM Tag
-				WHERE TagID = :tagID";  
+				WHERE TagID = :tagID";
 
 		$parameters = array(":tagID" => $tagID);
 
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
-    
-    }
+	}
+
 }

@@ -58,12 +58,12 @@
 </div>
 
 <script>
-	$(document).ready(function(){
-		$('#add').click(function(){
+	$(document).ready(function() {
+		$('#add').click(function() {
 			window.location.href = '<?php echo URL_WITH_INDEX_FILE; ?>events/edit';
 		});
 
-		$('#clear').click(function(){
+		$('#clear').click(function() {
 			window.location.href = '<?php echo URL_WITH_INDEX_FILE; ?>events/listHosted';
 		});
 	});

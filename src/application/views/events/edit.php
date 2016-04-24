@@ -99,62 +99,61 @@ else {
 								<div class="col-sm-3"><input type="text" class="form-control" style="width: 110px" id="gmap-lon" name="gmap-lon"/></div>
 							</div>
 							<div class="clearfix"></div>
-                            <script>
-                                var lat,long;
-                                function getLocation() {
-                                    if (navigator.geolocation) {
-                                        navigator.geolocation.getCurrentPosition(getPosition, noPosition);
-                                    } else { 
-                                        alert("Geolocation is not supported by this browser.");
-                                    }
-                                }
-                                function noPosition(){
-                                    setMap(40.1138767,-88.2242376);
-                                }
-                                function getPosition(position) {
-                                    setMap(position.coords.latitude,position.coords.longitude);
-                                }
+							<script>
+								var lat,long;
+								function getLocation() {
+									if (navigator.geolocation) {
+										navigator.geolocation.getCurrentPosition(getPosition, noPosition);
+									} else { 
+										alert("Geolocation is not supported by this browser.");
+									}
+								}
+								function noPosition() {
+									setMap(40.1138767,-88.2242376);
+								}
+								function getPosition(position) {
+									setMap(position.coords.latitude,position.coords.longitude);
+								}
 
-                                function setMap(lat,lon){
-                                    $('#gmap-lat').val(lat);
-                                    $('#gmap-lon').val(lon);
-                                    $('#gmap').locationpicker({
-                                        <?php if (is_numeric($event->Lat) && is_numeric($event->Lon)) { ?>
-                                        location: {latitude: <?php echo $event->Lat ?>, longitude: <?php echo $event->Lon ?>},
-                                        <?php } else { ?>
-                                        location: {latitude: lat, longitude: lon},
-                                        <?php } ?>
-                                        radius: 0,
-                                        inputBinding: {
-                                            latitudeInput: $('#gmap-lat'),
-                                            longitudeInput: $('#gmap-lon'),
-                                            locationNameInput: $('#gmap-address')
-                                        },
-                                        enableAutocomplete: true
-                                    });
-                                }
-                                
-                                getLocation();
-                                $('#gmap-dialog').on('shown.bs.modal', function() {
-                                    $('#gmap').locationpicker('autosize');
-                                });
-                                $(function(){
-                                    $(document).on("click", "#save-event", function(event){
-                                        $('#address').val($('#gmap-address').val());        
-                                    }); 
-                                });                        
-                                $(function(){
-                                    $(document).on("focus", "#address", function(event){
-                                        $("#gmap-dialog").modal('show');
-                                    }); 
-                                });     
-                                $(function(){
-                                    $(document).on("keydown", "#address", function(event){
-                                        event.preventDefault();
-                                    }); 
-                                });     
+								function setMap(lat, lon) {
+									$('#gmap-lat').val(lat);
+									$('#gmap-lon').val(lon);
+									$('#gmap').locationpicker({
+										<?php if (is_numeric($event->Lat) && is_numeric($event->Lon)) { ?>
+											location: {latitude: <?php echo $event->Lat ?>, longitude: <?php echo $event->Lon ?>},
+										<?php } else { ?>
+											location: {latitude: lat, longitude: lon},
+										<?php } ?>
+										radius: 0,
+										inputBinding: {
+											latitudeInput: $('#gmap-lat'),
+											longitudeInput: $('#gmap-lon'),
+											locationNameInput: $('#gmap-address')
+										},
+										enableAutocomplete: true
+									});
+								}
 
-                            </script>
+								getLocation();
+								$('#gmap-dialog').on('shown.bs.modal', function() {
+									$('#gmap').locationpicker('autosize');
+								});
+								$(function() {
+									$(document).on("click", "#save-event", function(event) {
+										$('#address').val($('#gmap-address').val());
+									}); 
+								});
+								$(function() {
+									$(document).on("focus", "#address", function(event) {
+										$("#gmap-dialog").modal('show');
+									}); 
+								});
+								$(function() {
+									$(document).on("keydown", "#address", function(event) {
+										event.preventDefault();
+									}); 
+								});
+							</script>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -165,7 +164,7 @@ else {
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
 
-		<!-- Capacity -->  
+		<!-- Capacity -->
 		<div class="form-group">
 			<label for="capacity" class="col-sm-2 control-label">Capacity</label>
 			<div class="col-sm-10">
@@ -210,8 +209,8 @@ else {
 </div>
 
 <script>
-	$(document).ready(function(){
-		$('#cancel').click(function(){
+	$(document).ready(function() {
+		$('#cancel').click(function() {
 			window.location.href = '<?php echo $cancelURL; ?>';
 		});
 
@@ -270,8 +269,5 @@ else {
 				}
 			}
 		});
-//		$('#location').click(function(){
-//			alert('loca');
-//		});
 	});
 </script>

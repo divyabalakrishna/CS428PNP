@@ -1,11 +1,9 @@
 <?php
-if (session_status() == PHP_SESSION_NONE)
-{
+if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
 
-class Application
-{
+class Application {
 	/** @var null The controller */
 	private $url_controller = null;
 
@@ -22,8 +20,7 @@ class Application
 	 * "Start" the application:
 	 * Analyze the URL elements and calls the according controller/method or the fallback
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		// create array with URL parts in $url
 		$this->getUrlWithoutModRewrite();
 
@@ -54,16 +51,18 @@ class Application
 			// check for method: does such a method exist in the controller ?
 			if (method_exists($this->url_controller, $this->url_action)) {
 
-				if(!empty($this->url_params)) {
+				if (!empty($this->url_params)) {
 					// Call the method and pass arguments to it
 					call_user_func_array(array($this->url_controller, $this->url_action), $this->url_params);
-				} else {
+				}
+				else {
 					// If no parameters are given, just call the method without parameters, like $this->home->method();
 					$this->url_controller->{$this->url_action}();
 				}
 
-			} else {
-				if(strlen($this->url_action) == 0) {
+			}
+			else {
+				if (strlen($this->url_action) == 0) {
 					// no action defined: call the default index() method of a selected controller
 					$this->url_controller->index();
 				}
@@ -74,7 +73,8 @@ class Application
 					$page->index();
 				}
 			}
-		} else {
+		}
+		else {
 			require APP . 'controllers/error.php';
 			$page = new Error();
 			$page->index();
@@ -84,8 +84,7 @@ class Application
 	/**
 	 * Get and split the URL
 	 */
-	private function getUrlWithoutModRewrite()
-	{
+	private function getUrlWithoutModRewrite() {
 		// TODO the "" is weird
 		// get URL ($_SERVER['REQUEST_URI'] gets everything after domain and domain ending), something like
 		// array(6) { [0]=> string(0) "" [1]=> string(9) "index.php" [2]=> string(10) "controller" [3]=> string(6) "action" [4]=> string(6) "param1" [5]=> string(6) "param2" }
@@ -127,8 +126,7 @@ class Application
 	/**
 	 * Open the database connection with the credentials from application/config/config.php
 	 */
-	private function openDatabaseConnection()
-	{
+	private function openDatabaseConnection() {
 		// set the (optional) options of the PDO connection. in this case, we set the fetch mode to
 		// "objects", which means all results will be objects, like this: $result->user_name !
 		// For example, fetch mode FETCH_ASSOC would return results like this: $result["user_name] !
@@ -147,8 +145,7 @@ class Application
 		$this->db = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . $dbName, DB_USER, DB_PASS, $options);
 	}
 
-	private function loadHelpers()
-	{
+	private function loadHelpers() {
 		require APP . '/helpers/fileHelper.php';
 		require APP . '/helpers/queryHelper.php';
 		require APP . '/helpers/siteHelper.php';
@@ -160,8 +157,7 @@ class Application
 		$GLOBALS["beans"]->stringHelper = new StringHelper();
 	}
 
-	private function loadModels()
-	{
+	private function loadModels() {
 		require APP . '/core/model.php';
 		require APP . '/models/eventModel.php';
 		require APP . '/models/resourceModel.php';
@@ -173,12 +169,10 @@ class Application
 		$GLOBALS["beans"]->userModel = new UserModel($this->db);
 		$GLOBALS["beans"]->notifModel = new NotifModel($this->db);
 	}
-    
-	private function checkLoggedIn()
-	{
-        $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		if (!is_numeric($userID))
-		{
+
+	private function checkLoggedIn() {
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		if (!is_numeric($userID)) {
 			$validDestination = false;
 
 			// The following destinations do not require user to log in
@@ -192,21 +186,18 @@ class Application
 			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("active", $this->url_action) == 0);
 			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("reset", $this->url_action) == 0);
 
-			if (!$validDestination)
-			{
+			if (!$validDestination) {
 				header('location: ' . URL_WITH_INDEX_FILE);
 			}
 		}
-        else if ($GLOBALS["beans"]->userModel->isActive($userID)->Active != 'Yes')
-        {
+		else if ($GLOBALS["beans"]->userModel->isActive($userID)->Active != 'Yes') {
 			$validDestination = false;
 			$validDestination = $validDestination || (strcasecmp("user", $this->url_controller) == 0 && strcasecmp("active", $this->url_action) == 0);
-            
-			if (!$validDestination)
-			{
+
+			if (!$validDestination) {
 				header('location: ' . URL_WITH_INDEX_FILE);
 			}
-        }
+		}
 	}
 
 }

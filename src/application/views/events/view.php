@@ -9,7 +9,6 @@ else if ($event->Capacity > count($participants)) {
 }
 ?>
 
-
 <div class="container">
 	<div class="detailsHeading well" >
 		<?php if ($event->Image != "") { ?>
@@ -75,12 +74,9 @@ else if ($event->Capacity > count($participants)) {
 					<?php } ?>
 				</div>
 			</div>
-            
-
 		</div>
 		
 		<div class="participants">
-			
 			<h3 class="page-header">Participants</h3>
 			<?php foreach ($participants as $person) { ?>
 				<div class="profile">
@@ -95,140 +91,124 @@ else if ($event->Capacity > count($participants)) {
 				</div>
 			<?php } ?>
 		</div>
-	   <br><br>
-	    
+		<br><br>
+
 		<!-- Media -->
 		<div class="media">
 			<h3 class="page-header">Media</h3>
-            
-            <?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
-            
-            <div class="row well">
-                <div class="col-md-12">
-                  <div class="carousel carousel-showmanymoveone slide" id="carousel123">
-                    <div class="carousel-inner">
-                        <?php 
-                            $cnt=0; $act="active";
-                            foreach ($media as $image) { 
-                                if ($image->Image != "") { 
-                                    
-                                    $ext = explode(".", strtolower($image->Image));
-                                    if ($ext[1] == "mp4") 
-                                    {
-                        ?>
-                                    <div class="item <?php echo "$act"; ?> ">
-                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                            <a class="image-frame-car" href="" data-toggle="modal" data-target="#showModal" data-id="<?php echo $image->MediaID;?>" data-owner="<?php echo $image->UserID;?>" data-whatever="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" data-type="video">
-                                                <video class="image-thumb-car">
-                                                  <source src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" type="video/mp4">
-                                                  <source src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" type="video/ogg">
-                                                  Your browser does not support HTML5 video.
-                                                </video>
-                                            </a>
-                                        </div>
-                                    </div> 
-
-                        <?php
-                                    }
-                                    else
-                                    {
-                        ?>
-                                    <div class="item <?php echo "$act"; ?> ">
-                                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-                                            <a class="image-frame-car" href="" data-toggle="modal" data-target="#showModal" data-id="<?php echo $image->MediaID;?>" data-owner="<?php echo $image->UserID;?>" data-whatever="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" data-type="image">
-                                                <div class="image-thumb-car" style="background-image: url('<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>');"></div>
-                                            </a>
-                                        </div>
-                                    </div>                         
-                        <?php
-                                    }
-                                } 
-                                if ($cnt=="active" && count($media) >= 6) { $act=""; } 
-                        ?>
-                        <?php } ?>                            
-
-                    </div>
-                    <?php if (count($media) >= 6) { ?>
-                        <a class="left carousel-control" href="#carousel123" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                        <a class="right carousel-control" href="#carousel123" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
-                    <?php } ?>  
-                  </div>
-                </div>
-            </div>
-            <br>
-            <div class="row text-center">
-                <?php 
-                    $showUpload = false;
-                    foreach ($participants as $participant) {
-                        if($participant->UserID == $userID) { $showUpload = true; break; }
-                    }
-                    if ($showUpload) {
-                ?>
-                <button type="submit" class="btn btn-default" data-toggle="modal" data-target="#uploadModal">Upload New Media</button>
-                <?php } ?>
-            </div>
-
+			<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
+			<div class="row well">
+				<div class="col-md-12">
+					<div class="carousel carousel-showmanymoveone slide" id="carousel123">
+						<div class="carousel-inner">
+							<?php $cnt = 0;
+							$act = "active";
+							foreach ($media as $image) { 
+								if ($image->Image != "") { 
+									$ext = explode(".", strtolower($image->Image));
+									if ($ext[1] == "mp4") { ?>
+										<div class="item <?php echo "$act"; ?> ">
+											<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+												<a class="image-frame-car" href="" data-toggle="modal" data-target="#showModal" data-id="<?php echo $image->MediaID;?>" data-owner="<?php echo $image->UserID;?>" data-whatever="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" data-type="video">
+												<video class="image-thumb-car">
+													<source src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" type="video/mp4">
+													<source src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" type="video/ogg">
+													Your browser does not support HTML5 video.
+												</video>
+												</a>
+											</div>
+										</div>
+									<?php } else { ?>
+										<div class="item <?php echo "$act"; ?> ">
+											<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+												<a class="image-frame-car" href="" data-toggle="modal" data-target="#showModal" data-id="<?php echo $image->MediaID;?>" data-owner="<?php echo $image->UserID;?>" data-whatever="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>" data-type="image">
+													<div class="image-thumb-car" style="background-image: url('<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('media', $image->Image) ?>');">
+													</div>
+												</a>
+											</div>
+										</div>
+									<?php }
+								}
+								if ($cnt == "active" && count($media) >= 6) {
+									$act = "";
+								}
+							} ?>
+						</div>
+						<?php if (count($media) >= 6) { ?>
+							<a class="left carousel-control" href="#carousel123" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+							<a class="right carousel-control" href="#carousel123" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row text-center">
+				<?php $showUpload = false;
+				foreach ($participants as $participant) {
+					if ($participant->UserID == $userID) {
+						$showUpload = true;
+						break;
+					}
+				}
+				if ($showUpload) { ?>
+					<button type="submit" class="btn btn-default" data-toggle="modal" data-target="#uploadModal">Upload New Media</button>
+				<?php } ?>
+			</div>
 		</div>
-        
-        
-        <!-- Modal Upload Media -->
-        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
 
+		<!-- Modal Upload Media -->
+		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<form class="form-group" id="formUpload" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/upload" enctype="multipart/form-data" >
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Upload Media</h3>
+						</div>
+	
+						<div class="modal-body">
+							<br>
+							<input type="hidden" id="eventID" name="eventID" value="<?php echo $event->EventID ?>" />
+							<label for="image" class="sr-only">Image</label>
+							<input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
+							<input type="file" id="image" name="image[]" accept="image/jpg,image/jpeg,image/png,image/bmp,video/mp4" multiple class="form-control" />
+							<p class="help-block">Max file size: 2 MB. Accepted file types: .jpg, .jpeg, .png, .bmp</p>
+							<br>
+						</div>
+	
+						<div class="modal-footer">
+							<!-- Buttons -->
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Upload</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 
-                    <form class="form-group" id="formUpload" method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/upload" enctype="multipart/form-data" >
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h3 class="modal-title" id="myModalLabel"><img class="icon" src="<?php echo URL; ?>public/img/icon.png"> Upload Media</h3>
-                        </div>
+		<!-- Modal Show Media -->
+		<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					</div>
+					<div class="modal-body text-center">
+						<img id="showImage" name="showImage" class="showImage" src="">
+						<video width="100%" id="showVideo" autoplay style="display:none" controls>
+							<source src="" type="video/mp4"></source>
+							Your browser does not support HTML5 video.
+						</video>
+					</div>
+					<div class="modal-footer">
+						<div class="right">
+							<button id="deleteMedia" style="display:none; right;" type="button" class="btn btn-primary" onclick="">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                        <div class="modal-body">
-                            <br>
-                            <input type="hidden" id="eventID" name="eventID" value="<?php echo $event->EventID ?>" />
-                            <label for="image" class="sr-only">Image</label>
-                            <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
-                            <input type="file" id="image" name="image[]" accept="image/jpg,image/jpeg,image/png,image/bmp,video/mp4" multiple class="form-control" />
-                            <p class="help-block">Max file size: 2 MB. Accepted file types: .jpg, .jpeg, .png, .bmp</p>
-                            <br>
-                        </div>
-                        
-                        <div class="modal-footer">
-                            <!-- Buttons -->
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>                        
-                            <button type="submit" class="btn btn-primary">Upload</button>
-                        </div>                   
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Show Media -->
-        <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            <img id="showImage" name="showImage" class="showImage" src="">
-                            <video width="100%" id="showVideo" autoplay style="display:none" controls>
-                                <source src="" type="video/mp4"></source>
-                                Your browser does not support HTML5 video.
-                            </video>
-                            
-                        </div>
-                        
-                        <div class="modal-footer">
-                            <div class="right">
-                                <button id="deleteMedia" style="display:none; right;" type="button" class="btn btn-primary" onclick="">Delete</button>
-                            </div>
-                        </div>                   
-                
-                </div>
-            </div>
-        </div>
-    
 		<!-- Comments -->	
 		<div class="comments">
 			<h3 class="page-header">Comments</h3>
@@ -304,16 +284,15 @@ else if ($event->Capacity > count($participants)) {
 
 
 <script>
-	$(document).ready(function(){
+	$(document).ready(function() {
 		<?php if (strtotime($event->Time) > time()) {
 			if ($userID == $event->HostID) { ?>
-				$('#edit').click(function(){
+				$('#edit').click(function() {
 					window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/edit/" . $event->EventID; ?>';
 				});
 	
-				$('#delete').click(function(){
-					if (confirm('Are you sure you want to delete this event?'))
-					{
+				$('#delete').click(function() {
+					if (confirm('Are you sure you want to delete this event?')) {
 						window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/delete/" . $event->EventID; ?>';
 					}
 				});
@@ -327,95 +306,89 @@ else if ($event->Capacity > count($participants)) {
 				});
 		<?php }
 		} else if ($userID == $event->HostID) { ?>
-			$('#recreate').click(function(){
+			$('#recreate').click(function() {
 				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/recreate/" . $event->EventID; ?>';
 			});
 		<?php } ?>
 
 		$('#form').validate({});
-    
-        reply = function(replyLink, parentID) {
-            var td = $(replyLink).parent().next();
 
-            if (td.children().length == 0) {
-                var form = $('<form method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/reply" class="form-horizontal"></form>');
-                form.append('<input type="hidden" name="eventID" value="<?php echo $event->EventID ?>" />');
-                form.append('<input type="hidden" name="parentID" value="' + parentID + '" />');
-                form.append('<input type="text" name="text" required aria-required="true" />');
-                form.append('<button type="submit" class="btn btn-default" style="margin-left:5px">Save</button>');
-                form.append('<button type="button" class="btn btn-default" style="margin-left:5px" onclick="cancelReply(this)">Cancel</button>');
+		reply = function(replyLink, parentID) {
+			var td = $(replyLink).parent().next();
 
-                td.append(form);
-            }
-        }
+			if (td.children().length == 0) {
+				var form = $('<form method="post" action="<?php echo URL_WITH_INDEX_FILE; ?>events/reply" class="form-horizontal"></form>');
+				form.append('<input type="hidden" name="eventID" value="<?php echo $event->EventID ?>" />');
+				form.append('<input type="hidden" name="parentID" value="' + parentID + '" />');
+				form.append('<input type="text" name="text" required aria-required="true" />');
+				form.append('<button type="submit" class="btn btn-default" style="margin-left:5px">Save</button>');
+				form.append('<button type="button" class="btn btn-default" style="margin-left:5px" onclick="cancelReply(this)">Cancel</button>');
 
-        cancelReply = function(cancelButton) {
-            var td = $(cancelButton).closest('td');
-            td.empty();
-        }
+				td.append(form);
+			}
+		}
 
-        deleteComment = function(commentID) {
-            if (confirm('Are you sure you want to delete this comment?'))
-            {
-                window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/deleteComment/" . $event->EventID . "/"; ?>' + commentID;
-            }
-        }
-        
-        deleteMedia = function(mediaID) {
-            if (confirm('Are you sure you want to delete this media?'))
-            {
-                window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/deleteMedia/" . $event->EventID . "/"; ?>' + mediaID;
-            }
-        }
+		cancelReply = function(cancelButton) {
+			var td = $(cancelButton).closest('td');
+			td.empty();
+		}
 
-        $('.carousel-showmanymoveone .item').each(function(){
-            var itemToClone = $(this);
+		deleteComment = function(commentID) {
+			if (confirm('Are you sure you want to delete this comment?')) {
+				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/deleteComment/" . $event->EventID . "/"; ?>' + commentID;
+			}
+		}
 
-            <?php if (count($media) >= 6) { ?>          
-                for (var i=1;i<6;i++) {
-                  itemToClone = itemToClone.next();
-                  // wrap around if at end of item collection
-                  if (!itemToClone.length) {
-                    itemToClone = $(this).siblings(':first');
-                  }
+		deleteMedia = function(mediaID) {
+			if (confirm('Are you sure you want to delete this media?')) {
+				window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/deleteMedia/" . $event->EventID . "/"; ?>' + mediaID;
+			}
+		}
 
-                  // grab item, clone, add marker class, add to collection
-                  itemToClone.children(':first-child').clone()
-                    .addClass("cloneditem-"+(i))
-                    .appendTo($(this));
-                }
-            <?php } ?>
-        });
-        
-        $('#showModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            var imgSrc = button.data('whatever') // Extract info from data-* attributes
-            var mediaId = button.data('id') // Extract info from data-* attributes
-            var owner = button.data('owner') // Extract info from data-* attributes
-            var type = button.data('type') // Extract info from data-* attributes            
-            var modal = $(this);
-            var userId = <?php echo $userID; ?>;
+		$('.carousel-showmanymoveone .item').each(function() {
+			var itemToClone = $(this);
 
-            $("#showImage").attr('src',imgSrc);    
-            if (userId == owner) {
-                $("#deleteMedia").attr('onclick',"deleteMedia("+mediaId+")"); 
-                $("#deleteMedia").attr('style',"display:block"); 
-            }
-            if (type == "video") {
-                $("#showImage").attr('style',"display:none");
-                $("#showVideo").attr("src", imgSrc);
-                $("#showVideo").attr('style',"display:block");
-            }
-            else
-            {
-                $("#showImage").attr('style',"display:block");            
-                $("#showVideo").attr('style',"display:none");            
-                $("#showVideo")[0].pause();
-            }
-        });        
-        $('#showModal').on('hide.bs.modal', function (event) {
-                $("#showVideo")[0].pause();
-        });
-    });
-    
+			<?php if (count($media) >= 6) { ?>
+				for (var i=1;i<6;i++) {
+					itemToClone = itemToClone.next();
+					// wrap around if at end of item collection
+					if (!itemToClone.length) {
+						itemToClone = $(this).siblings(':first');
+					}
+
+					// grab item, clone, add marker class, add to collection
+					itemToClone.children(':first-child').clone().addClass("cloneditem-"+(i)).appendTo($(this));
+				}
+			<?php } ?>
+		});
+
+		$('#showModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget) // Button that triggered the modal
+			var imgSrc = button.data('whatever') // Extract info from data-* attributes
+			var mediaId = button.data('id') // Extract info from data-* attributes
+			var owner = button.data('owner') // Extract info from data-* attributes
+			var type = button.data('type') // Extract info from data-* attributes
+			var modal = $(this);
+			var userId = <?php echo $userID; ?>;
+
+			$("#showImage").attr('src',imgSrc);
+			if (userId == owner) {
+				$("#deleteMedia").attr('onclick',"deleteMedia("+mediaId+")"); 
+				$("#deleteMedia").attr('style',"display:block"); 
+			}
+			if (type == "video") {
+				$("#showImage").attr('style',"display:none");
+				$("#showVideo").attr("src", imgSrc);
+				$("#showVideo").attr('style',"display:block");
+			}
+			else {
+				$("#showImage").attr('style',"display:block");
+				$("#showVideo").attr('style',"display:none");
+				$("#showVideo")[0].pause();
+			}
+		});
+		$('#showModal').on('hide.bs.modal', function (event) {
+			$("#showVideo")[0].pause();
+		});
+	});
 </script>

@@ -1,7 +1,6 @@
 <?php
 
-class FileHelper
-{
+class FileHelper {
 
 	/* This function will OVERWRITE the file if the same file name exists in the $directory.
 	 * 
@@ -11,13 +10,11 @@ class FileHelper
 	 * $acceptedExtensions: comma separated list of accepted extensions (without the dot).
 	 * $errorMessageSubject: to be appended into the error message "Unable to upload <subject>" if upload is unsuccessful.
 	 */
-	public function uploadFile($fieldName, $directory, $acceptedExtensions, $errorMessageSubject, $maxSize = 0, $replaceFileName = "", $index = 0)
-	{
+	public function uploadFile($fieldName, $directory, $acceptedExtensions, $errorMessageSubject, $maxSize = 0, $replaceFileName = "", $index = 0) {
 		$fileName = "";
 		$errorMessage = "Unable to upload " . $errorMessageSubject . " " . $_FILES[$fieldName]["name"][$index];
 		$fileUploaded = false;
 
-        
 		if ($_FILES[$fieldName]["error"][$index] == 0 && $_FILES[$fieldName]["tmp_name"][$index] != "" && ($maxSize == 0 || $_FILES[$fieldName]["size"][$index] <= $maxSize)) {
 			$fileExtension = strtolower(pathinfo($_FILES[$fieldName]["name"][$index], PATHINFO_EXTENSION));
 			$acceptedExtensionArray = explode(",", strtolower($acceptedExtensions));
@@ -44,9 +41,9 @@ class FileHelper
 				$errorMessage .= ": The uploaded file is not in the accepted file types." . $fileExtension;
 			}
 		}
-        else if ($_FILES[$fieldName]["name"][$index] == "") {
-            $errorMessage = "";
-        }
+		else if ($_FILES[$fieldName]["name"][$index] == "") {
+			$errorMessage = "";
+		}
 		else if ($_FILES[$fieldName]["error"][$index] == UPLOAD_ERR_INI_SIZE || $_FILES[$fieldName]["error"][$index] == UPLOAD_ERR_FORM_SIZE || ($maxSize > 0 && $_FILES[$fieldName]["size"] > $maxSize)) {
 			$errorMessage .= ": The uploaded file exceeds the max size limit.";
 		}
@@ -68,7 +65,7 @@ class FileHelper
 	public function deleteUploadedFile($directory, $fileName) {
 		$uploadDirectory = UPLOAD_ROOT . $directory . DIRECTORY_SEPARATOR;
 
-        if (file_exists($uploadDirectory . $fileName)) {
+		if (file_exists($uploadDirectory . $fileName)) {
 			unlink($uploadDirectory . $fileName);
 		}
 	}

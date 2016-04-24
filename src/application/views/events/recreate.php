@@ -39,8 +39,8 @@
 </div>
 
 <script>
-	$(document).ready(function(){
-		$('#cancel').click(function(){
+	$(document).ready(function() {
+		$('#cancel').click(function() {
 			window.location.href = '<?php echo URL_WITH_INDEX_FILE . "events/view/". $eventID; ?>';
 		});
 

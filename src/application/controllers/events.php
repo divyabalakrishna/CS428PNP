@@ -1,15 +1,12 @@
 <?php
 
-class Events
-{
+class Events {
 
-	public function listHosted()
-	{
+	public function listHosted() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
 		$timeType = "future";
-		if (array_key_exists("timeType", $_POST))
-		{
+		if (array_key_exists("timeType", $_POST)) {
 			$timeType = $_POST["timeType"];
 		}
 
@@ -20,13 +17,11 @@ class Events
 		require APP . 'views/_templates/footer.php';
 	}
 
-	public function listJoined()
-	{
+	public function listJoined() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
 		$timeType = "future";
-		if (array_key_exists("timeType", $_POST))
-		{
+		if (array_key_exists("timeType", $_POST)) {
 			$timeType = $_POST["timeType"];
 		}
 
@@ -37,74 +32,74 @@ class Events
 		require APP . 'views/_templates/footer.php';
 	}
 
-    public function listSearch()
-	{
-         $Lat = $GLOBALS["beans"]->siteHelper->getDefaultLat();
-         $Lon = $GLOBALS["beans"]->siteHelper->getDefaultLon();
+	public function listSearch() {
+		$latitude = $GLOBALS["beans"]->siteHelper->getDefaultLat();
+		$longitude = $GLOBALS["beans"]->siteHelper->getDefaultLon();
 
-         if(isset($_COOKIE['latitude'])){
-              $Lat = $_COOKIE["latitude"];
-         }
-         if(isset($_COOKIE['longitude'])){
-              $Lon = $_COOKIE["longitude"];
-         }
-        
-         if(isset($_POST["gmap-lat2"])){
-             $Lat = $_POST["gmap-lat2"];
-         }
+		if (isset($_COOKIE['latitude'])) {
+			$latitude = $_COOKIE["latitude"];
+		}
+		if (isset($_COOKIE['longitude'])) {
+			$longitude = $_COOKIE["longitude"];
+		}
 
-         if(isset($_POST["gmap-lon2"])){
-             $Lon = $_POST["gmap-lon2"];
-         }
-        $Tag = false;
-        $Old = false;
+		if (isset($_POST["gmap-lat2"])) {
+			$latitude = $_POST["gmap-lat2"];
+		}
 
-        if(isset($_POST["tag"])){
-            $Tag = true;
-        }
-        if(isset($_POST["old"])){
-            $Old = true;
-        }
+		if (isset($_POST["gmap-lon2"])) {
+			$longitude = $_POST["gmap-lon2"];
+		}
+		$tag = false;
+		$old = false;
 
-         $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-         $user = $GLOBALS["beans"]->userModel->getProfile($userID);
-         
-         if(!$user->Radius) $user->Radius = 2;
-        
-		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon, $Tag, $Old);
+		if (isset($_POST["tag"])) {
+			$tag = true;
+		}
+		if (isset($_POST["old"])) {
+			$old = true;
+		}
 
-		 require APP . 'views/_templates/header.php';
-		 require APP . 'views/events/index_search.php';
-		 require APP . 'views/_templates/footer.php';
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$user = $GLOBALS["beans"]->userModel->getProfile($userID);
+		
+		if (!$user->Radius) {
+			$user->Radius = 2;
+		}
+		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $latitude, $longitude, $tag, $old);
+
+		require APP . 'views/_templates/header.php';
+		require APP . 'views/events/index_search.php';
+		require APP . 'views/_templates/footer.php';
 	}
 
-    public function genXML()
-	{
-         $Lat = $GLOBALS["beans"]->siteHelper->getDefaultLat();
-         $Lon = $GLOBALS["beans"]->siteHelper->getDefaultLon();
+	public function genXML() {
+		$latitude = $GLOBALS["beans"]->siteHelper->getDefaultLat();
+		$longitude = $GLOBALS["beans"]->siteHelper->getDefaultLon();
 
-         if(isset($_COOKIE['latitude'])){
-              $Lat = $_COOKIE["latitude"];
-         }
-         if(isset($_COOKIE['longitude'])){
-              $Lon = $_COOKIE["longitude"];
-         }
-        
-		 $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");  
-         $user = $GLOBALS["beans"]->userModel->getProfile($userID);
-        
-         if(!$user->Radius) $user->Radius = 2;        
-		 $events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $Lat, $Lon);
+		if (isset($_COOKIE['latitude'])) {
+			$latitude = $_COOKIE["latitude"];
+		}
+		if (isset($_COOKIE['longitude'])) {
+			$longitude = $_COOKIE["longitude"];
+		}
 
-         require APP . 'views/events/xml.php';
-    }
+		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+		$user = $GLOBALS["beans"]->userModel->getProfile($userID);
 
-	public function view($eventID)
-	{
-        if (!is_numeric($eventID)) {
-            header('location: ' . URL_WITH_INDEX_FILE);            
-        }
-        
+		if (!$user->Radius) {
+			$user->Radius = 2;
+		}
+		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $latitude, $longitude);
+
+		require APP . 'views/events/xml.php';
+	}
+
+	public function view($eventID) {
+		if (!is_numeric($eventID)) {
+			header('location: ' . URL_WITH_INDEX_FILE);
+		}
+
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 		$participants = $GLOBALS["beans"]->eventModel->getParticipants($eventID);
@@ -117,8 +112,7 @@ class Events
 		require APP . 'views/_templates/footer.php';
 	}
 	
-	public function recreate($eventID)
-	{
+	public function recreate($eventID) {
 		require APP . 'views/_templates/header.php';
 		require APP . 'views/events/recreate.php';
 		require APP . 'views/_templates/footer.php';
@@ -147,8 +141,7 @@ class Events
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $newEventID);
 	}
 	
-	public function edit($eventID = "")
-	{
+	public function edit($eventID = "") {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID, $userID);
 		$tags = $GLOBALS["beans"]->resourceModel->getTags();
@@ -158,8 +151,7 @@ class Events
 		require APP . 'views/_templates/footer.php';
 	}
 
-	public function save()
-	{
+	public function save() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$eventID = $_POST["eventID"];
 		$performUpload = false;
@@ -236,32 +228,33 @@ class Events
 	}
 	
 	
-	public function upload()
-	{
+	public function upload() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$eventID = $_POST["eventID"];
-        $success = false;
-        
-        $total = count($_FILES['image']['name']);
-        
-        // Loop through each file
-        for($i=0; $i<$total; $i++) {
-            $newName = $eventID."-".$userID."-".$GLOBALS["beans"]->stringHelper->genString(); 
-            $result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "media", "jpg,jpeg,png,bmp,mp4", "media image", 8097152, $newName,$i);
+		$success = false;
 
-            if ($result->fileUploaded) {
-                $GLOBALS["beans"]->eventModel->insertMedia($eventID, $userID, $result->fileName);
-                $success = true;
-            }
-            else if ($result->errorMessage != "") {
-                $GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
-            }
-        }
-        
-        // Add notification to all participants
-        if($success) $this->addUploadNotif($eventID);
+		$total = count($_FILES['image']['name']);
+
+		// Loop through each file
+		for ($i = 0; $i < $total; $i++) {
+			$newName = $eventID."-".$userID."-".$GLOBALS["beans"]->stringHelper->genString(); 
+			$result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "media", "jpg,jpeg,png,bmp,mp4", "media image", 8097152, $newName,$i);
+
+			if ($result->fileUploaded) {
+				$GLOBALS["beans"]->eventModel->insertMedia($eventID, $userID, $result->fileName);
+				$success = true;
+			}
+			else if ($result->errorMessage != "") {
+				$GLOBALS["beans"]->siteHelper->addAlert("danger", $result->errorMessage);
+			}
+		}
+
+		// Add notification to all participants
+		if ($success) {
+			$this->addUploadNotif($eventID);
+		}
 		
-        header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
+		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
 
 	public function delete($eventID) {
@@ -330,7 +323,7 @@ class Events
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
-    
+
 	public function deleteMedia($eventID, $mediaID) {
 		if (!is_numeric($mediaID)) {
 			$mediaID = -1;
@@ -338,39 +331,42 @@ class Events
 
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$media = $GLOBALS["beans"]->eventModel->getMedia($eventID,$mediaID);
-        
+
 		if ($userID == $media[0]->UserID) {
 			$GLOBALS["beans"]->eventModel->deleteMedia($eventID, $mediaID);
-            $GLOBALS["beans"]->fileHelper->deleteUploadedFile("media", $media[0]->Image);
+			$GLOBALS["beans"]->fileHelper->deleteUploadedFile("media", $media[0]->Image);
 		}
 
 		header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 	}
-    
-    public function addUploadNotif($eventID)
-    {
+
+	public function addUploadNotif($eventID) {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 		$participants = $GLOBALS["beans"]->eventModel->getParticipants($eventID);
 
-        foreach ($participants as $user) { 
+		foreach ($participants as $user) { 
 
-            if($user->UserID != $userID) {
-                echo "notif " . $user->UserID . "<br>";
-                if($event->Image)
-                    $imgLink = "/uploads/event/" . $event->Image;
-                else 
-                    $imgLink = "/public/img/sports/" . $event->TagName . ".png";
-                //Insert Notifications
-                $GLOBALS["beans"]->notifModel->insertNotif(
-                        $user->UserID,
-                        $event->EventID,
-                        "Your friend was uploading a new media on ". $event->Name . ".",
-                        "/events/view/" . $event->EventID,
-                        $imgLink
-                );
-            }
-        }
-    }
+			if ($user->UserID != $userID) {
+				echo "notif " . $user->UserID . "<br>";
+
+				if ($event->Image) {
+					$imgLink = "/uploads/event/" . $event->Image;
+				}
+				else {
+					$imgLink = "/public/img/sports/" . $event->TagName . ".png";
+				}
+
+				//Insert Notifications
+				$GLOBALS["beans"]->notifModel->insertNotif(
+						$user->UserID,
+						$event->EventID,
+						"Your friend was uploading a new media on ". $event->Name . ".",
+						"/events/view/" . $event->EventID,
+						$imgLink
+				);
+			}
+		}
+	}
 
 }

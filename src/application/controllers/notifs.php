@@ -1,10 +1,8 @@
 <?php
 
-class Notifs
-{
+class Notifs {
 
-	public function index()
-	{
+	public function index() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$events = $GLOBALS["beans"]->notifModel->getNotifications($userID,"");
 
@@ -13,37 +11,36 @@ class Notifs
 		require APP . 'views/_templates/footer.php';
 	}
 
-    public function genNotifications($hour, $check="")
-    {
+	public function genNotifications($hour, $check="") {
 
-        $users = $GLOBALS["beans"]->userModel->getAllUserIDs();
+		$users = $GLOBALS["beans"]->userModel->getAllUserIDs();
 
-        foreach ($users as $user) { 
+		foreach ($users as $user) { 
+			echo "notif " . $user->UserID . "<br>";
+			$events = $GLOBALS["beans"]->notifModel->getJoinedEvents($user->UserID, $hour, $check);
 
-            echo "notif " . $user->UserID . "<br>";
-    		$events = $GLOBALS["beans"]->notifModel->getJoinedEvents($user->UserID, $hour, $check);
+			foreach ($events as $event) { 
+				if ($event->Image) {
+					$imgLink = "/uploads/event/" . $event->Image;
+				}
+				else {
+					$imgLink = "/public/img/sports/" . $event->TagName . ".png";
+				}
 
-            foreach ($events as $event) { 
-        
-                if($event->Image)
-                    $imgLink = "/uploads/event/" . $event->Image;
-                else 
-                    $imgLink = "/public/img/sports/" . $event->TagName . ".png";
-                //Insert Notifications
-                $GLOBALS["beans"]->notifModel->insertNotif(
-                        $user->UserID,
-                        $event->EventID,
-                        $event->Name . " begins in " . $hour . " hours",
-                        "/events/view/" . $event->EventID,
-                        $imgLink
-                );
-            }
-        }
-    }
+				//Insert Notifications
+				$GLOBALS["beans"]->notifModel->insertNotif(
+						$user->UserID,
+						$event->EventID,
+						$event->Name . " begins in " . $hour . " hours",
+						"/events/view/" . $event->EventID,
+						$imgLink
+				);
+			}
+		}
+	}
 
-    public function updateFlag($notifID)
-    {
-        $GLOBALS["beans"]->notifModel->updateFlag($notifID);
-    }
-    
+	public function updateFlag($notifID) {
+		$GLOBALS["beans"]->notifModel->updateFlag($notifID);
+	}
+
 }

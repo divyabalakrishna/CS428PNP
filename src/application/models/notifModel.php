@@ -1,35 +1,30 @@
 <?php
 
-class NotifModel extends Model
-{
+class NotifModel extends Model {
 
-	public function getNotifications($userID, $limit)
-	{
+	public function getNotifications($userID, $limit) {
 		$sql = "SELECT Notification.*,
-                TIMEDIFF(Notification.Time, now()) AS TimeDiff                    
-                FROM Notification
+					TIMEDIFF(Notification.Time, now()) AS TimeDiff
+				FROM Notification
 				WHERE UserID = :userID";
-
 
 		$sql .= " ORDER BY Notification.Time DESC";
 
 		if (is_numeric($limit)) {
 			$sql .= " LIMIT " . $limit;
 		}
-        
+
 		$parameters = array(":userID" => $userID);
 
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
-    
-	public function getJoinedEvents($userID, $hour="", $check="")
-	{
+
+	public function getJoinedEvents($userID, $hour = "", $check = "") {
 		$sql = "SELECT Event.*,
-					Tag.Name AS TagName,       
-                    TIMEDIFF(Event.Time, now()) AS TimeDiff, 
-                    TIMESTAMPDIFF(HOUR,Event.Time, now()) AS HourDiff,
+					Tag.Name AS TagName,
+					TIMEDIFF(Event.Time, now()) AS TimeDiff, 
+					TIMESTAMPDIFF(HOUR,Event.Time, now()) AS HourDiff,
 					MINUTE(TIMEDIFF(Event.Time, now())) AS MinDiff 
-                    
 				FROM Event
 				INNER JOIN Participant ON Participant.EventID = Event.EventID
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
@@ -42,7 +37,6 @@ class NotifModel extends Model
 
 		$sql .= " ORDER BY Event.Time";
 
-        
 		$parameters = array(":userID" => $userID);
 
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
@@ -62,7 +56,7 @@ class NotifModel extends Model
 
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
-    
+
 	public function updateFlag($notifID) {
 		$sql = "UPDATE Notification
 				SET Flag = 1
@@ -75,10 +69,9 @@ class NotifModel extends Model
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
-    public function updateNotified($eventID, $userID, $notif) {
-		$sql = "UPDATE Participation ";
-
-        $sql .= "SET Flag = 1
+	public function updateNotified($eventID, $userID, $notif) {
+		$sql = "UPDATE Participation
+				SET Flag = 1
 				WHERE Notification.NotificationID = :notifID";
 
 		$parameters = array(
@@ -87,9 +80,5 @@ class NotifModel extends Model
 
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
-    
-    
-    
-
 
 }

@@ -1,10 +1,8 @@
 <?php
 
-class ResourceModel extends Model
-{
+class ResourceModel extends Model {
 
-	public function getTags()
-	{
+	public function getTags() {
 		$sql = "SELECT *
 				FROM Tag
 				ORDER BY Name";

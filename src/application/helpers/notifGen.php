@@ -1,11 +1,11 @@
 <?php
-    // DIRECTORY_SEPARATOR adds a slash to the end of the path
-    define('ROOT', __DIR__ . DIRECTORY_SEPARATOR);
-    // set a constant that holds the project's "application" folder, like "/var/www/application".
-    define('APP', dirname(__DIR__));
+	// DIRECTORY_SEPARATOR adds a slash to the end of the path
+	define('ROOT', __DIR__ . DIRECTORY_SEPARATOR);
+	// set a constant that holds the project's "application" folder, like "/var/www/application".
+	define('APP', dirname(__DIR__));
 
-    // load application config (error reporting etc.)
-    //require APP. '/config/config.php';
+	// load application config (error reporting etc.)
+	//require APP. '/config/config.php';
 	
 	define('DB_TYPE', 'mysql');
 	define('DB_HOST', 'localhost:3306');
@@ -16,23 +16,21 @@
 	$options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING);
 	$db = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS, $options);
 
-    function getAllRows($db, $sql, $parameters = "") {
-    
-        $query = $db->prepare($sql);
+	function getAllRows($db, $sql, $parameters = "") {
+		$query = $db->prepare($sql);
 
-        if ($parameters == "") {
-            $query->execute();
-        }
-        else {
-            $query->execute($parameters);
-        }
+		if ($parameters == "") {
+			$query->execute();
+		}
+		else {
+			$query->execute($parameters);
+		}
 
-        return $query->fetchAll();
-    }
+		return $query->fetchAll();
+	}
 	
-    function executeWriteQuery($db, $sql, $parameters) {
-		foreach ($parameters as $parameterKey => $parameterValue)
-		{
+	function executeWriteQuery($db, $sql, $parameters) {
+		foreach ($parameters as $parameterKey => $parameterValue) {
 			if (!is_numeric($parameterValue) && $parameterValue == "") {
 				$parameters[$parameterKey] = null;
 			}
@@ -44,25 +42,21 @@
 		return $db->lastInsertId();
 	}
 
-
-    function getAllUser($db)
-	{
-		$sql = "SELECT UserID FROM User
-                WHERE 1";
+	function getAllUser($db) {
+		$sql = "SELECT UserID
+				FROM User";
 
 		$parameters = "";
 
 		return getAllRows($db, $sql, $parameters);
 	}
 
-	function getJoinedEvents($db, $userID, $hour="", $check="")
-	{
+	function getJoinedEvents($db, $userID, $hour="", $check = "") {
 		$sql = "SELECT Event.*,
-					Tag.Name AS TagName,       
-                    TIMEDIFF(Event.Time, now()) AS TimeDiff, 
-                    TIMESTAMPDIFF(HOUR,Event.Time, now()) AS HourDiff,
-					MINUTE(TIMEDIFF(Event.Time, now())) AS MinDiff 
-                    
+					Tag.Name AS TagName,
+					TIMEDIFF(Event.Time, now()) AS TimeDiff, 
+					TIMESTAMPDIFF(HOUR,Event.Time, now()) AS HourDiff,
+					MINUTE(TIMEDIFF(Event.Time, now())) AS MinDiff
 				FROM Event
 				INNER JOIN Participant ON Participant.EventID = Event.EventID
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
@@ -75,7 +69,6 @@
 
 		$sql .= " ORDER BY Event.Time";
 
-        
 		$parameters = array(":userID" => $userID);
 
 		return getAllRows($db, $sql, $parameters);
@@ -95,41 +88,35 @@
 
 		return executeWriteQuery($db, $sql, $parameters);
 	}
-    
-    function genNotifications($db, $hour, $check="")
-    {
 
-        $users = getAllUser($db);
+	function genNotifications($db, $hour, $check = "") {
+		$users = getAllUser($db);
 
-        //echo date('d-M-Y H:m:i', time()). "\n";
-        foreach ($users as $user) { 
+		foreach ($users as $user) { 
+			$events = getJoinedEvents($db, $user->UserID, $hour, $check);
 
-            //echo "asd" . $user->UserID . "<br>";
-    		$events = getJoinedEvents($db, $user->UserID, $hour, $check);
+			foreach ($events as $event) {
+				if ($event->Image) {
+					$imgLink = "/uploads/event/" . $event->Image;
+				}
+				else {
+					$imgLink = "/public/img/sports/" . $event->TagName . ".png";
+				}
 
-            foreach ($events as $event) { 
-        
+				//Insert Notifications
+				insertNotif(
+						$db,
+						$user->UserID,
+						$event->EventID,
+						$event->Name . " begins in " . $hour . " hours",
+						"/events/view/" . $event->EventID,
+						$imgLink
+				);
+			}
+		}
+	}
 
-                if($event->Image)
-                    $imgLink = "/uploads/event/" . $event->Image;
-                else 
-                    $imgLink = "/public/img/sports/" . $event->TagName . ".png";
-
-                //Insert Notifications
-                insertNotif(
-                        $db,
-                        $user->UserID,
-                        $event->EventID,
-                        $event->Name . " begins in " . $hour . " hours",
-                        "/events/view/" . $event->EventID,
-                        $imgLink
-                );
-            }
-        }
-    }
-
-    genNotifications($db,1);
-    genNotifications($db,24);
-
+	genNotifications($db,1);
+	genNotifications($db,24);
 
 ?>

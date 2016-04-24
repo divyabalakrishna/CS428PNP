@@ -24,16 +24,19 @@ if (!function_exists('debugPDO')) {
 			// check if named parameters (':param') or anonymous parameters ('?') are used
 			if (is_string($key)) {
 				$keys[] = '/' . $key . '/';
-			} else {
+			}
+			else {
 				$keys[] = '/[?]/';
 			}
 
 			// bring parameter into human-readable format
 			if (is_string($value)) {
 				$values[$key] = "'" . $value . "'";
-			} elseif (is_array($value)) {
+			}
+			elseif (is_array($value)) {
 				$values[$key] = implode(',', $value);
-			} elseif (is_null($value)) {
+			}
+			elseif (is_null($value)) {
 				$values[$key] = 'NULL';
 			}
 		}

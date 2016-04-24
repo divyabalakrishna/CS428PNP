@@ -1,7 +1,6 @@
 <?php
 
-class QueryHelper
-{
+class QueryHelper {
 
 	public function getSingleRowObject($db, $sql, $parameters) {
 		$query = $db->prepare($sql);
@@ -20,8 +19,7 @@ class QueryHelper
 	}
 
 	public function executeWriteQuery($db, $sql, $parameters) {
-		foreach ($parameters as $parameterKey => $parameterValue)
-		{
+		foreach ($parameters as $parameterKey => $parameterValue) {
 			if (!is_numeric($parameterValue) && $parameterValue == "") {
 				$parameters[$parameterKey] = null;
 			}

@@ -776,7 +776,7 @@ class EventModelTest extends ModelTestCase {
 		$expectedObject->Lon = -88.236077;
 		$expectedObject->FormattedDateTime = date('m/d/Y', strtotime('tomorrow')) . ' 05:00 PM';
 		$expectedObject->TagName = 'Badminton';
-		$expectedObject->distance = 1.9079905786448228;
+		$expectedObject->Distance = 1.9079905786448228;
 		$expectedArray[] = $expectedObject;
 
 		$this->assertEquals($expectedArray, $actualArray);

@@ -74,7 +74,7 @@ if (!isset($userID)) {
 			}
 		});
 
-		$(document).ready(function(){
+		$(document).ready(function() {
 			// Add asterisk to required fields
 			$('input,textarea,select').filter('[required]').each(function(index, element) {
 				$(element).closest('.form-group').find('label:first').append('<span class="asterisk-required">*</span>');
@@ -89,7 +89,6 @@ if (!isset($userID)) {
 </head>
 <body>
 	<!-- top bar -->
-    
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="containerHeader">
 			<div class="navbar-header">
@@ -99,101 +98,102 @@ if (!isset($userID)) {
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-                    <?php if (is_numeric($userID)) { ?>
-                        <li>
+					<?php if (is_numeric($userID)) { ?>
+						<li>
 							<a href="<?php echo URL_WITH_INDEX_FILE; ?>" title="Home">
 								<img src="<?php echo URL; ?>public/img/home_icon.png" alt="Home" style="width:28px;height:26px;"> 
-                            </a>
-                        </li>                    
-                        <!-- NOTIFICATION SECTION -->
-                        <?php if ($GLOBALS["beans"]->userModel->isActive($userID)->Active == 'Yes') { ?>
-                        <li id="notification_li">
-                            <!--Notification icon-->
-							<a href="#" id="notificationLink" title="Notifications">
-								<img src="<?php echo URL; ?>public/img/notification_icon.png" alt="Notifications" style="width:25px;height:25px;"> 
-  							</a>
-                            <div id="notificationContainer">
-                                <div id="notificationTitle">Notifications</div>
-                                <?php 
-                                    $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");           
-                                    $notifs = $GLOBALS["beans"]->notifModel->getNotifications($userID,5);
+							</a>
+						</li>
+						<!-- NOTIFICATION SECTION -->
+						<?php if ($GLOBALS["beans"]->userModel->isActive($userID)->Active == 'Yes') { ?>
+							<li id="notification_li">
+								<!--Notification icon-->
+								<a href="#" id="notificationLink" title="Notifications">
+									<img src="<?php echo URL; ?>public/img/notification_icon.png" alt="Notifications" style="width:25px;height:25px;"> 
+								</a>
+								<div id="notificationContainer">
+									<div id="notificationTitle">Notifications</div>
+									<?php $userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
+									$notifs = $GLOBALS["beans"]->notifModel->getNotifications($userID,5);
 
-                                    $row = 0;
-                                    $count = 0;
-                                    foreach ($notifs as $notif) {
-                                        if ($notif->Flag == 1)
-                                            $rowclass = "read";
-                                        else
-                                            $rowclass = "";
-                                            
-                                ?>
-                                <div id="notificationsBody" class="notifications">
-                                    <div class="row">
-                                        <div class="col-sm-2 col-md-2">
-                                            <div class="image-frame"> 
-                                                <div class="image-thumb" style="background-image: url('<?php echo URL; ?><?php echo $notif->ImgLink?>');"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-10 col-md-10">
-                                            <a class="<?php echo $rowclass; ?>" href="javascript:updateNotifFlag(<?php echo $notif->NotificationID; ?>,'<?php echo $notif->UrlLink; ?>')"><?php echo $notif->Message ?></a>
-                                        </div>
-                                    </div>
-                                    <div style="font-size: 10px;font-style: italic;" class="    text-right"><?php echo $GLOBALS["beans"]->siteHelper->notifMsg($notif->Time); ?></div>
-
-                                </div>
-                                <?php
-                                        if($notif->Flag == 0) {
-                                            $count++;
-                                        }
-                                        $row++;
-                                    } 
-                                ?>
-                            <?php if($row == 0) {?>
-                            <div id="notificationsBody" class="notifications text-center">You don't have notifications</div>
-                            <?php } ?>
-
-                                <div id="notificationFooter"><a href="<?php echo URL_WITH_INDEX_FILE; ?>notifs/index">See All</a></div>
-                            </div>
-                            <?php if($count > 0) {?>
-                            <span id="notification_count"><?php echo $count; ?></span>
-                            <?php } ?>
-                        </li>
-                        <!-- END NOTIFICATION SECTION -->
-                        <li>
-							<!-- Search Icon on Menu Bar -->
-							<a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch" title="Search">
-								<img src="<?php echo URL; ?>public/img/search_icon.png" alt="Search" style="width:25px;height:24.5px;"> 
-                            </a>
-                        </li>
-                        <li>
-							<!-- Profile Icon on Menu Bar -->
-							<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile" title="Profile">
-								<img src="<?php echo URL; ?>public/img/profile_icon.png" alt="Profile" style="width:27px;height:27px;"> 
-                            </a>
-                        </li>
-                        <?php } ?>
-                        <li>
+									$row = 0;
+									$count = 0;
+									foreach ($notifs as $notif) {
+										if ($notif->Flag == 1) {
+											$rowclass = "read";
+										}
+										else {
+											$rowclass = "";
+										} ?>
+										<div id="notificationsBody" class="notifications">
+											<div class="row">
+												<div class="col-sm-2 col-md-2">
+													<div class="image-frame"> 
+														<div class="image-thumb" style="background-image: url('<?php echo URL; ?><?php echo $notif->ImgLink?>');">
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-10 col-md-10">
+													<a class="<?php echo $rowclass; ?>" href="javascript:updateNotifFlag(<?php echo $notif->NotificationID; ?>,'<?php echo $notif->UrlLink; ?>')"><?php echo $notif->Message ?></a>
+												</div>
+											</div>
+											<div style="font-size: 10px;font-style: italic;" class="text-right">
+												<?php echo $GLOBALS["beans"]->siteHelper->notifMsg($notif->Time); ?>
+											</div>
+										</div>
+										<?php if ($notif->Flag == 0) {
+											$count++;
+										}
+										$row++;
+									}
+									if ($row == 0) { ?>
+										<div id="notificationsBody" class="notifications text-center">
+											You don't have notifications
+										</div>
+									<?php } ?>
+									<div id="notificationFooter">
+										<a href="<?php echo URL_WITH_INDEX_FILE; ?>notifs/index">See All</a>
+									</div>
+								</div>
+								<?php if ($count > 0) { ?>
+									<span id="notification_count"><?php echo $count; ?></span>
+								<?php } ?>
+							</li>
+							<!-- END NOTIFICATION SECTION -->
+							<li>
+								<!-- Search Icon on Menu Bar -->
+								<a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch" title="Search">
+									<img src="<?php echo URL; ?>public/img/search_icon.png" alt="Search" style="width:25px;height:24.5px;"> 
+								</a>
+							</li>
+							<li>
+								<!-- Profile Icon on Menu Bar -->
+								<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile" title="Profile">
+									<img src="<?php echo URL; ?>public/img/profile_icon.png" alt="Profile" style="width:27px;height:27px;"> 
+								</a>
+							</li>
+						<?php } ?>
+						<li>
 							<!-- Logout Icon on Menu Bar -->
 							<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/logout" title="Logout">
 								<img src="<?php echo URL; ?>public/img/logout_icon.png" alt="Logout" style="width:27px;height:27px;"> 
-                            </a>
-                        </li>
-                    <?php } else { ?>
-                        <?php if((isset($cheat) && $cheat!=0) || !isset($cheat)) {?>
-                        <li>
-                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>">Home</a>
-                        </li>                    
-                        <?php }?>
-                        <?php if(isset($cheat) && $cheat==0) {?>
-                            <li>
-                                <a id="signInLink" href="" class="btn" data-toggle="modal" data-target="#myModal">Sign in</a>
-                            </li>
-                            <li>
-                                <a id="signUpLink" href="" class="btn" data-toggle="modal" data-target="#myModal2">Sign Up</a>
-                            </li>
-                        <?php }?>
-                    <?php }?>
-                    
+							</a>
+						</li>
+					<?php } else { ?>
+						<?php if ((isset($cheat) && $cheat != 0) || !isset($cheat)) { ?>
+							<li>
+								<a href="<?php echo URL_WITH_INDEX_FILE; ?>">Home</a>
+							</li>
+						<?php }
+						if (isset($cheat) && $cheat == 0) { ?>
+							<li>
+								<a id="signInLink" href="" class="btn" data-toggle="modal" data-target="#myModal">Sign in</a>
+							</li>
+							<li>
+								<a id="signUpLink" href="" class="btn" data-toggle="modal" data-target="#myModal2">Sign Up</a>
+							</li>
+						<?php }
+					} ?>
 				</ul>
 			</div>
 		</div>

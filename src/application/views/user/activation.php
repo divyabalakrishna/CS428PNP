@@ -14,68 +14,64 @@
 					<label for="active" class="sr-only">Activation</label>
 					<input type="text" id="active" name="active" class="form-control" placeholder="Activation code" value="<?php echo $active;?>" required>
 					<br>
-                    <?php if(isset($cheat)) {?>
-					<label for="password" class="sr-only">Password</label>
-					<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-                    <br>
-                    <?php } ?>
-                    
-                    <?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>                    
+					<?php if (isset($cheat)) { ?>
+						<label for="password" class="sr-only">Password</label>
+						<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+						<br>
+					<?php } ?>
+					<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
 				</div>
 				<div class="modal-footer">
-                    <div class="row">
-                        <div class="col-md-6 text-left">
-                            <a class="text-left" href="<?php echo URL_WITH_INDEX_FILE; ?>user/resendActivation">Resend Activation Code</a>
-                        </div>
-                        <div class="col-md-6 ">
-                            <button type="submit" class="btn btn-primary">Activate</button>
-                        </div>
-                    </div>
+					<div class="row">
+						<div class="col-md-6 text-left">
+							<a class="text-left" href="<?php echo URL_WITH_INDEX_FILE; ?>user/resendActivation">Resend Activation Code</a>
+						</div>
+						<div class="col-md-6 ">
+							<button type="submit" class="btn btn-primary">Activate</button>
+						</div>
+					</div>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
 <script>
-    $(document).ready(function(){
+	$(document).ready(function() {
 
-        $("#activationForm").validate({
-            
-            rules: {
-                email: {
-                    required: true,
-                    email: true
-                },
-                <?php if(isset($cheat)) {?>
-                password: {
-					required: true,
-					minlength: 6,
-				},
-                <?php } ?>
-                active: {
-                    required: true,
-                    minlength: 16
-                }
-            },
-            messages: {
+		$("#activationForm").validate({
+			rules: {
 				email: {
-                    required: "Please enter your email",
-                    email: "Please enter correct email format"
-                },
-                <?php if(isset($cheat)) {?>                
-				password: {
-					required: "Please provide a password",
-					minlength: "Your password must be at least 6 characters long",
-					equalTo: "Please enter the same password as above"
+					required: true,
+					email: true
 				},
-                <?php } ?>                
+				<?php if (isset($cheat)) { ?>
+					password: {
+						required: true,
+						minlength: 6,
+					},
+				<?php } ?>
+				active: {
+					required: true,
+					minlength: 16
+				}
+			},
+			messages: {
+				email: {
+					required: "Please enter your email",
+					email: "Please enter correct email format"
+				},
+				<?php if (isset($cheat)) { ?>
+					password: {
+						required: "Please provide a password",
+						minlength: "Your password must be at least 6 characters long",
+						equalTo: "Please enter the same password as above"
+					},
+				<?php } ?>
 				active: {
 					required: "Please provide a activation code",
 					minlength: "Your activation code must be at least 16 characters long"
 				}
 			}
 		});
-
-        
 	});
 </script>

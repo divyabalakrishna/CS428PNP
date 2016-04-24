@@ -1,13 +1,11 @@
 <?php
 
-class Model
-{
+class Model {
 
 	/**
 	 * @param object $db A PDO database connection
 	 */
-	function __construct($db)
-	{
+	function __construct($db) {
 		$this->db = $db;
 	}
 
