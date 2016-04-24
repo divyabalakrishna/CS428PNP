@@ -23,7 +23,7 @@ else if ($event->Capacity > count($participants)) {
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Description</label>
 				<div class="col-sm-3">
-					<p class="form-control-static"><?php echo $event->Description ?></p>
+					<p class="form-control-static"><?php echo $event->FormattedDate ?></p>
 				</div>
 			</div>
 			<div class="form-group">
