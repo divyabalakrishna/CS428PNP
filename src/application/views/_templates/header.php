@@ -101,16 +101,16 @@ if (!isset($userID)) {
 				<ul class="nav navbar-nav navbar-right">
                     <?php if (is_numeric($userID)) { ?>
                         <li>
-                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>">
-                            <img src="<?php echo URL; ?>public/img/home_icon.png" alt="Home" style="width:28px;height:26px;"> 
+							<a href="<?php echo URL_WITH_INDEX_FILE; ?>" title="Home">
+								<img src="<?php echo URL; ?>public/img/home_icon.png" alt="Home" style="width:28px;height:26px;"> 
                             </a>
                         </li>                    
                         <!-- NOTIFICATION SECTION -->
                         <?php if ($GLOBALS["beans"]->userModel->isActive($userID)->Active == 'Yes') { ?>
                         <li id="notification_li">
                             <!--Notification icon-->
-                            <a href="#" id="notificationLink">
-  								<img src="<?php echo URL; ?>public/img/notification_icon.png" alt="Notification" style="width:25px;height:25px;"> 
+							<a href="#" id="notificationLink" title="Notifications">
+								<img src="<?php echo URL; ?>public/img/notification_icon.png" alt="Notifications" style="width:25px;height:25px;"> 
   							</a>
                             <div id="notificationContainer">
                                 <div id="notificationTitle">Notifications</div>
@@ -160,22 +160,22 @@ if (!isset($userID)) {
                         </li>
                         <!-- END NOTIFICATION SECTION -->
                         <li>
-                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch">
-                            <!-- Search Icon on Menu Bar -->
-                            <img src="<?php echo URL; ?>public/img/search_icon.png" alt="Search" style="width:25px;height:24.5px;"> 
+							<!-- Search Icon on Menu Bar -->
+							<a href="<?php echo URL_WITH_INDEX_FILE; ?>events/listSearch" title="Search">
+								<img src="<?php echo URL; ?>public/img/search_icon.png" alt="Search" style="width:25px;height:24.5px;"> 
                             </a>
                         </li>
                         <li>
-                        <!-- Profile Icon on Menu Bar -->
-                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile">
-                            <img src="<?php echo URL; ?>public/img/profile_icon.png" alt="Profile" style="width:27px;height:27px;"> 
+							<!-- Profile Icon on Menu Bar -->
+							<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/viewProfile" title="Profile">
+								<img src="<?php echo URL; ?>public/img/profile_icon.png" alt="Profile" style="width:27px;height:27px;"> 
                             </a>
                         </li>
                         <?php } ?>
                         <li>
-                        <!-- Logout Icon on Menu Bar -->
-                            <a href="<?php echo URL_WITH_INDEX_FILE; ?>user/logout">
-                            <img src="<?php echo URL; ?>public/img/logout_icon.png" alt="Logout" style="width:27px;height:27px;"> 
+							<!-- Logout Icon on Menu Bar -->
+							<a href="<?php echo URL_WITH_INDEX_FILE; ?>user/logout" title="Logout">
+								<img src="<?php echo URL; ?>public/img/logout_icon.png" alt="Logout" style="width:27px;height:27px;"> 
                             </a>
                         </li>
                     <?php } else { ?>
