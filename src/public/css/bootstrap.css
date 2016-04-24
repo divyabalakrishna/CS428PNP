@@ -6860,7 +6860,7 @@ button.close {
 
 .container .media{
 /*	margin: 60px 20px 60px 20px;*/
-    margin-top: 120px;        
+    padding-top: 60px;        
     width: 100%;
 }
 
