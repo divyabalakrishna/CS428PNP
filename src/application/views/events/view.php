@@ -19,6 +19,7 @@ else if ($event->Capacity > count($participants)) {
 		<div class="title"><?php echo $event->Name ?></div>
 	</div>
 	
+	<div class="col-sm-6">
 		<div class="form-horizontal eventDetails">
 			<div class="form-group">
 				<label class="col-sm-1 control-label">Description</label>
@@ -75,23 +76,28 @@ else if ($event->Capacity > count($participants)) {
 				</div>
 			</div>
 		</div>
-		
+	</div>
+	
+	<div class="form-horizontal attendees">	
 		<div class="participants">
 			<h3 class="page-header">Participants</h3>
-			<?php foreach ($participants as $person) { ?>
-				<div class="profile">
-					<a href="<?php echo URL_WITH_INDEX_FILE . "user/viewParticipantProfile/" . $person->UserID; ?>">
-						<?php if ($person->Picture == "") { ?>
-							<img class="image" src="<?php echo URL; ?>public/img/profile.png">
-						<?php } else { ?>
-							<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture) ?>"/>
-						<?php } ?>
-						<div class="name"><?php echo $person->FirstName ?></div>
-					</a>
-				</div>
-			<?php } ?>
+			<div class="form-group profilePhotos">
+				<?php foreach ($participants as $person) { ?>
+					<div class="profile">
+						<a href="<?php echo URL_WITH_INDEX_FILE . "user/viewParticipantProfile/" . $person->UserID; ?>">
+							<?php if ($person->Picture == "") { ?>
+								<img class="image" src="<?php echo URL; ?>public/img/profile.png">
+							<?php } else { ?>
+								<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture) ?>"/>
+							<?php } ?>
+							<div class="name"><?php echo $person->FirstName ?></div>
+						</a>
+					</div>
+				<?php } ?>
+			</div>
 		</div>
-		<br><br>
+	</div>	
+	<br><br>
 
 		<!-- Media -->
 		<div class="media">
