@@ -1,7 +1,6 @@
 <?php
 
-class PHPUnit_ArrayDataSet extends PHPUnit_Extensions_Database_DataSet_AbstractDataSet
-{
+class PHPUnit_ArrayDataSet extends PHPUnit_Extensions_Database_DataSet_AbstractDataSet {
 
 	/**
 	 * @var array

@@ -3,8 +3,7 @@
 include_once(__DIR__ . '/modelTestCase.php');
 include_once(__DIR__ . '/../../../src/application/models/eventModel.php');
 
-class EventModelTest extends ModelTestCase
-{
+class EventModelTest extends ModelTestCase {
 
 	private static $eventModel;
 
@@ -214,7 +213,7 @@ class EventModelTest extends ModelTestCase
 	}
 
 	public function testGetHostedEventsLimit() {
-		$actualArray = static::$eventModel->getHostedEvents(1, "", 1);
+		$actualArray = static::$eventModel->getHostedEvents(1, '', 1);
 
 		$expectedArray = array();
 
@@ -242,7 +241,7 @@ class EventModelTest extends ModelTestCase
 	}
 
 	public function testGetHostedEventsFuture() {
-		$actualArray = static::$eventModel->getHostedEvents(1, "future");
+		$actualArray = static::$eventModel->getHostedEvents(1, 'future');
 
 		$expectedArray = array();
 
@@ -270,7 +269,7 @@ class EventModelTest extends ModelTestCase
 	}
 
 	public function testGetHostedEventsPast() {
-		$actualArray = static::$eventModel->getHostedEvents(1, "past");
+		$actualArray = static::$eventModel->getHostedEvents(1, 'past');
 
 		$expectedArray = array();
 
@@ -344,7 +343,7 @@ class EventModelTest extends ModelTestCase
 	}
 
 	public function testGetJoinedEventsLimit() {
-		$actualArray = static::$eventModel->getJoinedEvents(2, "", 1);
+		$actualArray = static::$eventModel->getJoinedEvents(2, '', 1);
 
 		$expectedArray = array();
 
@@ -371,7 +370,7 @@ class EventModelTest extends ModelTestCase
 	}
 
 	public function testGetJoinedEventsFuture() {
-		$actualArray = static::$eventModel->getJoinedEvents(2, "future");
+		$actualArray = static::$eventModel->getJoinedEvents(2, 'future');
 
 		$expectedArray = array();
 
@@ -398,7 +397,7 @@ class EventModelTest extends ModelTestCase
 	}
 
 	public function testGetJoinedEventsPast() {
-		$actualArray = static::$eventModel->getJoinedEvents(2, "past");
+		$actualArray = static::$eventModel->getJoinedEvents(2, 'past');
 
 		$expectedArray = array();
 
@@ -613,7 +612,7 @@ class EventModelTest extends ModelTestCase
 	}
 
 	public function testInsertComment() {
-		static::$eventModel->insertComment(2, 2, "", "Stay tuned.");
+		static::$eventModel->insertComment(2, 2, '', 'Stay tuned.');
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Comment' => array(
@@ -628,7 +627,7 @@ class EventModelTest extends ModelTestCase
 	}
 
 	public function testInsertCommentReply() {
-		static::$eventModel->insertComment(1, 1, 2, "Bring your own beverages.");
+		static::$eventModel->insertComment(1, 1, 2, 'Bring your own beverages.');
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
 			'Comment' => array(

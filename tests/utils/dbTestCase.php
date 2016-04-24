@@ -2,8 +2,7 @@
 
 include_once(__DIR__ . '/arrayDataSet.php');
 
-abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase
-{
+abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase {
 
 	private static $pdo = null;
 
