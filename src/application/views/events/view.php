@@ -23,37 +23,37 @@ else if ($event->Capacity > count($participants)) {
 		<div class="form-horizontal eventDetails">
 			<div class="form-group">
 				<label class="col-sm-1 control-label">Description</label>
-				<div class="col-sm-5">
+				<div class="col-sm-10">
 					<p class="form-control-static"><?php echo $event->FormattedDate ?></p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-1 control-label">Date/Time</label>
-				<div class="col-sm-5">
+				<div class="col-sm-10">
 					<p class="form-control-static"><?php echo $event->FormattedDate ?> <?php echo $event->FormattedTime ?></p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-1 control-label">Location</label>
-				<div class="col-sm-5">
+				<div class="col-sm-10">
 					<p class="form-control-static"><?php echo $event->Address ?></p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-1 control-label">Capacity</label>
-				<div class="col-sm-5">
+				<div class="col-sm-10">
 					<p class="form-control-static"><?php echo $event->Capacity ?></p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-1 control-label">Type</label>
-				<div class="col-sm-5">
+				<div class="col-sm-10">
 					<p class="form-control-static"><?php echo $event->TagName ?></p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-1 control-label">Host</label>
-				<div class="col-sm-5">
+				<div class="col-sm-10">
 					<p class="form-control-static"><?php echo $event->HostFirstName." ".$event->HostLastName ?></p>
 				</div>
 			</div>
