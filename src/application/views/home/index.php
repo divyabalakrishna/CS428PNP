@@ -12,6 +12,8 @@
 		</div>
 	</div>
 	<div class="rightpane rightpaneExpanded" id="rightpane">
+		<div id="rightpaneTitle" class="rightpaneTitle">Other Events</div>
+		<div id="rightpaneContent"></div>
 	</div>
 </div>
 
@@ -66,18 +68,18 @@
 		if (data.Description != null) {
 			tile = tile + '<div class="desc">'+ data.Description + '</div>';
 		}
-		tile = tile + '<div class="desc">'+ data.Address + '</div>'+
-				'<div class="desc">'+ data.FormattedDate + '</div>'+
-				'<div class="desc">'+ data.FormattedTime +'</div>'+
+		tile = tile + '<div class="address">'+ data.Address + '</div>'+
+				'<div class="timedate">'+ data.FormattedDate + '</div>'+
+				'<div class="timedate">'+ data.FormattedTime +'</div>'+
 			'</div>'+
 		'</div>';
 
-		$('#rightpane').append(tile);
+		$('#rightpaneContent').append(tile);
 		$('.tiles').click(tileClick);
 	}
 
 	function load(filter = "") {
-		$('#rightpane').empty();
+		$('#rightpaneContent').empty();
 		
 		for (i = 0; i < that.data.length; i++) {
 			if (filter == "") {
@@ -94,6 +96,7 @@
 	}
 
 	function getFeed() {
+		$('#rightpaneTitle').text("Other Events");
 		<?php $Events = $joinableEvents;
 		$js_array = json_encode($Events);
 		echo "that.data = ". $js_array . ";\n"; ?>
@@ -109,6 +112,7 @@
 			});
 			$('#feed').click(getFeed);
 			$('#joined').click(function() {
+				$('#rightpaneTitle').text("Joined Events");
 				<?php $Events = $joinedEvents;
 				$js_array = json_encode($Events);
 				echo "that.data = ". $js_array . ";\n";
@@ -116,6 +120,7 @@
 				load();
 			});
 			$('#past').click(function() {
+				$('#rightpaneTitle').text("Past Events");
 				<?php $Events = $pastEvents;
 				$js_array = json_encode($Events);
 				echo "that.data = ". $js_array . ";\n";
@@ -123,6 +128,7 @@
 				load();
 			});
 			$('#hosted').click(function() {
+				$('#rightpaneTitle').text("Hosted Events");
 				<?php $Events = $hostedEvents;
 				$js_array = json_encode($Events);
 				echo "that.data = ". $js_array . ";\n";
