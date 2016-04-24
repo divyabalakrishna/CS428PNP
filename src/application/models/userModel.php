@@ -38,8 +38,10 @@ class UserModel extends Model {
 	}
 
 	public function getUserTags($userID) {
-		$sql = "SELECT UserTag.*
+		$sql = "SELECT UserTag.*,
+					Tag.Name AS TagName
 				FROM UserTag
+				INNER JOIN Tag ON Tag.TagID = UserTag.TagID
 				WHERE UserTag.UserID = :userID";
 
 		$parameters = array(":userID" => $userID);

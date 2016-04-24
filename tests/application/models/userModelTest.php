@@ -170,8 +170,14 @@ class UserModelTest extends ModelTestCase {
 		$actualArray = static::$userModel->getUserTags(1);
 
 		$expectedArray = array();
-		$expectedArray[] = (object)$this->createUserTagObject(1, 1);
-		$expectedArray[] = (object)$this->createUserTagObject(1, 5);
+
+		$expectedObject = (object)$this->createUserTagObject(1, 1);
+		$expectedObject->TagName = 'American Football';
+		$expectedArray[] = $expectedObject;
+
+		$expectedObject = (object)$this->createUserTagObject(1, 5);
+		$expectedObject->TagName = 'Basketball';
+		$expectedArray[] = $expectedObject;
 	
 		$this->assertEquals($expectedArray, $actualArray);
 	}

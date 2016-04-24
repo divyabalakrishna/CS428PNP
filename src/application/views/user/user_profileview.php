@@ -1,4 +1,17 @@
-<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
+<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); }
+
+$tagList = "";
+$index = 1;
+foreach ($userTags as $userTag) {
+	if ($index > 1) {
+		$tagList = $tagList . ", " ;
+	}
+
+	$tagList = $tagList . $userTag->TagName;
+
+	$index = $index + 1;
+}
+?>
 
 <div class="container">
 	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
@@ -39,10 +52,7 @@
 
 	<div class="form-group">
 		<label for="interests" class="col-sm-2 control-label">Interests</label>
-			<?php foreach ($tags as $tag) { 
-				foreach ($tagInfo as $usertag) { if ($usertag->TagID == $tag->TagID) { ?>
-				<label class="control-label"><?php echo $tag->Name ?></label>
-			<?php } } }?>
+		<label class="control-label"><?php echo $tagList; ?></label>
 	</div>
 
 	<!-- Buttons -->
