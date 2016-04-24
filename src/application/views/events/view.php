@@ -22,27 +22,10 @@ else if ($event->Capacity > count($participants)) {
 		<div class="form-horizontal eventDetails">
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Description</label>
-				<div class="col-sm-10">
+				<div class="col-sm-3">
 					<p class="form-control-static"><?php echo $event->Description ?></p>
 				</div>
 			</div>
-			<div class="participants">
-			<h3 class="page-header">Participants</h3>
-			<div class="col-sm-6">
-				<?php foreach ($participants as $person) { ?>
-					<div class="profile">
-						<a href="<?php echo URL_WITH_INDEX_FILE . "user/viewParticipantProfile/" . $person->UserID; ?>">
-							<?php if ($person->Picture == "") { ?>
-								<img class="image" src="<?php echo URL; ?>public/img/profile.png">
-							<?php } else { ?>
-								<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture) ?>"/>
-							<?php } ?>
-								<div class="name"><?php echo $person->FirstName ?></div>
-						</a>
-					</div>
-				<?php } ?>
-			</div>
-			<br><br>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Date/Time</label>
 				<div class="col-sm-10">
