@@ -30,7 +30,7 @@ require APP . '/config/config.php';
 require APP . '/libs/pdo-debug.php';
 
 // Production-only code
-if (strpos($_SERVER['SERVER_NAME'], 'web.engr.illinois.edu') === false) {
+if (strpos($_SERVER['SERVER_NAME'], 'web.engr.illinois.edu') > 0) {
 	require APP . '/libs/password.php';
 }
 
