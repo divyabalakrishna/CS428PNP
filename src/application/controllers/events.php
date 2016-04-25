@@ -36,18 +36,18 @@ class Events {
 		$latitude = $GLOBALS["beans"]->siteHelper->getDefaultLat();
 		$longitude = $GLOBALS["beans"]->siteHelper->getDefaultLon();
 
-		if (isset($_COOKIE['latitude'])) {
+		if (isset($_COOKIE['latitude']) && is_numeric($_COOKIE['latitude'])) {
 			$latitude = $_COOKIE["latitude"];
 		}
-		if (isset($_COOKIE['longitude'])) {
+		if (isset($_COOKIE['longitude']) && is_numeric($_COOKIE['longitude'])) {
 			$longitude = $_COOKIE["longitude"];
 		}
 
-		if (isset($_POST["gmap-lat2"])) {
+		if (isset($_POST["gmap-lat2"]) && is_numeric($_POST["gmap-lat2"])) {
 			$latitude = $_POST["gmap-lat2"];
 		}
 
-		if (isset($_POST["gmap-lon2"])) {
+		if (isset($_POST["gmap-lon2"]) && is_numeric($_POST["gmap-lon2"])) {
 			$longitude = $_POST["gmap-lon2"];
 		}
 		$tag = false;
