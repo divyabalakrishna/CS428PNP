@@ -549,6 +549,15 @@ body {
   background-color: black;
 }    
 
+.image-thumb-med {
+  background-size:cover;
+  background-repeat:no-repeat;
+  border-radius: 20px;
+  width:70px;
+  height:70px;
+  background-color: black;
+}    
+
 .image-thumb-small {
   border-radius: 5px;
   width:35px;

@@ -74,14 +74,14 @@
     vertical-align: bottom;
 }
 .image-frame {
-  background: grey;
-  border: 1px solid #b2b2b2;
+  background: #b7b7b7;
+  border: 1px solid grey;
   border-radius: 9px;
   display: inline-block;
   vertical-align: top;
-  padding: 2px;
+  padding: 3px;
   margin-right: .5em;
-  margin-bottom: .3em;
+  margin-bottom: .5em;
 }  
 
 .image-thumb {

@@ -85,9 +85,13 @@ else if ($event->Capacity > count($participants)) {
 						<div class="profile">
 							<a href="<?php echo URL_WITH_INDEX_FILE . "user/viewParticipantProfile/" . $person->UserID; ?>">
 								<?php if ($person->Picture == "") { ?>
-									<img class="image" src="<?php echo URL; ?>public/img/profile.png">
+                                    <div class="image-frame-profile"> 
+                                        <div class="image-thumb-med" style="background-image: url('<?php echo URL; ?>public/img/profile.png');"></div>
+                                    </div>
 								<?php } else { ?>
-									<img class="image" src="<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture) ?>"/>
+                                    <div class="image-frame-profile"> 
+                                        <div class="image-thumb-med" style="background-image: url('<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture)?>');"></div>
+                                    </div>
 								<?php } ?>
 								<div class="name"><?php echo $person->FirstName ?></div>
 							</a>
@@ -177,7 +181,7 @@ else if ($event->Capacity > count($participants)) {
 						<label for="image" class="sr-only">Image</label>
 						<input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
 						<input type="file" id="image" name="image[]" accept="image/jpg,image/jpeg,image/png,image/bmp,video/mp4" multiple class="form-control" />
-						<p class="help-block">Max file size: 2 MB. Accepted file types: .jpg, .jpeg, .png, .bmp</p>
+						<p class="help-block">Max file size: 2 MB. Accepted file types: .jpg, .jpeg, .png, .bmp, .mp4</p>
 						<br>
 					</div>
 
