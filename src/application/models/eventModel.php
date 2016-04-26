@@ -442,4 +442,26 @@ class EventModel extends Model {
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	public function countHostedEvents($hostID) {
+		$sql = "SELECT COUNT(*) as cnt
+				FROM Event
+				WHERE Event.HostID = :hostID";
+
+		$parameters = array(":hostID" => $hostID);
+
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+	}
+
+	public function countJoinedEvents($userID) {
+		$sql = "SELECT COUNT(*) as cnt
+				FROM Event
+				INNER JOIN Participant ON Participant.EventID = Event.EventID
+				WHERE Participant.UserID = :userID";
+
+		$parameters = array(":userID" => $userID);
+
+		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
+	}
+    
+    
 }

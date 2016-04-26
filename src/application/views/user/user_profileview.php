@@ -114,13 +114,11 @@ foreach ($userTags as $userTag) {
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Hosted events:</label>
                     <div class="col-sm-8"> 
-                        <p class="form-control-static"> 6 events
-                        </p>
+                        <p class="form-control-static"> <?php echo $countHosted; ?> events</p>
                     </div>
                     <label class="col-sm-4 control-label">Joined events:</label>
                     <div class="col-sm-8"> 
-                        <p class="form-control-static"> 6 events
-                        </p>
+                        <p class="form-control-static"> <?php echo $countJoined; ?> events</p>
                     </div>
                 </div>
                 <div class="form-group">

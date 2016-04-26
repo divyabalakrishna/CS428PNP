@@ -101,6 +101,18 @@ class User {
 		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
 		$userTags = $GLOBALS["beans"]->userModel->getUserTags($userID);
 
+        $countHosteds = $GLOBALS["beans"]->eventModel->countHostedEvents($userID);
+        if($countHosteds)
+            $countHosted = $countHosteds[0]->cnt;
+        else
+            $countHosted = 0;
+        
+        $countJoineds = $GLOBALS["beans"]->eventModel->countJoinedEvents($userID);
+        if($countJoineds)
+            $countJoined = $countJoineds[0]->cnt;
+        else
+            $countJoined = 0;
+
 		require APP . 'views/_templates/header.php';
 		require APP . 'views/user/user_profileview.php';
 		require APP . 'views/_templates/footer.php';
