@@ -2,6 +2,10 @@
 
 class UserModel extends Model {
 
+	/**
+	 * retrieves login info for given email
+	 * @param string $email
+	 */
 	public function getLoginInfo($email) {
 		$sql = "SELECT UserID, Email, Password, Active
 				FROM User
@@ -12,6 +16,12 @@ class UserModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * insert user into database 
+	 * @param string $email
+	 * @param string $password
+	 * @param string $activation
+	 */
 	public function insertUser($email, $password, $activation) {
 		$sql = "INSERT INTO User (Email, Password, Active)
 				VALUES (:email, :password, :active)";
@@ -25,6 +35,10 @@ class UserModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 	
+	/**
+	 * Retrieves profile with user id
+	 * @param integer $userID
+	 */
 	public function getProfile($userID) {
 		$sql = "SELECT FirstName, LastName, Email, Phone, Picture, Radius, Reminder, NickName, 
 					DATE_FORMAT(BirthDate, '%m/%d/%Y') AS FormattedDate, 
@@ -37,6 +51,10 @@ class UserModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * Retrieves user tags using user id
+	 * @param integer $userID
+	 */
 	public function getUserTags($userID) {
 		$sql = "SELECT UserTag.*,
 					Tag.Name AS TagName
@@ -49,6 +67,18 @@ class UserModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * updates the user using given values like user id, first name, last name, etc.
+	 * @param integer $userID
+	 * @param string $firstName
+	 * @param string $lastName
+	 * @param string $email
+	 * @param string $password
+	 * @param string $phone
+	 * @param string $nickName
+	 * @param string $gender
+	 * @param string $birthDate
+	 */
 	public function updateUser($userID, $firstName, $lastName, $email, $password, $phone, $nickName, $gender, $birthDate) {
 		$sql = "UPDATE User
 				SET FirstName = :firstName,
@@ -83,6 +113,10 @@ class UserModel extends Model {
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * Delete user tages using user id
+	 * @param integer $userID
+	 */
 	public function deleteUserTags($userID) {
 		$sql = "DELETE
 				FROM UserTag
@@ -93,6 +127,11 @@ class UserModel extends Model {
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * insert user's tag (interest) by giving user id and tag id
+	 * @param integer $userID
+	 * @param string $tagID
+	 */
 	public function insertUserTag($userID, $tagID) {
 		$sql = "INSERT INTO UserTag (UserID, TagID)
 				VALUES (:userID, :tagID)";
@@ -105,6 +144,11 @@ class UserModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * update picture using user id and picture
+	 * @param integer $userID
+	 * @param string $picture
+	 */
 	public function updatePicture($userID, $picture) {
 		$sql = "UPDATE User
 				SET Picture = :picture
@@ -118,6 +162,9 @@ class UserModel extends Model {
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * Retrieves all user ids
+	 */
 	public function getAllUserIDs() {
 		$sql = "SELECT UserID
 				FROM User
@@ -126,6 +173,10 @@ class UserModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
 	}
 
+	/**
+	 * Checks if user id is active or not
+	 * @param integer $userID
+	 */
 	public function isActive($userID) {
 		$sql = "SELECT Active
 				FROM User
@@ -136,6 +187,11 @@ class UserModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->getSingleRowObject($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * Set user id to become active
+	 * @param integer $userID
+	 * @param string $active
+	 */
 	public function setActive($userID, $active) {
 		$sql = "UPDATE User
 				SET Active = :active
@@ -149,6 +205,12 @@ class UserModel extends Model {
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * sets password for user
+	 * @param integer $userID
+	 * @param string $password
+	 * @param string $encrypt
+	 */
 	public function setPassword($userID, $password, $encrypt = 'yes') {
 		$sql = "UPDATE User
 				SET Password = :password
