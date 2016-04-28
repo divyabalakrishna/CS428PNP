@@ -9,7 +9,6 @@ body {
     width: 100%;
     height: 100%;
     background: #fafafa;
-/*    font-family: Verdana, 'Helvetica Neue',Arial,sans-serif;*/
     font-family: Merriweather,'Helvetica Neue',Arial,sans-serif;
 }
 
@@ -501,27 +500,6 @@ body {
   background-image: url(../img/video.jpg)
 }    
 
-/*
-
-@media (max-width: 767px) {
-  .image-thumb-car {
-  }
-}
-
-@media (min-width: 768px) {
-  .image-thumb-car {
-      width:200px;
-      height:200px;
-  }
-}
-@media (min-width: 992px) {
-  .image-thumb-car {
-      width:130px;
-      height:130px;
-  }
-}
-*/
-
 @media (min-width: 1200px) {
   .image-thumb-car {
       width:160px;
@@ -530,7 +508,6 @@ body {
 }
 
 .image-frame-profile {
-/*  background: grey;*/
   border: 1px solid #b2b2b2;
   border-radius: 20px;
   display: inline-block;
