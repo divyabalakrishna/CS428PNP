@@ -1,3 +1,8 @@
+/**
+ * http open url 
+ * @param string url
+ * @param string callback function
+ */
 function downloadUrl(url, callback) {
   var request = window.ActiveXObject ?
       new ActiveXObject('Microsoft.XMLHTTP') :
@@ -14,8 +19,16 @@ function downloadUrl(url, callback) {
   request.send(null);
 }
 
+/**
+ * helper function 
+ */
 function doNothing() {}
 
+/**
+ * update notification read flag when user click
+ * @param integer notifID
+ * @param string redirectUrl
+ */
 function updateNotifFlag (notifID,redirectUrl) {
 
     url = '/index.php/notifs/updateFlag/' + notifID; 

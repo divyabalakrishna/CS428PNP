@@ -2,6 +2,9 @@
 
 class Notifs {
 
+    /**
+	 * notification main page
+	 */
 	public function index() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$events = $GLOBALS["beans"]->notifModel->getNotifications($userID,"");
@@ -10,7 +13,12 @@ class Notifs {
 		require APP . 'views/notifs/index.php';
 		require APP . 'views/_templates/footer.php';
 	}
-
+    
+	/**
+	 * generate notification based on time (1hour/24hour) before it start 
+	 * @param integer $hour
+	 * @param string $check
+	 */
 	public function genNotifications($hour, $check="") {
 
 		$users = $GLOBALS["beans"]->userModel->getAllUserIDs();
@@ -39,6 +47,10 @@ class Notifs {
 		}
 	}
 
+	/**
+	 * update notification read flag
+	 * @param integer $notifID
+	 */    
 	public function updateFlag($notifID) {
 		$GLOBALS["beans"]->notifModel->updateFlag($notifID);
 	}

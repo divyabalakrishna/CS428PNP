@@ -2,6 +2,11 @@
 
 class NotifModel extends Model {
 
+	/**
+	 * retrieve notification for given userID 
+	 * @param integer $userID
+	 * @param integer $limit
+	 */    
 	public function getNotifications($userID, $limit) {
 		$sql = "SELECT Notification.*,
 					TIMEDIFF(Notification.Time, now()) AS TimeDiff
@@ -19,6 +24,12 @@ class NotifModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * retrieve joined events for given userID 
+	 * @param integer $userID
+	 * @param integer $hour
+	 * @param string $check
+	 */        
 	public function getJoinedEvents($userID, $hour = "", $check = "") {
 		$sql = "SELECT Event.*,
 					Tag.Name AS TagName,
@@ -42,6 +53,14 @@ class NotifModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * insert notification into database 
+	 * @param integer $userID
+	 * @param integer $eventID
+	 * @param string $msg
+	 * @param string $urlLink
+	 * @param string $imgLink
+	 */            
 	public function insertNotif($userID, $eventID, $msg, $urlLink, $imgLink) {
 		$sql = "INSERT INTO Notification (UserID, EventID, Message, Time, UrlLink, ImgLink)
 				VALUES (:userID, :eventID, :msg, now(), :urlLink, :imgLink)";
@@ -57,20 +76,12 @@ class NotifModel extends Model {
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
+	/**
+	 * update notification read flag 
+	 * @param integer $notifID
+	 */                
 	public function updateFlag($notifID) {
 		$sql = "UPDATE Notification
-				SET Flag = 1
-				WHERE Notification.NotificationID = :notifID";
-
-		$parameters = array(
-				":notifID" => $notifID
-		);
-
-		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
-	}
-
-	public function updateNotified($eventID, $userID, $notif) {
-		$sql = "UPDATE Participation
 				SET Flag = 1
 				WHERE Notification.NotificationID = :notifID";
 
