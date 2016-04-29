@@ -194,8 +194,8 @@ class SiteHelper {
 
 	/**
 	 * default longitude user location
-	 */                                        
-    public function getDefaultLon() {
+	 */
+	public function getDefaultLon() {
 		return -88.224828;
 	}
 
