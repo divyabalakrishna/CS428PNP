@@ -84,7 +84,7 @@ class UserModel extends Model {
 				SET FirstName = :firstName,
 					LastName = :lastName,
 					Email = :email,";
-
+		//make sure password is not blank
 		if ($password != "") {
 			$sql .= "Password = :password,";
 		}
@@ -106,6 +106,7 @@ class UserModel extends Model {
 				":birthDate" => $birthDate
 		);
 
+		//make sure password is not blank
 		if ($password != "") {
 			$parameters["password"] = password_hash($password, PASSWORD_DEFAULT);
 		}
@@ -220,6 +221,7 @@ class UserModel extends Model {
 				":userID" => $userID
 		);
 
+		//if encryption is enabled
 		if ($encrypt == "yes") {
 			$parameters["password"] = password_hash($password, PASSWORD_DEFAULT);
 		}

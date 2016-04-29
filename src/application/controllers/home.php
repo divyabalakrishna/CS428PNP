@@ -9,10 +9,13 @@
  *
  */
 class Home {
-
+	/**
+	 * Display the home page  
+	 */	
 	public function index() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
+		//if the user is logged in
 		if (is_numeric($userID)) {
 			if ($GLOBALS["beans"]->userModel->isActive($userID)->Active != 'Yes') {
 				$user = $GLOBALS["beans"]->userModel->getProfile($userID);

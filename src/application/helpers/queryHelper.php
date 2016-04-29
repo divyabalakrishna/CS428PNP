@@ -2,6 +2,12 @@
 
 class QueryHelper {
 
+	/**
+	 * Insert a single row to the database  
+	 * @param string $db      
+	 * @param string $sql      
+	 * @param string $parameters      
+	 */	
 	public function getSingleRowObject($db, $sql, $parameters) {
 		$query = $db->prepare($sql);
 		$query->execute($parameters);
@@ -18,6 +24,12 @@ class QueryHelper {
 		return $result;
 	}
 
+	/**
+	 * Execute a write query to the database  
+	 * @param string $db      
+	 * @param string $sql      
+	 * @param string $parameters      
+	 */	
 	public function executeWriteQuery($db, $sql, $parameters) {
 		foreach ($parameters as $parameterKey => $parameterValue) {
 			if (!is_numeric($parameterValue) && $parameterValue == "") {
@@ -33,6 +45,12 @@ class QueryHelper {
 		}
 	}
 
+	/**
+	 * Get all rows from the database  
+	 * @param string $db      
+	 * @param string $sql      
+	 * @param string $parameters      
+	 */	
 	public function getAllRows($db, $sql, $parameters = "") {
 		$query = $db->prepare($sql);
 
