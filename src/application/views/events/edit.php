@@ -20,7 +20,7 @@ else {
 	.pac-container {z-index:2000 !important;}
 </style>
 
-<div class="container">
+<div class="container well">
 	<?php echo $GLOBALS["beans"]->siteHelper->getAlertsHTML(); ?>
 
 	<h2 class="page-header"><?php echo $title; ?></h2>
@@ -199,6 +199,7 @@ else {
 		</div>
 
 		<!-- Buttons -->
+        <h2 class="page-header"></h2>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="submit" class="btn btn-default">Save</button>
