@@ -2,6 +2,9 @@
 
 class User {
 
+	/**
+	 * check user login credential info in database
+	 */
 	public function login() {
 		$errorMessage = "Invalid email or password.";
 		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
@@ -21,6 +24,9 @@ class User {
 		header('location: ' . URL_WITH_INDEX_FILE);
 	}
 
+	/**
+	 * perform user logout, clear session
+	 */    
 	public function logout() {
 		// Unset all of the session variables.
 		$_SESSION = array();
@@ -41,6 +47,11 @@ class User {
 		header('location: ' . URL_WITH_INDEX_FILE);
 	}
 
+	/**
+	 * account creation, insert user into database
+	 * @param string $_POST["email"]     
+	 * @param string $_POST["password1"]     
+	 */    
 	public function createAccount() {
 		$activation = $GLOBALS["beans"]->stringHelper->genString();
 
@@ -52,6 +63,10 @@ class User {
 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
 
+	/**
+	 * forgot password, send email to reset password
+	 * @param string $_POST["email"]
+	 */    
 	public function forgotPassword() {
 		$code = $GLOBALS["beans"]->stringHelper->genString();
 
@@ -67,6 +82,10 @@ class User {
 		header('location: ' . URL_WITH_INDEX_FILE);
 	}
 
+	/**
+	 * check user email address in user table 
+	 * @param string $_POST["email"]
+	 */        
 	public function emailExist() {
 		$unique = false;
 		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
@@ -78,14 +97,23 @@ class User {
 		return $unique;
 	}
 
+	/**
+	 * check whether email address is not registered
+	 */            
 	public function checkUniqueEmail() {
 		echo json_encode($this->emailExist());
 	}
 
-	public function checkExistEmail() {
+	/**
+	 * check whether email address is registered
+	 */            
+    public function checkExistEmail() {
 		echo json_encode(!$this->emailExist());
 	}
 
+	/**
+	 * view user profile main page
+	 */                
 	public function viewProfile() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
@@ -96,7 +124,11 @@ class User {
 		require APP . 'views/user/user_profile.php';
 		require APP . 'views/_templates/footer.php';
 	}
-	
+
+	/**
+	 * view other user profile main page
+	 * @param integer $userID
+	 */                    
 	public function viewParticipantProfile($userID) {
 		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
 		$userTags = $GLOBALS["beans"]->userModel->getUserTags($userID);
@@ -118,6 +150,10 @@ class User {
 		require APP . 'views/_templates/footer.php';
 	}
 
+	/**
+	 * update user profile into database
+	 * @param integer $userID
+	 */                        
 	public function saveProfile() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$user = $GLOBALS["beans"]->userModel->getProfile($userID);
@@ -165,6 +201,9 @@ class User {
 		header('location: ' . URL_WITH_INDEX_FILE . 'user/viewProfile');
 	}
 
+	/**
+	 * account activation process, set activation flag in user table
+	 */                        
 	public function activation() {
 		$errorMessage = "Activation failed, invalid code !!!.";
 
@@ -211,6 +250,9 @@ class User {
 		header('location: ' . URL_WITH_INDEX_FILE);
 	}
 
+	/**
+	 * resend email activation code 
+	 */                        
 	public function resendActivation() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$loginInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
@@ -224,6 +266,11 @@ class User {
 		header('location: ' . URL_WITH_INDEX_FILE);
 	}
 
+	/**
+	 * user activation main page
+	 * @param string $email
+	 * @param string $active
+	 */                        
 	public function active($email = "", $active = "") {
 		$user = $GLOBALS["beans"]->userModel->getLoginInfo($email);
 
@@ -243,10 +290,15 @@ class User {
 		}
 	}
 
-	public function reset($email = "", $password = "") {
+	/**
+	 * reset password main page
+	 * @param string $email
+	 * @param string $passcode
+	 */                        
+	public function reset($email = "", $passcode = "") {
 		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($email);
 
-		if (strcasecmp($password,$loginInfo->Password) == 0) {
+		if (strcasecmp($passcode,$loginInfo->Password) == 0) {
 			$cheat = 1;
 
 			require APP . 'views/_templates/header.php';
@@ -258,6 +310,11 @@ class User {
 		}
 	}
 
+	/**
+	 * reset password process, update new password into user table 
+	 * @param string $_POST["email"]
+	 * @param string $_POST["password1"]
+	 */                            
 	public function resetPassword() {
 		$activation = $GLOBALS["beans"]->stringHelper->genString();
 		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($_POST["email"]);
