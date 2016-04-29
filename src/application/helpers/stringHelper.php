@@ -2,6 +2,11 @@
 
 class StringHelper {
 
+	/**
+	 * get n-character substring from left  
+	 * @param string $string
+	 * @param string $length
+	 */                                
 	public function left($string, $length) {
 		$result = trim($string);
 		if (strlen($result) > $length) {
@@ -11,6 +16,11 @@ class StringHelper {
 		return $result;
 	}
 
+	/**
+	 * get n-character substring from right  
+	 * @param string $string
+	 * @param string $length
+	 */                                
 	public function right($string, $length) {
 		$result = trim($string);
 		if (strlen($result) > $length) {
@@ -20,6 +30,10 @@ class StringHelper {
 		return $result;
 	}
 
+	/**
+	 * generate random string for activation code and passcode for reset password
+	 * @param integer $length
+	 */                                    
 	public function genString($length = 16) {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$charactersLength = strlen($characters);
@@ -30,6 +44,6 @@ class StringHelper {
 		}
 
 		return $randomString;
-	}
+	}    
 
 }

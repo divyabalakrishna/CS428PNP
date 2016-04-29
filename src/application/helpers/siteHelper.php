@@ -2,6 +2,10 @@
 
 class SiteHelper {
 
+	/**
+	 * retrieve session information
+	 * @param string $variableName
+	 */                        
 	public function getSession($variableName) {
 		$value = "";
 
@@ -12,11 +16,17 @@ class SiteHelper {
 		return $value;
 	}
 
-	/* Options for $type:
+	/**
+	 * add alert message notification info into session
+	 * @param string $type
+	 * @param string $message
+	 * @param string $id
+     *
+	 *	Options for $type:
 	 *		success (light green background)
-	 *		info (light blue background)
+	 *		info    (light blue background)
 	 *		warning (light yellow background)
-	 *		danger (pink background)
+	 *		danger  (pink background)
 	 */
 	public function addAlert($type, $message, $id = "") {
 		$alerts = $this->getSession("alerts");
@@ -33,6 +43,10 @@ class SiteHelper {
 		$_SESSION["alerts"][] = $alert;
 	}
 
+	/**
+	 * retrieve alert info session and show it in html page
+	 * @param string $id
+	 */                            
 	public function getAlertsHTML($id="") {
 		$html = "";
 		$alerts = $this->getSession("alerts");
@@ -52,11 +66,19 @@ class SiteHelper {
 		return $html;
 	}
 
+	/**
+	 * set popup modalID into session
+	 * @param string $modalID
+	 */                            
 	public function setPopUp($modalID) {
 		$_SESSION["popup"] = new stdClass();
 		$_SESSION["popup"]->modalID = $modalID;
 	}
 
+	/**
+	 * get popup modalID from session and perform javascript command
+	 * @param string $modalID
+	 */                                
 	public function getPopUp() {
 		$html = "";
 		$popup = $this->getSession("popup");
@@ -70,6 +92,10 @@ class SiteHelper {
 		return $html;
 	}
 
+	/**
+	 * date formatter from datetime to "sometime ago" 
+	 * @param string $datetime
+	 */                                
 	function notifMsg($datetime) {
 		date_default_timezone_set('America/Chicago');
 		$timeline = time()-strtotime($datetime);
@@ -109,7 +135,12 @@ class SiteHelper {
 
 		return trim($result); 
 	}
-
+    
+	/**
+	 * send email template for activation code notification
+	 * @param string $email
+	 * @param string $active
+	 */                                    
 	public function sendActivationMail($email, $active) {
 		$headers = "From: no-reply@plannplay.web.engr.illinois.com\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
@@ -129,7 +160,12 @@ class SiteHelper {
 
 		mail($to,$subject,$message,$headers);
 	}
-
+    
+	/**
+	 * send email template for reset password 
+	 * @param string $email
+	 * @param string $code
+	 */                                    
 	public function sendForgotMail($email, $code) {
 		$headers = "From: no-reply@plannplay.web.engr.illinois.com\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
@@ -149,11 +185,17 @@ class SiteHelper {
 		mail($to,$subject,$message,$headers);
 	}
 
+	/**
+	 * default latitude user location
+	 */                                        
 	public function getDefaultLat() {
 		return 40.11374573;
 	}
 
-	public function getDefaultLon() {
+	/**
+	 * default longitude user location
+	 */                                        
+    public function getDefaultLon() {
 		return -88.224828;
 	}
 
