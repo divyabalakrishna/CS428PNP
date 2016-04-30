@@ -20,11 +20,17 @@
 <script>
 	var that = this;
 
+	/*
+	* event listener for tile click on home screen
+	*/
 	function tileClick() {
 		var eventID = $(this).children()[0].value;
 		self.location='<?php echo URL_WITH_INDEX_FILE; ?>events/view/' + eventID;
 	}
 
+	/*
+	* event listener for tag click
+	*/
 	function tagFilter(event) {
 		var tag = $(this)[0].text.substring(1);
 		if (that.selected) {
@@ -37,6 +43,10 @@
 		load(tag);
 	}
 
+	/*
+	* get all the tags in the right pane data and create them on left panel of home screen
+	* params list of data to be loaded 
+	*/
 	function loadTags(data) {
 		$('#tagsList').empty();
 		var tagsList = [];
@@ -57,6 +67,10 @@
 		}
 	}
 
+	/*
+	* load tiles representing the data
+	* params list of data to be loaded 
+	*/
 	function loadData(data) {
 		var tile = '<div class = "tiles">' +
 	 		'<input type="hidden" id="eventIDTile" name="eventID" value="'+ data.EventID+'" />'+
@@ -78,6 +92,9 @@
 		$('.tiles').click(tileClick);
 	}
 
+	/*
+	* load tiles representing the data
+	*/
 	function load(filter = "") {
 		$('#rightpaneContent').empty();
 		if(that.data.length == 0){
@@ -97,6 +114,9 @@
 		
 	}
 
+	/*
+	* event handler for click of feed button on home screen
+	*/
 	function getFeed() {
 		$('#rightpaneTitle').text("Other Events");
 		<?php $Events = $joinableEvents;
@@ -109,10 +129,16 @@
 		$(document).ready(function() {
 			getFeed();
 			$('.tiles').click(tileClick);
+
+			//navigate to create screen on click of create
 			$('#create').click(function() {
 				self.location='<?php echo URL_WITH_INDEX_FILE; ?>events/edit';
 			});
+
+			//register event handler for feed button
 			$('#feed').click(getFeed);
+
+			//event handler for click of Joined button
 			$('#joined').click(function() {
 				$('#rightpaneTitle').text("Joined Events");
 				<?php $Events = $joinedEvents;
@@ -121,6 +147,8 @@
 				?>
 				load();
 			});
+
+			//event handler for click of Past button
 			$('#past').click(function() {
 				$('#rightpaneTitle').text("Past Events");
 				<?php $Events = $pastEvents;
@@ -129,6 +157,8 @@
 				?>
 				load();
 			});
+
+			//event handler for click of Hosted button
 			$('#hosted').click(function() {
 				$('#rightpaneTitle').text("Hosted Events");
 				<?php $Events = $hostedEvents;
