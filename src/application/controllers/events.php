@@ -61,19 +61,24 @@ class Events {
 
 		if (isset($_POST["gmap-lat2"]) && is_numeric($_POST["gmap-lat2"])) {
 			$latitude = $_POST["gmap-lat2"];
+            $_SESSION['latitude_s'] = $latitude;
 		}
 
 		if (isset($_POST["gmap-lon2"]) && is_numeric($_POST["gmap-lon2"])) {
 			$longitude = $_POST["gmap-lon2"];
+            $_SESSION['longitude_s'] = $longitude;            
 		}
+        
 		$tag = false;
 		$old = false;
-
+        
 		if (isset($_POST["tag"])) {
 			$tag = true;
+            $_SESSION['tag_s'] = $tag;                        
 		}
 		if (isset($_POST["old"])) {
 			$old = true;
+            $_SESSION['old_s'] = $old;                                    
 		}
 
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -89,6 +94,9 @@ class Events {
 		require APP . 'views/_templates/footer.php';
 	}
 
+	/**
+	 * Generate event marker for event search Google Map    
+	 */     
 	public function genXML() {
 		$latitude = $GLOBALS["beans"]->siteHelper->getDefaultLat();
 		$longitude = $GLOBALS["beans"]->siteHelper->getDefaultLon();
@@ -100,14 +108,36 @@ class Events {
 			$longitude = $_COOKIE["longitude"];
 		}
 
+		if (isset($_SESSION["latitude_s"])) {
+			$latitude = $_SESSION["latitude_s"];
+		}
+		if (isset($_SESSION["longitude_s"])) {
+			$longitude = $_SESSION["longitude_s"];
+		}
+
+        $tag = false;
+		$old = false;
+        
+		if (isset($_SESSION["tag_s"])) {
+			$tag = $_SESSION["tag_s"];
+		}
+		if (isset($_SESSION["old_s"])) {
+			$old = $_SESSION["old_s"];
+		}
+        
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$user = $GLOBALS["beans"]->userModel->getProfile($userID);
 
 		if (!$user->Radius) {
 			$user->Radius = 2;
 		}
-		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $latitude, $longitude);
+		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $latitude, $longitude, $tag, $old);
 
+        $_SESSION["latitude_s"] = "";
+        $_SESSION["longitude_s"] = "";
+        $_SESSION["tag_s"] = "";
+        $_SESSION["old_s"] = "";
+        
 		require APP . 'views/events/xml.php';
 	}
 
