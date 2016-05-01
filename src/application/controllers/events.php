@@ -108,11 +108,13 @@ class Events {
 			$longitude = $_COOKIE["longitude"];
 		}
 
-		if (isset($_SESSION["latitude_s"])) {
+		if (isset($_SESSION["latitude_s"]) && is_numeric($_SESSION['latitude_s'])) {
 			$latitude = $_SESSION["latitude_s"];
+            $_SESSION["latitude_s"] = "";
 		}
-		if (isset($_SESSION["longitude_s"])) {
+		if (isset($_SESSION["longitude_s"]) && is_numeric($_SESSION['longitude_s'])) {
 			$longitude = $_SESSION["longitude_s"];
+            $_SESSION["longitude_s"] = "";
 		}
 
         $tag = false;
@@ -120,9 +122,11 @@ class Events {
         
 		if (isset($_SESSION["tag_s"])) {
 			$tag = $_SESSION["tag_s"];
+            $_SESSION["tag_s"] = "";
 		}
 		if (isset($_SESSION["old_s"])) {
 			$old = $_SESSION["old_s"];
+            $_SESSION["old_s"] = "";
 		}
         
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -132,11 +136,6 @@ class Events {
 			$user->Radius = 2;
 		}
 		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $latitude, $longitude, $tag, $old);
-
-        $_SESSION["latitude_s"] = "";
-        $_SESSION["longitude_s"] = "";
-        $_SESSION["tag_s"] = "";
-        $_SESSION["old_s"] = "";
         
 		require APP . 'views/events/xml.php';
 	}
