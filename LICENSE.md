@@ -1,9 +1,9 @@
-Copyright (c) 2016 Plan & Play Team 
+Copyright (c) 2016 PLAN & PLAY Team 
 All rights reserved.
 
-Developed by: 		Plan & Play Team (CS428 Spring 2016)
-                    Departement of Computer Science
-                    University of Illinois at Urbana Champaign
+Developed by: 		PLAN & PLAY Team (CS428 Spring 2016)
+                    Department of Computer Science
+                    University of Illinois at Urbana-Champaign
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal with the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
