@@ -2,8 +2,14 @@
 
 include_once (__DIR__ . '/viewTestCase.php');
 
+/**
+ * This class provides Selenium tests for home page.
+ */
 class HomePageTest extends ViewTestCase {
 
+	/**
+	 * Test activating an account with an invalid activation code.
+	 */
 	public function testActivationInvalid() {
 		parent::loginToSite('firstlast@email.com', '98765');
 
@@ -20,6 +26,9 @@ class HomePageTest extends ViewTestCase {
 		$this->assertEquals('Activation failed, invalid code !!!.', $errorMessage->text());
 	}
 
+	/**
+	 * Test activating an account with a valid activation code.
+	 */
 	public function testActivationSuccessful() {
 		parent::loginToSite('firstlast@email.com', '98765');
 
@@ -36,6 +45,9 @@ class HomePageTest extends ViewTestCase {
 		$this->assertEquals('Congratulation. Your Account is now active.', $successMessage->text());
 	}
 
+	/**
+	 * Test clicking on the Hosted filter.
+	 */
 	public function testViewHosted() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
@@ -47,6 +59,9 @@ class HomePageTest extends ViewTestCase {
 		$this->assertEquals('Badminton Game', $eventTitle->text());
 	}
 
+	/**
+	 * Test clicking on the Past filter.
+	 */
 	public function testViewPast() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
@@ -58,6 +73,9 @@ class HomePageTest extends ViewTestCase {
 		$this->assertEquals('Casual jogging', $eventTitle->text());
 	}
 
+	/**
+	 * Test clicking on the Joined filter.
+	 */
 	public function testViewJoined() {
 		parent::loginToSite('jsmith@email.com', 'abcde');
 
@@ -69,6 +87,9 @@ class HomePageTest extends ViewTestCase {
 		$this->assertEquals('Badminton Game', $eventTitle->text());
 	}
 
+	/**
+	 * Test clicking on the Feed filter.
+	 */
 	public function testViewFeed() {
 		parent::loginToSite('joe@email.com', 'password');
 

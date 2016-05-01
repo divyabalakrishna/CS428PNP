@@ -2,8 +2,14 @@
 
 include_once (__DIR__ . '/viewTestCase.php');
 
+/**
+ * This class provides Selenium tests for View Event page.
+ */
 class EventViewTest extends ViewTestCase {
 
+	/**
+	 * Test action buttons display when the user is the event host.
+	 */
 	public function testViewHostedEvent() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
@@ -25,6 +31,9 @@ class EventViewTest extends ViewTestCase {
 		$this->assertNotExists('leave', 'Leave button');
 	}
 
+	/**
+	 * Test action buttons display when the user is a participant.
+	 */
 	public function testViewJoinedEvent() {
 		parent::loginToSite('jsmith@email.com', 'abcde');
 
@@ -44,6 +53,9 @@ class EventViewTest extends ViewTestCase {
 		$this->assertNotExists('join', 'Join button');
 	}
 
+	/**
+	 * Test action buttons display when the user is neither the event host nor a participant.
+	 */
 	public function testViewOtherEvent() {
 		parent::loginToSite('joe@email.com', 'password');
 
@@ -59,6 +71,9 @@ class EventViewTest extends ViewTestCase {
 		$this->assertNotExists('leave', 'Leave button');
 	}
 
+	/**
+	 * Test adding a comment.
+	 */
 	public function testInsertComment() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
@@ -85,6 +100,9 @@ class EventViewTest extends ViewTestCase {
 		$this->assertEquals('Anyone has extra racket?', $commentColumn->text());
 	}
 
+	/**
+	 * Test clicking on the recreate button.
+	 */
 	public function testRecreateForm() {
 		parent::loginToSite('jdoe@email.com', '12345');
 
@@ -108,6 +126,9 @@ class EventViewTest extends ViewTestCase {
 		$this->assertEquals($expectedLink, $this->getBrowserUrl());
 	}
 
+	/**
+	 * Test clicking on the cancel button on the recreate event page.
+	 */
 	public function testRecreateCancel() {
 		parent::loginToSite('jdoe@email.com', '12345');
 

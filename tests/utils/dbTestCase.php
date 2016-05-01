@@ -2,13 +2,21 @@
 
 include_once(__DIR__ . '/arrayDataSet.php');
 
+/**
+ * This class provides a dataset for the database testing.
+ */
 abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase {
 
 	private static $pdo = null;
 
 	private $connection = null;
 
+	/**
+	 * Get the PDO database connection.
+	 * @return PDO A PDO database connection.
+	 */
 	public static final function getPDO() {
+		// Create a new PDO database connection if it has not yet existed
 		if (self::$pdo == null) {
 			$options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING);
 			self::$pdo = new PDO('mysql:host=localhost:3306;dbname=plannpla_test', 'plannpla_webapp', 'pnp428', $options);
@@ -17,7 +25,12 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase {
 		return self::$pdo;
 	}
 
+	/**
+	 * Get the PHPUnit database connection.
+	 * @return object A PHPUnit database connection.
+	 */
 	public final function getConnection() {
+		// Create a new PHPUnit database connection if it has not yet existed
 		if ($this->connection === null) {
 			$this->getPDO();
 			$this->connection = $this->createDefaultDBConnection(self::$pdo, 'testDB');
@@ -26,6 +39,10 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase {
 		return $this->connection;
 	}
 
+	/**
+	 * Get a mocked data for the database testing.
+	 * @return PHPUnit_ArrayDataSet A PHPUnit dataset with mocked data.
+	 */
 	protected final function getDataSet() {
 		date_default_timezone_set('UTC');
 
@@ -64,6 +81,23 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase {
 		));
 	}
 
+	/**
+	 * Create a user record in an array format.
+	 * @param integer $userID User ID.
+	 * @param string $firstName First name.
+	 * @param string $lastName Last name.
+	 * @param string $email Email address.
+	 * @param string $password Password.
+	 * @param string $phone Phone number.
+	 * @param string $picture Profile picture file name.
+	 * @param integer $radius Radius setting.
+	 * @param integer $reminder Reminder setting.
+	 * @param string $nickName Nick name.
+	 * @param string $gender Gender.
+	 * @param string $birthDate Birthdate.
+	 * @param string $active Activation code.
+	 * @return array User record.
+	 */
 	public function createUserObject($userID, $firstName, $lastName, $email, $password, $phone, $picture, $radius, $reminder, $nickName, $gender, $birthDate, $active) {
 		$user = array('FirstName' => $firstName,
 				'LastName' => $lastName,
@@ -85,11 +119,33 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase {
 		return $user;
 	}
 
+	/**
+	 * Create a user tag record in an array format.
+	 * @param integer $userID User ID.
+	 * @param integer $tagID Tag ID.
+	 * @return array User tag record.
+	 */
 	public function createUserTagObject($userID, $tagID) {
 		return array('UserID' => $userID,
 				'TagID' => $tagID);
 	}
 
+	/**
+	 * Create an event record in an array format.
+	 * @param integer $eventID Event ID.
+	 * @param integer $hostID Host user ID.
+	 * @param string $name Name.
+	 * @param string $description Description.
+	 * @param string $datetime Date and time.
+	 * @param string $address Address.
+	 * @param integer $capacity Capacity.
+	 * @param integer $private Private flag.
+	 * @param integer $tagID Tag ID.
+	 * @param string $image Event image file name.
+	 * @param double $latitude Latitude.
+	 * @param double $longitude Longitude.
+	 * @return array Event record.
+	 */
 	public function createEventObject($eventID, $hostID, $name, $description, $datetime, $address, $capacity, $private, $tagID, $image, $latitude, $longitude) {
 		$event = array('HostID' => $hostID,
 				'Name' => $name,
@@ -110,12 +166,28 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase {
 		return $event;
 	}
 
+	/**
+	 * Create an event record in an array format.
+	 * @param unknown $eventID
+	 * @param unknown $userID
+	 * @param unknown $invited
+	 * @return array User record.
+	 */
 	public function createParticipantObject($eventID, $userID, $invited) {
 		return array('EventID' => $eventID,
 				'UserID' => $userID,
 				'Invited' => $invited);
 	}
 
+	/**
+	 * Create an event comment record in an array format.
+	 * @param integer $commentID Comment ID.
+	 * @param integer $eventID Event ID.
+	 * @param integer $userID User ID.
+	 * @param integer $parentID Parent comment ID.
+	 * @param string $text Comment text.
+	 * @return array Event comment record.
+	 */
 	public function createCommentObject($commentID, $eventID, $userID, $parentID, $text) {
 		$comment = array('EventID' => $eventID,
 				'UserID' => $userID,
@@ -129,6 +201,14 @@ abstract class DBTestCase extends PHPUnit_Extensions_Database_TestCase {
 		return $comment;
 	}
 
+	/**
+	 * Create an event media record in an array format.
+	 * @param integer $mediaID Media ID.
+	 * @param integer $eventID Event ID.
+	 * @param integer $userID User ID.
+	 * @param string $image Media file name.
+	 * @return array Event media record.
+	 */
 	public function createMediaObject($mediaID, $eventID, $userID, $image) {
 		$media = array('MediaID' => $mediaID,
 				'EventID' => $eventID,

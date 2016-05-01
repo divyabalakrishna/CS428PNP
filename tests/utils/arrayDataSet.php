@@ -1,14 +1,19 @@
 <?php
 
+/**
+ * This class provides a PHPUnit dataset implementation from an array.
+ */
 class PHPUnit_ArrayDataSet extends PHPUnit_Extensions_Database_DataSet_AbstractDataSet {
 
 	/**
-	 * @var array
+	 * @var array An array of tables.
 	 */
 	protected $tables = array();
 
 	/**
-	 * @param array $data
+	 * Construct a new PHPUnit_ArrayDataSet object.
+	 * @param array $data An array of data.
+	 * @param True if the data array is a result of a PDO query, false otherwise.
 	 */
 	public function __construct(array $data, $pdo = false) {
 		if ($pdo) {
@@ -44,10 +49,20 @@ class PHPUnit_ArrayDataSet extends PHPUnit_Extensions_Database_DataSet_AbstractD
 		}
 	}
 
+	/**
+	 * Create a table iterator object.
+	 * @param string $reverse True to reverse the iterator order, false otherwise.
+	 * @return PHPUnit_Extensions_Database_DataSet_DefaultTableIterator The newly created table iterator object.
+	 */
 	protected function createIterator($reverse = false) {
 		return new PHPUnit_Extensions_Database_DataSet_DefaultTableIterator($this->tables, $reverse);
 	}
 
+	/**
+	 * Get data for a particular table.
+	 * @param string $tableName Table name.
+	 * @return PHPUnit_Extensions_Database_DataSet_DefaultTable An object with the table data.
+	 */
 	public function getTable($tableName) {
 		if (!isset($this->tables[$tableName])) {
 			throw new InvalidArgumentException($tableName . ' is not a table in the current database.');

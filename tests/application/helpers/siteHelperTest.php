@@ -2,24 +2,39 @@
 
 include_once(__DIR__ . '/../../../src/application/helpers/siteHelper.php');
 
+/**
+ * This class provides unit tests for SiteHelper.
+ */
 class SiteHelperTest extends PHPUnit_Framework_TestCase {
 
 	private static $siteHelper;
 
+	/**
+	 * Initialize required variables once for all tests.
+	 */
 	public static function setUpBeforeClass() {
 		static::$siteHelper = new SiteHelper();
 	}
 
+	/**
+	 * Test the normal usage for getSession function.
+	 */
 	public function testGetSession() {
 		$_SESSION['application'] = 'PLAN & PLAY';
 		$this->assertEquals('PLAN & PLAY', static::$siteHelper->getSession('application'));
 	}
 
+	/**
+	 * Test getSession function when the variable name does not exist.
+	 */
 	public function testGetSessionNotExists() {
 		$_SESSION['test'] = '';
 		$this->assertEquals('', static::$siteHelper->getSession('application'));
 	}
 
+	/**
+	 * Test addAlert function with single alert.
+	 */
 	public function testAddAlertSingle() {
 		$_SESSION['alerts'] = '';
 		static::$siteHelper->addAlert('info', 'Hello World');
@@ -33,6 +48,9 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('Hello World', $alerts[0]->message);
 	}
 
+	/**
+	 * Test addAlert function with multiple alerts.
+	 */
 	public function testAddAlertMultiple() {
 		$_SESSION['alerts'] = '';
 		static::$siteHelper->addAlert('info', 'Hello World');
@@ -50,16 +68,26 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('Error Message', $alerts[1]->message);
 	}
 
+	/**
+	 * Add a dummy alert into the session variable.
+	 */
 	private function addDummyAlert() {
 		$_SESSION['alerts'] = '';
 		static::$siteHelper->addAlert('info', 'Hello World');
 	}
 
+	/**
+	 * Perform assertion for getAlertsHTML function.
+	 * @param string $html Expected alert HTML code.
+	 */
 	private function checkAlert($html) {
 		$this->assertEquals($html, static::$siteHelper->getAlertsHTML());
 		$this->assertEquals('', static::$siteHelper->getSession('alerts'));
 	}
 
+	/**
+	 * Test getAlertsHTML function with single alert.
+	 */
 	public function testGetAlertsHTMLSingle() {
 		$this->addDummyAlert();
 
@@ -68,6 +96,9 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase {
 		$this->checkAlert($html);
 	}
 
+	/**
+	 * Test getAlertsHTML function with multiple alerts.
+	 */
 	public function testGetAlertsHTMLMultiple() {
 		$this->addDummyAlert();
 		static::$siteHelper->addAlert('danger', 'Error Message');
@@ -77,6 +108,9 @@ class SiteHelperTest extends PHPUnit_Framework_TestCase {
 		$this->checkAlert($html);
 	}
 
+	/**
+	 * Test the normal usage for setPopUp function.
+	 */
 	public function testSetPopUp() {
 		static::$siteHelper->setPopUp('abc');
 

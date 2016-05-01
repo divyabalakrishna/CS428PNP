@@ -2,8 +2,14 @@
 
 include_once (__DIR__ . '/viewTestCase.php');
 
+/**
+ * This class provides Selenium tests for PLAN & PLAY main webpage (before the user is logged in).
+ */
 class LandingPageTest extends ViewTestCase {
 
+	/**
+	 * Test login with an invalid credential.
+	 */
 	public function testSignInInvalid() {
 		$this->url($this->applicationURL);
 
@@ -28,6 +34,9 @@ class LandingPageTest extends ViewTestCase {
 		$this->assertEquals('Invalid email or password.', $errorMessage->text());
 	}
 
+	/**
+	 * Test login with a valid credential.
+	 */
 	public function testSignInSuccessful() {
 		$this->url($this->applicationURL);
 
@@ -52,6 +61,9 @@ class LandingPageTest extends ViewTestCase {
 		$this->assertEquals('Hosted', $hostedButton->text());
 	}
 
+	/**
+	 * Test account creation with an email address that has not been registered before.
+	 */
 	public function testSignUpSuccessful() {
 		$this->url($this->applicationURL);
 
@@ -80,6 +92,9 @@ class LandingPageTest extends ViewTestCase {
 		$this->assertEquals('ACTIVATE', $activateButton->text());
 	}
 
+	/**
+	 * Test account creation with an email address that has already been registered.
+	 */
 	public function testSignUpInvalid() {
 		$this->url($this->applicationURL);
 
@@ -108,6 +123,9 @@ class LandingPageTest extends ViewTestCase {
 		$this->assertEquals('There is an existing account with this email.', $errorMessage->text());
 	}
 
+	/**
+	 * Test submitting a forgot password request.
+	 */
 	public function testForgotPassword() {
 		$this->url($this->applicationURL);
 

@@ -2,8 +2,14 @@
 
 include_once (__DIR__ . '/viewTestCase.php');
 
+/**
+ * This class provides Selenium tests for Edit Profile page.
+ */
 class ProfileEditTest extends ViewTestCase {
 
+	/**
+	 * Test changing password.
+	 */
 	public function testChangePassword() {
 		parent::loginToSite('jdoe@email.com', '12345');
 

@@ -3,15 +3,24 @@
 include_once (__DIR__ . '/modelTestCase.php');
 include_once (__DIR__ . '/../../../src/application/models/userModel.php');
 
+/**
+ * This class provides unit tests for UserModel.
+ */
 class UserModelTest extends ModelTestCase {
 
 	private static $userModel;
 
+	/**
+	 * Initialize required variables once for all tests.
+	 */
 	public static function setUpBeforeClass() {
 		static::$userModel = new UserModel(parent::getPDO());
 		parent::setGlobalVariables();
 	}
 
+	/**
+	 * Test the normal usage for getLoginInfo function.
+	 */
 	public function testGetLoginInfo() {
 		$actualObject = static::$userModel->getLoginInfo('jsmith@email.com');
 
@@ -28,6 +37,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertTrue(password_verify('abcde', $actualPassword));
 	}
 
+	/**
+	 * Test the normal usage for getProfile function.
+	 */
 	public function testGetProfile() {
 		$actualObject = static::$userModel->getProfile(1);
 
@@ -47,6 +59,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertEquals($expectedObject, $actualObject);
 	}
 
+	/**
+	 * Test the normal usage for insertUser function.
+	 */
 	public function testInsertUser() {
 		$userID = static::$userModel->insertUser('email@email.com', 'abc123', '987xyz');
 
@@ -67,6 +82,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertTrue(password_verify('abc123', $actualPassword));
 	}
 
+	/**
+	 * Test the normal usage for isActive function.
+	 */
 	public function testIsActive() {
 		$actualObject = static::$userModel->isActive(1);
 
@@ -76,6 +94,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertEquals($expectedObject, $actualObject);
 	}
 
+	/**
+	 * Test the normal usage for setActive function.
+	 */
 	public function testSetActive() {
 		static::$userModel->setActive(4, 'Yes');
 
@@ -92,6 +113,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $filteredTable);
 	}
 
+	/**
+	 * Test the normal usage for updateUser function.
+	 */
 	public function testUpdateUser() {
 		$userID = static::$userModel->updateUser(2, 'John', 'Smith', 'jsmith@email.com', 'a1b2c3d4e5', '789-012-3456', 'JS', 'M', '12/31/1985');
 
@@ -111,6 +135,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertTrue(password_verify('a1b2c3d4e5', $actualPassword));
 	}
 
+	/**
+	 * Test setPassword function with encryption enabled.
+	 */
 	public function testSetPasswordEncrypted() {
 		static::$userModel->setPassword(2, 'a1b2c3d4e5', 'yes');
 
@@ -120,6 +147,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertTrue(password_verify('a1b2c3d4e5', $actualPassword));
 	}
 
+	/**
+	 * Test setPassword function with encryption disabled.
+	 */
 	public function testSetPasswordNotEncrypted() {
 		static::$userModel->setPassword(2, 'a1b2c3d4e5', 'no');
 
@@ -129,6 +159,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertEquals('a1b2c3d4e5', $actualPassword);
 	}
 
+	/**
+	 * Test the normal usage for deleteUserTags function.
+	 */
 	public function testDeleteUserTags() {
 		static::$userModel->deleteUserTags(1);
 
@@ -142,6 +175,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test the normal usage for getAllUserIDs function.
+	 */
 	public function testGetAllUserIDs() {
 		$actualArray = static::$userModel->getAllUserIDs();
 	
@@ -166,6 +202,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test the normal usage for getUserTags function.
+	 */
 	public function testGetUserTags() {
 		$actualArray = static::$userModel->getUserTags(1);
 
@@ -182,6 +221,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test the normal usage for updatePicture function.
+	 */
 	public function testUpdatePicture() {
 		static::$userModel->updatePicture(1, 'abc.jpg');
 
@@ -200,6 +242,9 @@ class UserModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $filteredTable);
 	}
 
+	/**
+	 * Test the normal usage for insertUserTag function.
+	 */
 	public function testInsertUserTag() {
 		static::$userModel->insertUserTag(1, 6);
 

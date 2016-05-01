@@ -3,15 +3,24 @@
 include_once(__DIR__ . '/modelTestCase.php');
 include_once(__DIR__ . '/../../../src/application/models/eventModel.php');
 
+/**
+ * This class provides unit tests for EventModel.
+ */
 class EventModelTest extends ModelTestCase {
 
 	private static $eventModel;
 
+	/**
+	 * Initialize required variables once for all tests.
+	 */
 	public static function setUpBeforeClass() {
 		static::$eventModel = new EventModel(parent::getPDO());
 		parent::setGlobalVariables();
 	}
 
+	/**
+	 * Test the normal usage for insertEvent function.
+	 */
 	public function testInsertEvent() {
 		$eventID = static::$eventModel->insertEvent(1, 'Mini Basketball', '2 vs 2', '03/05/2016', '3:00 PM', 'Activities and Recreation Center (ARC), 201 E Peabody Dr, Champaign, IL, 61820', 4, 5, 40.100972, -88.236077);
 
@@ -27,6 +36,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test deleteEvent function when the user is the event host.
+	 */
 	public function testDeleteEventHosted() {
 		static::$eventModel->deleteMedia(1);
 		static::$eventModel->deleteComments(1);
@@ -43,6 +55,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test deleteEvent function when the user is not the event host.
+	 */
 	public function testDeleteEventNotHosted() {
 		// This should not perform the deletion because the user ID is not the host ID
 		static::$eventModel->deleteEvent(1, 2);
@@ -59,6 +74,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test updateEvent function when the user is the event host.
+	 */
 	public function testUpdateEventHosted() {
 		static::$eventModel->updateEvent(1, 1, 'Test Event', '', '03/05/2016', '3:00 PM', 'Illini Union, 1401 W Green St, Urbana, IL 61801', 10, 1, 40.109567, -88.227213);
 
@@ -73,6 +91,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test updateEvent function when the user is not the event host.
+	 */
 	public function testUpdateEventNotHosted() {
 		// This should not perform the update because the user ID is not the host ID
 		static::$eventModel->updateEvent(1, 2, 'Test Event', '', '03/05/2016', '3:00 PM', 'Illini Union, 1401 W Green St, Urbana, IL 61801', 10, 1, 40.109567, -88.227213);
@@ -88,6 +109,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test the normal usage of getEvent function.
+	 */
 	public function testGetEvent() {
 		$actualObject = static::$eventModel->getEvent(1);
 
@@ -113,6 +137,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedObject, $actualObject);
 	}
 
+	/**
+	 * Test getEvent function when the user is the event host.
+	 */
 	public function testGetEventHosted() {
 		$actualObject = static::$eventModel->getEvent(1, 1);
 
@@ -138,6 +165,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedObject, $actualObject);
 	}
 
+	/**
+	 * Test getEvent function when the user is not the event host.
+	 */
 	public function testGetEventNotHosted() {
 		// This should return empty values because the user ID is not the host ID
 		$actualObject = static::$eventModel->getEvent(1, 2);
@@ -164,6 +194,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedObject, $actualObject);
 	}
 
+	/**
+	 * Test the normal usage for getHostedEvents function.
+	 */
 	public function testGetHostedEvents() {
 		$actualArray = static::$eventModel->getHostedEvents(1);
 
@@ -212,6 +245,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test getHostedEvents function with limited number of results.
+	 */
 	public function testGetHostedEventsLimit() {
 		$actualArray = static::$eventModel->getHostedEvents(1, '', 1);
 
@@ -240,6 +276,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test getHostedEvents function for future events.
+	 */
 	public function testGetHostedEventsFuture() {
 		$actualArray = static::$eventModel->getHostedEvents(1, 'future');
 
@@ -268,6 +307,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test getHostedEvents function for past events.
+	 */
 	public function testGetHostedEventsPast() {
 		$actualArray = static::$eventModel->getHostedEvents(1, 'past');
 
@@ -296,6 +338,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test the normal usage for getJoinedEvents function.
+	 */
 	public function testGetJoinedEvents() {
 		$actualArray = static::$eventModel->getJoinedEvents(2);
 
@@ -342,6 +387,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test getJoinedEvents function with limited number of results.
+	 */
 	public function testGetJoinedEventsLimit() {
 		$actualArray = static::$eventModel->getJoinedEvents(2, '', 1);
 
@@ -369,6 +417,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test getJoinedEvents function for future events.
+	 */
 	public function testGetJoinedEventsFuture() {
 		$actualArray = static::$eventModel->getJoinedEvents(2, 'future');
 
@@ -396,6 +447,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test getJoinedEvents function for past events.
+	 */
 	public function testGetJoinedEventsPast() {
 		$actualArray = static::$eventModel->getJoinedEvents(2, 'past');
 
@@ -423,6 +477,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test updateEventImage function when the user is the event host.
+	 */
 	public function testUpdateEventImageHosted() {
 		static::$eventModel->updateEventImage(1, 1, 'abc.jpg');
 
@@ -437,6 +494,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test updateEventImage function when the user is not the event host.
+	 */
 	public function testUpdateEventImageNotHosted() {
 		// This should not perform the update because the user ID is not the host ID
 		static::$eventModel->updateEventImage(1, 2, 'abc.jpg');
@@ -452,6 +512,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test deleteParticipants function for an event.
+	 */
 	public function testDeleteParticipants() {
 		static::$eventModel->deleteParticipants(1);
 
@@ -465,6 +528,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test deleteParticipants function for a specific user.
+	 */
 	public function testDeleteParticipantsSpecificUser() {
 		static::$eventModel->deleteParticipants(1, 2);
 
@@ -482,6 +548,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test the normal usage for insertParticipant function.
+	 */
 	public function testInsertParticipant() {
 		static::$eventModel->insertParticipant(2, 3);
 
@@ -499,6 +568,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test getParticipants function for an event.
+	 */
 	public function testGetParticipants() {
 		$actualArray = static::$eventModel->getParticipants(1);
 
@@ -525,6 +597,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test getParticipants function for a specific user.
+	 */
 	public function testGetParticipantsSpecificUser() {
 		$actualArray = static::$eventModel->getParticipants(2, 2);
 
@@ -542,6 +617,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test the normal usage for getComments function.
+	 */
 	public function testGetComments() {
 		$actualArray = static::$eventModel->getComments(1);
 
@@ -583,6 +661,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test deleteComments function for an event.
+	 */
 	public function testDeleteComments() {
 		static::$eventModel->deleteComments(1);
 
@@ -596,6 +677,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test deleteComments function for a specific comment.
+	 */
 	public function testDeleteCommentsSpecificComment() {
 		static::$eventModel->deleteComments(1, 1);
 
@@ -611,6 +695,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test insertComment function for a new comment.
+	 */
 	public function testInsertComment() {
 		static::$eventModel->insertComment(2, 2, '', 'Stay tuned.');
 
@@ -626,6 +713,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test insertComment function for a reply comment.
+	 */
 	public function testInsertCommentReply() {
 		static::$eventModel->insertComment(1, 1, 2, 'Bring your own beverages.');
 
@@ -644,6 +734,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test deleteMedia function for an event.
+	 */
 	public function testDeleteMedia() {
 		static::$eventModel->deleteMedia(1);
 
@@ -657,6 +750,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test deleteMedia function for a specific media.
+	 */
 	public function testDeleteMediaSpecificMedia() {
 		static::$eventModel->deleteMedia(1, 1);
 
@@ -672,6 +768,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test getMedia function for an event.
+	 */
 	public function testGetMedia() {
 		$actualArray = static::$eventModel->getMedia(1);
 
@@ -682,6 +781,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test getMedia function for a specific media.
+	 */
 	public function testGetMediaSpecificMedia() {
 		$actualArray = static::$eventModel->getMedia(1, 2);
 
@@ -691,6 +793,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test the normal usage for insertMedia function.
+	 */
 	public function testInsertMedia() {
 		static::$eventModel->insertMedia(2, 2, 'photo.jpg');
 
@@ -707,6 +812,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test the normal usage for copyEvent function.
+	 */
 	public function testCopyEvent() {
 		$eventID = static::$eventModel->copyEvent(2, '04/11/2016', '10:00 AM');
 
@@ -722,6 +830,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test the normal usage for copyParticipant function.
+	 */
 	public function testCopyParticipant() {
 		$eventID = static::$eventModel->copyEvent(2, '04/11/2016', '10:00 AM');
 		static::$eventModel->copyParticipant(2, $eventID);
@@ -739,8 +850,11 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test copyParticipant function when the users have already joined the event.
+	 */
 	public function testCopyParticipantDuplicate() {
-		// This should not insert any records since the participants already join the event
+		// This should not insert any records since the participants already joined the event
 		static::$eventModel->copyParticipant(1, 2);
 
 		$expectedTable = (new PHPUnit_ArrayDataSet(array(
@@ -756,6 +870,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertTablesEqual($expectedTable, $actualTable);
 	}
 
+	/**
+	 * Test getSearchEvents function for future events.
+	 */
 	public function testGetSearchEventsFuture() {
 		$actualArray = static::$eventModel->getSearchEvents(1, 5, 40.1, -88.2, '', false);
 
@@ -782,6 +899,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test getSearchEvents function for past events.
+	 */
 	public function testGetSearchEventsPast() {
 		$actualArray = static::$eventModel->getSearchEvents(1, 5, 40.1, -88.2, '', true);
 
@@ -826,6 +946,9 @@ class EventModelTest extends ModelTestCase {
 		$this->assertEquals($expectedArray, $actualArray);
 	}
 
+	/**
+	 * Test the normal usage for getFeed function.
+	 */
 	public function testGetFeed() {
 		$actualArray = static::$eventModel->getFeed(3);
 
