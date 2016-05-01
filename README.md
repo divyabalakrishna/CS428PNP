@@ -9,7 +9,7 @@ Getting the capacity to rapidly organize and plan a sport activity with friends 
 PLAN & PLAN is a web application which addresses the problem by enabling its users to organize sports-related events without the burden of searching for others to participate. Users can search for activities in their area which they are interested in, join the events, and discover new friends with similar interests.  
   
 Production site: [http://plannplay.web.engr.illinois.edu] (http://plannplay.web.engr.illinois.edu)  
-Project Documentation: [https://github.com/divyabalakrishna/CS428PNP/blob/master/project_documentation.pdf] (https://github.com/divyabalakrishna/CS428PNP/blob/master/project_documentation.pdf)  
+Project documentation: [https://github.com/divyabalakrishna/CS428PNP/blob/master/project_documentation.pdf] (https://github.com/divyabalakrishna/CS428PNP/blob/master/project_documentation.pdf)  
 
 ### Contributors
 * Divya Balakrishna
