@@ -10,6 +10,17 @@ class FileHelper {
 	 * $acceptedExtensions: comma separated list of accepted extensions (without the dot).
 	 * $errorMessageSubject: to be appended into the error message "Unable to upload <subject>" if upload is unsuccessful.
 	 */
+    
+	/**
+	 * Upload file from local into specific directory in server 
+	 * @param string $fieldName      
+	 * @param string $directory 
+	 * @param string $acceptedExtensions 
+	 * @param string $errorMessageSubject 
+	 * @param integer $maxSize 
+	 * @param string $replaceFileName 
+	 * @param integer $index 
+	 */	        
 	public function uploadFile($fieldName, $directory, $acceptedExtensions, $errorMessageSubject, $maxSize = 0, $replaceFileName = "", $index = 0) {
 		$fileName = "";
 		$errorMessage = "Unable to upload " . $errorMessageSubject . " " . $_FILES[$fieldName]["name"][$index];
@@ -62,6 +73,11 @@ class FileHelper {
 		return $result;
 	}
 
+	/**
+	 * Delete uploaded file in specific directory  
+	 * @param string $directory      
+	 * @param string $fileName 
+	 */	    
 	public function deleteUploadedFile($directory, $fileName) {
 		$uploadDirectory = UPLOAD_ROOT . $directory . DIRECTORY_SEPARATOR;
 
@@ -70,10 +86,21 @@ class FileHelper {
 		}
 	}
 
+	/**
+	 * Get url path for uploaded file  
+	 * @param string $directory      
+	 * @param string $fileName 
+	 */	        
 	public function getUploadedFileURL($directory, $fileName) {
 		return UPLOAD_URL . $directory . "/" . $fileName;
 	}
 
+	/**
+	 * Copy uploaded file into specific directory  
+	 * @param string $directory      
+	 * @param string $fileName 
+	 * @param string $replaceFileName 
+	 */	        
 	public function copyUploadedFile($directory, $originalFileName, $replaceFileName = "") {
 		$uploadDirectory = UPLOAD_ROOT . $directory . DIRECTORY_SEPARATOR;
 		$extensionIndex = strpos($originalFileName, ".");
