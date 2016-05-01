@@ -1,17 +1,4 @@
-<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); }
-
-$tagList = "";
-$index = 1;
-foreach ($userTags as $userTag) {
-	if ($index > 1) {
-		$tagList = $tagList . ", " ;
-	}
-
-	$tagList = $tagList . $userTag->TagName;
-
-	$index = $index + 1;
-}
-?>
+<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
 
 <div class="container well">
 	<h2 class="page-header"><?php echo $profileInfo->FirstName ?> <?php echo $profileInfo->LastName ?>'s Profile</h2>
@@ -55,13 +42,8 @@ foreach ($userTags as $userTag) {
                 <div class="form-group">
                     <?php
                         if ($profileInfo->FormattedDate != "") {
-                            //explode the date to get month, day and year
-                            $birthDate = explode("/", $profileInfo->FormattedDate);
-                            //get age from date or birthdate
-                            $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
-                            ? ((date("Y") - $birthDate[2]) - 1)
-                            : (date("Y") - $birthDate[2]));
-                            $age = $age . " years old";
+                            $age = $GLOBALS["beans"]->stringHelper->convertAge($profileInfo->FormattedDate);
+                            $age .= " years old";
                         }
                         else {
                             $age = "N/A";
@@ -126,7 +108,6 @@ foreach ($userTags as $userTag) {
                 
             </div>
         </div>
-        
         
         <h2 class="page-header"></h2>
 

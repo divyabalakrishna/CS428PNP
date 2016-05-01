@@ -31,6 +31,9 @@
 <script>
 	$(document).ready(function() {
 
+        /**
+         * Reset Form validation
+         */
 		$("#resetForm").validate({
 			rules: {
 				email: {

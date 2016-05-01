@@ -166,11 +166,13 @@
 
 	$(document).ready(function(){
 
+        // Datepicker event handler
 		$('.input-group.date').datepicker({
 			todayBtn: 'linked',
 			clearBtn: true
 		});
 
+        // Form validation        
 		$('#form').validate({
 			rules: {
 				birthdate: {
@@ -188,6 +190,7 @@
 			}
 		});
 
+        // Form submit event handler
 		$('#form').submit(function() {
 			var user_tags = '';
 			$('input.tag-checkbox:checked').each(function() {

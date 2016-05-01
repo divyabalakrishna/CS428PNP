@@ -37,7 +37,9 @@
 </div>
 <script>
 	$(document).ready(function() {
-
+        /**
+         * Activation Form validation
+         */
 		$("#activationForm").validate({
 			rules: {
 				email: {
