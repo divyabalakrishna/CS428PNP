@@ -1,9 +1,12 @@
 <?php
 
+/**
+ * This class acts as a controller for user module.
+ */
 class User {
 
 	/**
-	 * check user login credential info in database
+	 * Login to the application.
 	 */
 	public function login() {
 		$errorMessage = "Invalid email or password.";
@@ -25,13 +28,13 @@ class User {
 	}
 
 	/**
-	 * perform user logout, clear session
+	 * Logout from the application.
 	 */
 	public function logout() {
-		// Unset all of the session variables.
+		// Unset all of the session variables
 		$_SESSION = array();
 
-		// If it's desired to kill the session, also delete the session cookie.
+		// If it's desired to kill the session, also delete the session cookie
 		// Note: This will destroy the session, and not just the session data!
 		if (ini_get("session.use_cookies")) {
 			$params = session_get_cookie_params();
@@ -41,16 +44,14 @@ class User {
 			);
 		}
 
-		// Finally, destroy the session.
+		// Finally, destroy the session
 		session_destroy();
 
 		header('location: ' . URL_WITH_INDEX_FILE);
 	}
 
 	/**
-	 * account creation, insert user into database
-	 * @param string $_POST["email"]
-	 * @param string $_POST["password1"]
+	 * Create a new account.
 	 */
 	public function createAccount() {
 		$activation = $GLOBALS["beans"]->stringHelper->genString();
@@ -64,8 +65,7 @@ class User {
 	}
 
 	/**
-	 * forgot password, send email to reset password
-	 * @param string $_POST["email"]
+	 * Send an email to reset password.
 	 */
 	public function forgotPassword() {
 		$code = $GLOBALS["beans"]->stringHelper->genString();
@@ -83,8 +83,8 @@ class User {
 	}
 
 	/**
-	 * check user email address in user table
-	 * @param string $_POST["email"]
+	 * Check whether an email address has not been registered.
+	 * @return boolean True if the email address has not been registered, false otherwise.
 	 */
 	public function emailExist() {
 		$unique = false;
@@ -98,21 +98,25 @@ class User {
 	}
 
 	/**
-	 * check whether email address is not registered
+	 * Check whether an email address has not been registered.
+	 * Use this function for Ajax call.
+	 * @return boolean True if the email address has not been registered, false otherwise.
 	 */
 	public function checkUniqueEmail() {
 		echo json_encode($this->emailExist());
 	}
 
 	/**
-	 * check whether email address is registered
+	 * Check whether an email address has already been registered.
+	 * Use this function for Ajax call.
+	 * @return boolean True if the email address has already been registered, false otherwise.
 	 */
 	public function checkExistEmail() {
 		echo json_encode(!$this->emailExist());
 	}
 
 	/**
-	 * view user profile main page
+	 * Display edit profile form.
 	 */
 	public function viewProfile() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -126,8 +130,8 @@ class User {
 	}
 
 	/**
-	 * view other user profile main page
-	 * @param integer $userID
+	 * Display information and statistics for a user.
+	 * @param integer $userID User ID.
 	 */
 	public function viewParticipantProfile($userID) {
 		$profileInfo = $GLOBALS["beans"]->userModel->getProfile($userID);
@@ -155,8 +159,7 @@ class User {
 	}
 
 	/**
-	 * update user profile into database
-	 * @param integer $userID
+	 * Update user details and interests.
 	 */
 	public function saveProfile() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -188,12 +191,13 @@ class User {
 			$GLOBALS["beans"]->userModel->insertUserTag($userID, $tagID);
 		}
 
-		// Profile picture
+		// Upload profile picture
 		$result = $GLOBALS["beans"]->fileHelper->uploadFile("picture", "profile", "jpg,jpeg,png,bmp", "profile image", 2097152, $userID);
 
 		if ($result->fileUploaded) {
 			$GLOBALS["beans"]->userModel->updatePicture($userID, $result->fileName);
 
+			// Delete old profile picture
 			if ($oldImage != "" && $oldImage != $result->fileName) {
 				$GLOBALS["beans"]->fileHelper->deleteUploadedFile("picture", $oldImage);
 			}
@@ -206,7 +210,7 @@ class User {
 	}
 
 	/**
-	 * account activation process, set activation flag in user table
+	 * Activate user account.
 	 */
 	public function activation() {
 		$errorMessage = "Activation failed, invalid code !!!.";
@@ -255,7 +259,7 @@ class User {
 	}
 
 	/**
-	 * resend email activation code
+	 * Resend account activation email.
 	 */
 	public function resendActivation() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -271,9 +275,9 @@ class User {
 	}
 
 	/**
-	 * user activation main page
-	 * @param string $email
-	 * @param string $active
+	 * Display account activation form.
+	 * @param string $email Email address.
+	 * @param string $active Activation code.
 	 */
 	public function active($email = "", $active = "") {
 		$user = $GLOBALS["beans"]->userModel->getLoginInfo($email);
@@ -295,9 +299,9 @@ class User {
 	}
 
 	/**
-	 * reset password main page
-	 * @param string $email
-	 * @param string $passcode
+	 * Display reset password form.
+	 * @param string $email Email address.
+	 * @param string $passcode Temporary passcode.
 	 */
 	public function reset($email = "", $passcode = "") {
 		$loginInfo = $GLOBALS["beans"]->userModel->getLoginInfo($email);
@@ -315,9 +319,7 @@ class User {
 	}
 
 	/**
-	 * reset password process, update new password into user table
-	 * @param string $_POST["email"]
-	 * @param string $_POST["password1"]
+	 * Reset user password.
 	 */
 	public function resetPassword() {
 		$activation = $GLOBALS["beans"]->stringHelper->genString();

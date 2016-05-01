@@ -1,21 +1,17 @@
 <?php
 
 /**
- * Class Home
- *
- * Please note:
- * Don't use the same name for class and method, as this might trigger an (unintended) __construct of the class.
- * This is really weird behaviour, but documented here: http://php.net/manual/en/language.oop5.decon.php
- *
+ * This class acts as a controller for home module.
  */
 class Home {
+
 	/**
-	 * Display the home page
+	 * Display home page.
 	 */	
 	public function index() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
-		//if the user is logged in
+		// If the user is logged in
 		if (is_numeric($userID)) {
 			if ($GLOBALS["beans"]->userModel->isActive($userID)->Active != 'Yes') {
 				$user = $GLOBALS["beans"]->userModel->getProfile($userID);

@@ -1,15 +1,18 @@
 <?php
 
+/**
+ * This class acts as a controller for event module.
+ */
 class Events {
+
 	/**
-	 * Get a list of all the events hosted by the user
-	 * @param string $_POST["timeType"]
+	 * Display a list of events hosted by the user.
 	 */
 	public function listHosted() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
+		// Past or future filter
 		$timeType = "future";
-		//make sure the key exist
 		if (array_key_exists("timeType", $_POST)) {
 			$timeType = $_POST["timeType"];
 		}
@@ -22,14 +25,13 @@ class Events {
 	}
 
 	/**
-	 * Get a list of all the events joined by the user
-	 * @param string $_POST["timeType"]
+	 * Display a list of events joined by the user.
 	 */
 	public function listJoined() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
+		// Past or future filter
 		$timeType = "future";
-		//make sure the key exist
 		if (array_key_exists("timeType", $_POST)) {
 			$timeType = $_POST["timeType"];
 		}
@@ -42,11 +44,7 @@ class Events {
 	}
 
 	/**
-	 * Get a list of all the events in the future
-	 * @param string $_POST["gmap-lat2"]
-	 * @param string $_POST["gmap-lon2"]
-	 * @param string $_POST["tag"]
-	 * @param string $_POST["old"]
+	 * Display a list of events based on a location.
 	 */ 
 	public function listSearch() {
 		$latitude = $GLOBALS["beans"]->siteHelper->getDefaultLat();
@@ -95,7 +93,7 @@ class Events {
 	}
 
 	/**
-	 * Generate event marker for event search Google Map
+	 * Generate event marker XML for Google Map.
 	 */
 	public function genXML() {
 		$latitude = $GLOBALS["beans"]->siteHelper->getDefaultLat();
@@ -141,31 +139,30 @@ class Events {
 	}
 
 	/**
-	 * Get all the details for an event
-	 * @param string $eventID
+	 * Display information, participant list, comments, and media for an event.
+	 * @param integer $eventID Event ID.
 	 */
 	public function view($eventID) {
-		//make sure the eventID is valid
+		// Redirect to home page is event ID is invalid
 		if (!is_numeric($eventID)) {
 			header('location: ' . URL_WITH_INDEX_FILE);
 		}
-		
-		//get all the parameters
+
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 		$participants = $GLOBALS["beans"]->eventModel->getParticipants($eventID);
 		$userParticipation = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
 		$comments = $GLOBALS["beans"]->eventModel->getComments($eventID);
 		$media = $GLOBALS["beans"]->eventModel->getMedia($eventID);
-		
+
 		require APP . 'views/_templates/header.php';
 		require APP . 'views/events/view.php';
 		require APP . 'views/_templates/footer.php';
 	}
 
 	/**
-	 * Redirect to the recreate event page
-	 * @param string $eventID
+	 * Display recreate event form.
+	 * @param integer $eventID Event ID.
 	 */
 	public function recreate($eventID) {
 		require APP . 'views/_templates/header.php';
@@ -174,13 +171,9 @@ class Events {
 	}
 
 	/**
-	 * Recreate an existing past event
-	 * @param string $_POST["eventID"]
-	 * @param string $_POST["date"]
-	 * @param string $_POST["time"]
+	 * Create a new event based on a past event.
 	 */
 	public function recreateSave() {
-		//get all the parameters
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($_POST["eventID"]);
 
@@ -195,7 +188,6 @@ class Events {
 				$newEventID
 		);
 
-		//make sure the image exist
 		if ($event->Image != "") {
 			$fileName = $GLOBALS["beans"]->fileHelper->copyUploadedFile("event", $event->Image, $newEventID);
 			$GLOBALS["beans"]->eventModel->updateEventImage($newEventID, $userID, $fileName);
@@ -205,7 +197,8 @@ class Events {
 	}
 
 	/**
-	 * Redirect to the edit page of an event
+	 * Display edit event form.
+	 * @param integer @eventID Event ID.
 	 */	
 	public function edit($eventID = "") {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -218,31 +211,20 @@ class Events {
 	}
 
 	/**
-	 * Save the edited event detail
-	 * @param string $_POST["eventID"]
-	 * @param string $_POST["name"]
-	 * @param string $_POST["description"]
-	 * @param string $_POST["date"]
-	 * @param string $_POST["time"]
-	 * @param string $_POST["address"]
-	 * @param string $_POST["capacity"]
-	 * @param string $_POST["tagID"]
-	 * @param string $_POST["gmap-lat"]
-	 * @param string $_POST["gmap-lon"]
+	 * Save an event.
 	 */
 	public function save() {
-		//get all the parameters
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$eventID = $_POST["eventID"];
 		$performUpload = false;
 		$oldImage = "";
 		$backToEdit = false;
 
-		//make sure the eventID is valid
+		// Update event if it already exists
 		if (is_numeric($eventID)) {
 			$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 			
-			//If the event already exist, modify it
+			// Ensure the action is performed by the host user
 			if ($userID == $event->HostID) {
 				$GLOBALS["beans"]->eventModel->updateEvent(
 						$eventID,
@@ -261,7 +243,9 @@ class Events {
 				$oldImage = $event->Image;
 				$performUpload = true;
 			}
-		}//if the event is not exist, create it
+		}
+
+		// Create a new event
 		else {
 			$eventID = $GLOBALS["beans"]->eventModel->insertEvent(
 					$userID,
@@ -285,13 +269,14 @@ class Events {
 			$performUpload = true;
 		}
 
-		//if there is a meida needs to be uploaded
+		// Upload event image
 		if ($performUpload) {
 			$result = $GLOBALS["beans"]->fileHelper->uploadFile("image", "event", "jpg,jpeg,png,bmp", "event image", 2097152, $eventID);
 
 			if ($result->fileUploaded) {
 				$GLOBALS["beans"]->eventModel->updateEventImage($eventID, $userID, $result->fileName);
 
+				// Delete old event image
 				if ($oldImage != "" && $oldImage != $result->fileName) {
 					$GLOBALS["beans"]->fileHelper->deleteUploadedFile("event", $oldImage);
 				}
@@ -301,8 +286,7 @@ class Events {
 				$backToEdit = true;
 			}
 		}
-		
-		//redirect to different page
+
 		if ($backToEdit) {
 			header('location: ' . URL_WITH_INDEX_FILE . 'events/edit/' . $eventID);
 		}
@@ -310,12 +294,9 @@ class Events {
 			header('location: ' . URL_WITH_INDEX_FILE . 'events/view/' . $eventID);
 		}
 	}
-	
+
 	/**
-	 * Get the media needs to be uploaded
-	 * @param string $_POST["eventID"]
-	 * @param string $_POST['image']
-	 * @param string $_POST['name']
+	 * Upload event media.
 	 */	
 	public function upload() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -347,14 +328,14 @@ class Events {
 	}
 
 	/**
-	 * Delete an event
-	 * @param string $eventID
+	 * Delete an event.
+	 * @param integer $eventID Event ID.
 	 */
 	public function delete($eventID) {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 
-		//only the hoster can delete the event
+		// Ensure the action is performed by host user
 		if ($userID == $event->HostID) {
 			$GLOBALS["beans"]->eventModel->deleteMedia($eventID);
 			$GLOBALS["beans"]->eventModel->deleteComments($eventID);
@@ -366,10 +347,7 @@ class Events {
 	}
 
 	/**
-	 * Comment on an event
-	 * @param string $_POST["eventID"]
-	 * @param string $_POST["parentID"]
-	 * @param string $_POST["text"]
+	 * Create a comment for an event.
 	 */
 	public function reply() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -386,14 +364,14 @@ class Events {
 	}
 
 	/**
-	 * Join an event
-	 * @param string $eventID
+	 * Join an event.
+	 * @param integer $eventID Event ID.
 	 */
 	public function join($eventID) {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$participant = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
 
-		//only insert the participant if not in the database already
+		// Ensure the user is not yet a participant
 		if (count($participant) == 0) {
 			$GLOBALS["beans"]->eventModel->insertParticipant($eventID, $userID);
 		}
@@ -402,15 +380,15 @@ class Events {
 	}
 
 	/**
-	 * Leave an event
-	 * @param string $eventID
+	 * Leave an event.
+	 * @param integer $eventID Event ID.
 	 */
 	public function leave($eventID) {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 		$participant = $GLOBALS["beans"]->eventModel->getParticipants($eventID, $userID);
 
-		//only delete the participant if in the database already and not the hoster
+		// Ensure the user is a participant and not the event host
 		if (count($participant) > 0 && $userID != $event->HostID) {
 			$GLOBALS["beans"]->eventModel->deleteParticipants($eventID, $userID);
 		}
@@ -419,9 +397,9 @@ class Events {
 	}
 
 	/**
-	 * Delete a comment from an event
-	 * @param string $eventID
-	 * @param string $commentID
+	 * Delete a comment from an event.
+	 * @param integer $eventID Event ID.
+	 * @param integer $commentID Comment ID.
 	 */
 	public function deleteComment($eventID, $commentID) {
 		// We do not want to accidentally delete all comments in case commentID is blank, so change to a dummy number
@@ -432,7 +410,7 @@ class Events {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$comment = $GLOBALS["beans"]->eventModel->getComments($eventID, $commentID);
 
-		//delete all the comment
+		// Ensure the comment was created by the user
 		if (count($comment) > 0 && $userID == $comment[0]->UserID) {
 			$GLOBALS["beans"]->eventModel->deleteComments($eventID, $commentID);
 		}
@@ -441,19 +419,20 @@ class Events {
 	}
 
 	/**
-	 * Delete a media from an event
-	 * @param string $eventID
-	 * @param string $mediaID
+	 * Delete a media from an event.
+	 * @param integer $eventID Event ID.
+	 * @param integer $mediaID Media ID.
 	 */
 	public function deleteMedia($eventID, $mediaID) {
-		// We do not want to accidentally delete all Medias in case mediaID is blank, so change to a dummy number
+		// We do not want to accidentally delete all media in case mediaID is blank, so change to a dummy number
 		if (!is_numeric($mediaID)) {
 			$mediaID = -1;
 		}
 
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
-		$media = $GLOBALS["beans"]->eventModel->getMedia($eventID,$mediaID);
+		$media = $GLOBALS["beans"]->eventModel->getMedia($eventID, $mediaID);
 
+		// Ensure the media was uploaded by the user
 		if ($userID == $media[0]->UserID) {
 			$GLOBALS["beans"]->eventModel->deleteMedia($eventID, $mediaID);
 			$GLOBALS["beans"]->fileHelper->deleteUploadedFile("media", $media[0]->Image);
@@ -463,8 +442,8 @@ class Events {
 	}
 
 	/**
-	 * Add a notification to the user
-	 * @param string $eventID
+	 * Add notifications for event participants when a new media is uploaded.
+	 * @param integer $eventID Event ID.
 	 */
 	public function addUploadNotif($eventID) {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -472,9 +451,7 @@ class Events {
 		$participants = $GLOBALS["beans"]->eventModel->getParticipants($eventID);
 
 		foreach ($participants as $user) { 
-
 			if ($user->UserID != $userID) {
-
 				if ($event->Image) {
 					$imgLink = "/uploads/event/" . $event->Image;
 				}
@@ -482,7 +459,6 @@ class Events {
 					$imgLink = "/public/img/sports/" . $event->TagName . ".png";
 				}
 
-				//Insert Notifications
 				$GLOBALS["beans"]->notifModel->insertNotif(
 						$user->UserID,
 						$event->EventID,

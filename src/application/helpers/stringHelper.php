@@ -1,11 +1,15 @@
 <?php
 
+/**
+ * This class provides utility functions for string.
+ */
 class StringHelper {
 
 	/**
-	 * get n-character substring from left
-	 * @param string $string
-	 * @param string $length
+	 * Get a number of characters from the left.
+	 * @param string $string A string.
+	 * @param string $length Number of characters.
+	 * @return string Substring result.
 	 */
 	public function left($string, $length) {
 		$result = trim($string);
@@ -17,9 +21,10 @@ class StringHelper {
 	}
 
 	/**
-	 * get n-character substring from right
-	 * @param string $string
-	 * @param string $length
+	 * Get a number of characters from the right.
+	 * @param string $string A string.
+	 * @param string $length Number of characters.
+	 * @return string Substring result.
 	 */
 	public function right($string, $length) {
 		$result = trim($string);
@@ -31,8 +36,9 @@ class StringHelper {
 	}
 
 	/**
-	 * generate random string for activation code and passcode for reset password
-	 * @param integer $length
+	 * Generate a random string.
+	 * @param integer $length Number of characters.
+	 * @return Random string.
 	 */
 	public function genString($length = 16) {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -47,20 +53,20 @@ class StringHelper {
 	}
 
 	/**
-	 * Format birthday into age
-	 * @param date $birthday
+	 * Calculate age from birthdate.
+	 * @param date $birthday Birthdate.
+	 * @return integer Age.
 	 */
 	public function convertAge($birthday) {
-	
-		//explode the date to get month, day and year
+		// Get birth month, day and year
 		$birthDate = explode("/", $birthday);
-		//get age from date or birthdate
+
+		// Calculate age from date or birthdate
 		$age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
 		? ((date("Y") - $birthDate[2]) - 1)
 		: (date("Y") - $birthDate[2]));
-		
+
 		return $age;
 	}
-	
 
 }

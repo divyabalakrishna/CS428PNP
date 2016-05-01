@@ -1,9 +1,12 @@
 <?php
 
+/**
+ * This class acts as a controller for notification module.
+ */
 class Notifs {
 
 	/**
-	 * notification main page
+	 * Display a list of notifications for a user.
 	 */
 	public function index() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -15,11 +18,11 @@ class Notifs {
 	}
 
 	/**
-	 * generate notification based on time (1hour/24hour) before it start
-	 * @param integer $hour
+	 * Generate notifications for event participants.
+	 * @param integer $hour Number of hour before events start.
 	 * @param string $check
 	 */
-	public function genNotifications($hour, $check="") {
+	public function genNotifications($hour, $check = "") {
 
 		$users = $GLOBALS["beans"]->userModel->getAllUserIDs();
 
@@ -35,7 +38,6 @@ class Notifs {
 					$imgLink = "/public/img/sports/" . $event->TagName . ".png";
 				}
 
-				//Insert Notifications
 				$GLOBALS["beans"]->notifModel->insertNotif(
 						$user->UserID,
 						$event->EventID,
@@ -48,8 +50,8 @@ class Notifs {
 	}
 
 	/**
-	 * update notification read flag
-	 * @param integer $notifID
+	 * Update the read flag for a notification.
+	 * @param integer $notifID Notification ID.
 	 */
 	public function updateFlag($notifID) {
 		$GLOBALS["beans"]->notifModel->updateFlag($notifID);

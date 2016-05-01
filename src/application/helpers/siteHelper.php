@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * This class provides miscellaneous utility functions for the application.
+ */
 class SiteHelper {
 
 	/**
-	 * retrieve session information
-	 * @param string $variableName
+	 * Retrieve a session value.
+	 * @param string $variableName Session variable name.
+	 * @return object Value if the session variable exists, empty string otherwise.
 	 */
 	public function getSession($variableName) {
 		$value = "";
@@ -17,16 +21,14 @@ class SiteHelper {
 	}
 
 	/**
-	 * add alert message notification info into session
-	 * @param string $type
-	 * @param string $message
-	 * @param string $id
-	 *
-	 *	Options for $type:
-	 *		success (light green background)
-	 *		info	(light blue background)
-	 *		warning (light yellow background)
-	 *		danger  (pink background)
+	 * Add an alert into the session.
+	 * @param string $type Alert type. Select one from the following:
+	 * 		success (light green background),
+	 * 		info (light blue background),
+	 * 		warning (light yellow background),
+	 * 		danger (pink background).
+	 * @param string $message Alert message.
+	 * @param string $id Alert ID.
 	 */
 	public function addAlert($type, $message, $id = "") {
 		$alerts = $this->getSession("alerts");
@@ -44,10 +46,11 @@ class SiteHelper {
 	}
 
 	/**
-	 * retrieve alert info session and show it in html page
-	 * @param string $id
+	 * Get an HTML code for all alerts and clear them from the session variables.
+	 * @param string $id Alert ID.
+	 * @return string HTML code.
 	 */
-	public function getAlertsHTML($id="") {
+	public function getAlertsHTML($id = "") {
 		$html = "";
 		$alerts = $this->getSession("alerts");
 
@@ -67,8 +70,8 @@ class SiteHelper {
 	}
 
 	/**
-	 * set popup modalID into session
-	 * @param string $modalID
+	 * Set a pop-up modalID into the session.
+	 * @param string $modalID Modal ID.
 	 */
 	public function setPopUp($modalID) {
 		$_SESSION["popup"] = new stdClass();
@@ -76,8 +79,8 @@ class SiteHelper {
 	}
 
 	/**
-	 * get popup modalID from session and perform javascript command
-	 * @param string $modalID
+	 * Get a Javascript code for pop-up and clear it from the session variables.
+	 * @return string Javascript code.
 	 */
 	public function getPopUp() {
 		$html = "";
@@ -93,8 +96,9 @@ class SiteHelper {
 	}
 
 	/**
-	 * date formatter from datetime to "sometime ago" 
-	 * @param string $datetime
+	 * Format a datetime string into "<...> ago".
+	 * @param string $datetime Datetime string.
+	 * @return string Formatted date time.
 	 */
 	function notifMsg($datetime) {
 		date_default_timezone_set('America/Chicago');
@@ -137,9 +141,9 @@ class SiteHelper {
 	}
 
 	/**
-	 * send email template for activation code notification
-	 * @param string $email
-	 * @param string $active
+	 * Send an email for account activation.
+	 * @param string $email Email address.
+	 * @param string $active Activation code.
 	 */
 	public function sendActivationMail($email, $active) {
 		$headers = "From: no-reply@plannplay.web.engr.illinois.com\r\n";
@@ -162,9 +166,9 @@ class SiteHelper {
 	}
 
 	/**
-	 * send email template for reset password
-	 * @param string $email
-	 * @param string $code
+	 * Send an email for reset password.
+	 * @param string $email Email address.
+	 * @param string $code Temporary passcode.
 	 */
 	public function sendForgotMail($email, $code) {
 		$headers = "From: no-reply@plannplay.web.engr.illinois.com\r\n";
@@ -186,14 +190,16 @@ class SiteHelper {
 	}
 
 	/**
-	 * default latitude user location
+	 * Get the default latitude for user location 
+	 * @return double Default latitude value.
 	 */
 	public function getDefaultLat() {
 		return 40.11374573;
 	}
 
 	/**
-	 * default longitude user location
+	 * Get the default longitude for user location
+	 * @return double Default longitude value.
 	 */
 	public function getDefaultLon() {
 		return -88.224828;

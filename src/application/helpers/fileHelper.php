@@ -1,25 +1,21 @@
 <?php
 
+/**
+ * This class provides utility functions for files.
+ */
 class FileHelper {
 
-	/* This function will OVERWRITE the file if the same file name exists in the $directory.
-	 * 
-	 * $directory: which sub-directory the file should be uploaded to inside the uploads folder.
-	 * $replaceFileName: file name will be replaced with this string. To keep original file name, use empty string.
-	 * $maxSize: maximum file size limit in bytes. If there is no limit, use 0.
-	 * $acceptedExtensions: comma separated list of accepted extensions (without the dot).
-	 * $errorMessageSubject: to be appended into the error message "Unable to upload <subject>" if upload is unsuccessful.
-	 */
-
 	/**
-	 * Upload file from local into specific directory in server
-	 * @param string $fieldName
-	 * @param string $directory
-	 * @param string $acceptedExtensions
-	 * @param string $errorMessageSubject
-	 * @param integer $maxSize
-	 * @param string $replaceFileName
-	 * @param integer $index
+	 * Upload a file into a specific directory in the server.
+	 * This function will overwrite the file if the same file name already exists in the upload directory.
+	 * @param string $fieldName Name for the HTML file upload tag.
+	 * @param string $directory Directory name inside the upload folder where the file should be uploaded to.
+	 * @param string $acceptedExtensions Comma separated list of accepted extensions (without the dot).
+	 * @param string $errorMessageSubject Words to be appended into the error message "Unable to upload <...>" if the upload is unsuccessful.
+	 * @param integer $maxSize Maximum file size limit in bytes. Use 0 if there is no limit.
+	 * @param string $replaceFileName New file name to replace the original file name. Use empty string to keep the original file name.
+	 * @param integer $index File upload index for multiple file upload. Use 0 for single file upload.
+	 * @return object An object which contains the uploaded file name, error message, and success flag.
 	 */
 	public function uploadFile($fieldName, $directory, $acceptedExtensions, $errorMessageSubject, $maxSize = 0, $replaceFileName = "", $index = 0) {
 		$fileName = "";
@@ -74,9 +70,9 @@ class FileHelper {
 	}
 
 	/**
-	 * Delete uploaded file in specific directory
-	 * @param string $directory
-	 * @param string $fileName
+	 * Delete a previously uploaded file from the server
+	 * @param string $directory Directory name inside the upload folder where the file was uploaded to.
+	 * @param string $fileName File name.
 	 */
 	public function deleteUploadedFile($directory, $fileName) {
 		$uploadDirectory = UPLOAD_ROOT . $directory . DIRECTORY_SEPARATOR;
@@ -87,19 +83,21 @@ class FileHelper {
 	}
 
 	/**
-	 * Get url path for uploaded file
-	 * @param string $directory
-	 * @param string $fileName
+	 * Get URL for an uploaded file.
+	 * @param string $directory Directory name inside the upload folder where the file was uploaded to.
+	 * @param string $fileName File name.
+	 * @return string Uploaded file URL.
 	 */
 	public function getUploadedFileURL($directory, $fileName) {
 		return UPLOAD_URL . $directory . "/" . $fileName;
 	}
 
 	/**
-	 * Copy uploaded file into specific directory
-	 * @param string $directory
-	 * @param string $fileName
-	 * @param string $replaceFileName
+	 * Copy a previously uploaded file.
+	 * @param string $directory Directory name inside the upload folder where the file was uploaded to.
+	 * @param string $fileName File name.
+	 * @param string $replaceFileName New file name to replace the original file name. Use empty string to follow the original file name.
+	 * @return string New file name.
 	 */
 	public function copyUploadedFile($directory, $originalFileName, $replaceFileName = "") {
 		$uploadDirectory = UPLOAD_ROOT . $directory . DIRECTORY_SEPARATOR;
@@ -110,6 +108,7 @@ class FileHelper {
 		if ($newFileName == "") {
 			$newFileName = $GLOBALS["beans"]->stringHelper->left($originalFileName, strlen($originalFileName) - $extensionIndex - 1);
 
+			// Find a number to ensure unique file name
 			$appendNumber = $GLOBALS["beans"]->stringHelper->right($newFileName, 1);
 			if (strlen($newFileName) > 1 && is_numeric($appendNumber)) {
 				$newFileName = $GLOBALS["beans"]->stringHelper->left($originalFileName, strlen($originalFileName) - 1);
@@ -117,6 +116,8 @@ class FileHelper {
 			else {
 				$appendNumber = 0;
 			}
+
+			// Loop until the append number makes a unique file name
 			while (file_exists($uploadDirectory . $newFileName . "." . $extension)) {
 				$appendNumber = $appendNumber + 1;
 				$newFileName = $newFileName . $appendNumber;
