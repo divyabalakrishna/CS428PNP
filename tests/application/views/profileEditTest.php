@@ -15,6 +15,7 @@ class ProfileEditTest extends ViewTestCase {
 
 		$searchLink = $this->byId('profileLink');
 		$searchLink->click();
+		usleep(500000);
 
 		$newPasswordField = $this->byId('newPassword');
 		$newPasswordField->clear();
