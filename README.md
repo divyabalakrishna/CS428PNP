@@ -4,7 +4,9 @@
 Software Engineering II (CS428) Spring 2016 Final Project*  
 
 ### Project Description
-Getting the capacity to rapidly organize and plan a fun activity with friends is difficult because of busy college schedules. Today, students use social media to ask their friends to join a group activity, but this is not efficient especially if they need more than 2-3 people, e.g., soccer or basketball where students might need multiple layer messages to find and form a group to play with. The solution is to create an application which addresses the problem by enabling users to create events, join events, and discover new friends who have similar interests. Users can use the application to look for an activity in their area which they are interested in participating without worrying about the burden of scheduling an event and/or searching for others to participate.  
+Getting the capacity to rapidly organize and plan a sport activity with friends is difficult because of busy college schedules. Today, students use social media to ask their friends to join an activity, but this is not efficient especially if they need a big group where multiple layer messages are necessary to find and form a group to play with.  
+  
+PLAN & PLAN is a web application which addresses the problem by enabling its users to organize sports-related events without the burden of searching for others to participate. Users can search for activities in their area which they are interested in, join the events, and discover new friends with similar interests.  
   
 Production site: [http://plannplay.web.engr.illinois.edu] (http://plannplay.web.engr.illinois.edu)
 
