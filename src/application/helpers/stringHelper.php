@@ -3,10 +3,10 @@
 class StringHelper {
 
 	/**
-	 * get n-character substring from left  
+	 * get n-character substring from left
 	 * @param string $string
 	 * @param string $length
-	 */                                
+	 */
 	public function left($string, $length) {
 		$result = trim($string);
 		if (strlen($result) > $length) {
@@ -17,10 +17,10 @@ class StringHelper {
 	}
 
 	/**
-	 * get n-character substring from right  
+	 * get n-character substring from right
 	 * @param string $string
 	 * @param string $length
-	 */                                
+	 */
 	public function right($string, $length) {
 		$result = trim($string);
 		if (strlen($result) > $length) {
@@ -33,7 +33,7 @@ class StringHelper {
 	/**
 	 * generate random string for activation code and passcode for reset password
 	 * @param integer $length
-	 */                                    
+	 */
 	public function genString($length = 16) {
 		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$charactersLength = strlen($characters);
@@ -44,23 +44,23 @@ class StringHelper {
 		}
 
 		return $randomString;
-	}    
+	}
 
 	/**
-	 * Format birthday into age  
+	 * Format birthday into age
 	 * @param date $birthday
-	 */                                    
+	 */
 	public function convertAge($birthday) {
-    
-        //explode the date to get month, day and year
-        $birthDate = explode("/", $birthday);
-        //get age from date or birthdate
-        $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
-        ? ((date("Y") - $birthDate[2]) - 1)
-        : (date("Y") - $birthDate[2]));
-        
-        return $age;
-    }
-    
+	
+		//explode the date to get month, day and year
+		$birthDate = explode("/", $birthday);
+		//get age from date or birthdate
+		$age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+		? ((date("Y") - $birthDate[2]) - 1)
+		: (date("Y") - $birthDate[2]));
+		
+		return $age;
+	}
+	
 
 }

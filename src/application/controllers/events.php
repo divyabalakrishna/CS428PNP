@@ -2,9 +2,9 @@
 
 class Events {
 	/**
-	 * Get a list of all the events hosted by the user  
-	 * @param string $_POST["timeType"]     
-	 */ 
+	 * Get a list of all the events hosted by the user
+	 * @param string $_POST["timeType"]
+	 */
 	public function listHosted() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
@@ -22,9 +22,9 @@ class Events {
 	}
 
 	/**
-	 * Get a list of all the events joined by the user  
-	 * @param string $_POST["timeType"]     
-	 */ 
+	 * Get a list of all the events joined by the user
+	 * @param string $_POST["timeType"]
+	 */
 	public function listJoined() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 
@@ -42,11 +42,11 @@ class Events {
 	}
 
 	/**
-	 * Get a list of all the events in the future  
-	 * @param string $_POST["gmap-lat2"] 
-	 * @param string $_POST["gmap-lon2"] 	
-	 * @param string $_POST["tag"] 	 
-	 * @param string $_POST["old"] 	
+	 * Get a list of all the events in the future
+	 * @param string $_POST["gmap-lat2"]
+	 * @param string $_POST["gmap-lon2"]
+	 * @param string $_POST["tag"]
+	 * @param string $_POST["old"]
 	 */ 
 	public function listSearch() {
 		$latitude = $GLOBALS["beans"]->siteHelper->getDefaultLat();
@@ -61,24 +61,24 @@ class Events {
 
 		if (isset($_POST["gmap-lat2"]) && is_numeric($_POST["gmap-lat2"])) {
 			$latitude = $_POST["gmap-lat2"];
-            $_SESSION['latitude_s'] = $latitude;
+			$_SESSION['latitude_s'] = $latitude;
 		}
 
 		if (isset($_POST["gmap-lon2"]) && is_numeric($_POST["gmap-lon2"])) {
 			$longitude = $_POST["gmap-lon2"];
-            $_SESSION['longitude_s'] = $longitude;            
+			$_SESSION['longitude_s'] = $longitude;
 		}
-        
+
 		$tag = false;
 		$old = false;
-        
+
 		if (isset($_POST["tag"])) {
 			$tag = true;
-            $_SESSION['tag_s'] = $tag;                        
+			$_SESSION['tag_s'] = $tag;
 		}
 		if (isset($_POST["old"])) {
 			$old = true;
-            $_SESSION['old_s'] = $old;                                    
+			$_SESSION['old_s'] = $old;
 		}
 
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -95,8 +95,8 @@ class Events {
 	}
 
 	/**
-	 * Generate event marker for event search Google Map    
-	 */     
+	 * Generate event marker for event search Google Map
+	 */
 	public function genXML() {
 		$latitude = $GLOBALS["beans"]->siteHelper->getDefaultLat();
 		$longitude = $GLOBALS["beans"]->siteHelper->getDefaultLon();
@@ -110,25 +110,25 @@ class Events {
 
 		if (isset($_SESSION["latitude_s"]) && is_numeric($_SESSION['latitude_s'])) {
 			$latitude = $_SESSION["latitude_s"];
-            $_SESSION["latitude_s"] = "";
+			$_SESSION["latitude_s"] = "";
 		}
 		if (isset($_SESSION["longitude_s"]) && is_numeric($_SESSION['longitude_s'])) {
 			$longitude = $_SESSION["longitude_s"];
-            $_SESSION["longitude_s"] = "";
+			$_SESSION["longitude_s"] = "";
 		}
 
-        $tag = false;
+		$tag = false;
 		$old = false;
-        
+
 		if (isset($_SESSION["tag_s"])) {
 			$tag = $_SESSION["tag_s"];
-            $_SESSION["tag_s"] = "";
+			$_SESSION["tag_s"] = "";
 		}
 		if (isset($_SESSION["old_s"])) {
 			$old = $_SESSION["old_s"];
-            $_SESSION["old_s"] = "";
+			$_SESSION["old_s"] = "";
 		}
-        
+
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$user = $GLOBALS["beans"]->userModel->getProfile($userID);
 
@@ -136,14 +136,14 @@ class Events {
 			$user->Radius = 2;
 		}
 		$events = $GLOBALS["beans"]->eventModel->getSearchEvents($userID, $user->Radius, $latitude, $longitude, $tag, $old);
-        
+
 		require APP . 'views/events/xml.php';
 	}
 
 	/**
-	 * Get all the details for an event    
+	 * Get all the details for an event
 	 * @param string $eventID
-	 */ 
+	 */
 	public function view($eventID) {
 		//make sure the eventID is valid
 		if (!is_numeric($eventID)) {
@@ -164,9 +164,9 @@ class Events {
 	}
 
 	/**
-	 * Redirect to the recreate event page   
+	 * Redirect to the recreate event page
 	 * @param string $eventID
-	 */ 	
+	 */
 	public function recreate($eventID) {
 		require APP . 'views/_templates/header.php';
 		require APP . 'views/events/recreate.php';
@@ -174,10 +174,10 @@ class Events {
 	}
 
 	/**
-	 * Recreate an existing past event  
-	 * @param string $_POST["eventID"]    
-	 * @param string $_POST["date"] 
-	 * @param string $_POST["time"] 	 
+	 * Recreate an existing past event
+	 * @param string $_POST["eventID"]
+	 * @param string $_POST["date"]
+	 * @param string $_POST["time"]
 	 */
 	public function recreateSave() {
 		//get all the parameters
@@ -205,7 +205,7 @@ class Events {
 	}
 
 	/**
-	 * Redirect to the edit page of an event  	 
+	 * Redirect to the edit page of an event
 	 */	
 	public function edit($eventID = "") {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -218,8 +218,8 @@ class Events {
 	}
 
 	/**
-	 * Save the edited event detail  
-	 * @param string $_POST["eventID"]    
+	 * Save the edited event detail
+	 * @param string $_POST["eventID"]
 	 * @param string $_POST["name"]
 	 * @param string $_POST["description"]
 	 * @param string $_POST["date"]
@@ -228,7 +228,7 @@ class Events {
 	 * @param string $_POST["capacity"]
 	 * @param string $_POST["tagID"]
 	 * @param string $_POST["gmap-lat"]
-	 * @param string $_POST["gmap-lon"]	 
+	 * @param string $_POST["gmap-lon"]
 	 */
 	public function save() {
 		//get all the parameters
@@ -242,7 +242,7 @@ class Events {
 		if (is_numeric($eventID)) {
 			$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
 			
-			//If the event already exist, modify it 
+			//If the event already exist, modify it
 			if ($userID == $event->HostID) {
 				$GLOBALS["beans"]->eventModel->updateEvent(
 						$eventID,
@@ -312,10 +312,10 @@ class Events {
 	}
 	
 	/**
-	 * Get the media needs to be uploaded  
-	 * @param string $_POST["eventID"]    
-	 * @param string $_POST['image'] 
-	 * @param string $_POST['name'] 	 
+	 * Get the media needs to be uploaded
+	 * @param string $_POST["eventID"]
+	 * @param string $_POST['image']
+	 * @param string $_POST['name']
 	 */	
 	public function upload() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
@@ -347,7 +347,7 @@ class Events {
 	}
 
 	/**
-	 * Delete an event  	
+	 * Delete an event
 	 * @param string $eventID
 	 */
 	public function delete($eventID) {
@@ -366,11 +366,11 @@ class Events {
 	}
 
 	/**
-	 * Comment on an event  
-	 * @param string $_POST["eventID"]    
-	 * @param string $_POST["parentID"] 
-	 * @param string $_POST["text"] 	 
-	 */	
+	 * Comment on an event
+	 * @param string $_POST["eventID"]
+	 * @param string $_POST["parentID"]
+	 * @param string $_POST["text"]
+	 */
 	public function reply() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$eventID = $_POST["eventID"];
@@ -386,7 +386,7 @@ class Events {
 	}
 
 	/**
-	 * Join an event 
+	 * Join an event
 	 * @param string $eventID
 	 */
 	public function join($eventID) {
@@ -402,9 +402,9 @@ class Events {
 	}
 
 	/**
-	 * Leave an event  
+	 * Leave an event
 	 * @param string $eventID
-	 */	
+	 */
 	public function leave($eventID) {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);
@@ -419,10 +419,10 @@ class Events {
 	}
 
 	/**
-	 * Delete a comment from an event  
+	 * Delete a comment from an event
 	 * @param string $eventID
 	 * @param string $commentID
-	 */	
+	 */
 	public function deleteComment($eventID, $commentID) {
 		// We do not want to accidentally delete all comments in case commentID is blank, so change to a dummy number
 		if (!is_numeric($commentID)) {
@@ -441,10 +441,10 @@ class Events {
 	}
 
 	/**
-	 * Delete a media from an event  
+	 * Delete a media from an event
 	 * @param string $eventID
 	 * @param string $mediaID
-	 */	
+	 */
 	public function deleteMedia($eventID, $mediaID) {
 		// We do not want to accidentally delete all Medias in case mediaID is blank, so change to a dummy number
 		if (!is_numeric($mediaID)) {
@@ -463,9 +463,9 @@ class Events {
 	}
 
 	/**
-	 * Add a notification to the user  
+	 * Add a notification to the user
 	 * @param string $eventID
-	 */	
+	 */
 	public function addUploadNotif($eventID) {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");
 		$event = $GLOBALS["beans"]->eventModel->getEvent($eventID);

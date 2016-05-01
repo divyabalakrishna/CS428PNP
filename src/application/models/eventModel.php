@@ -2,8 +2,8 @@
 
 class EventModel extends Model {
 	/**
-	 * Insert the event details to the database  
-	 * @param string $hostID    
+	 * Insert the event details to the database
+	 * @param string $hostID
 	 * @param string $name
 	 * @param string $description
 	 * @param string $date
@@ -34,9 +34,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Update the event details to the database  
-	 * @param string $eventID 
-	 * @param string $hostID    
+	 * Update the event details to the database
+	 * @param string $eventID
+	 * @param string $hostID
 	 * @param string $name
 	 * @param string $description
 	 * @param string $date
@@ -77,8 +77,8 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Delete the event details from the database  
-	 * @param string $eventID    
+	 * Delete the event details from the database
+	 * @param string $eventID
 	 * @param string $hostID
 	 */
 	public function deleteEvent($eventID, $hostID) {
@@ -96,8 +96,8 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Copy the event details in the database  
-	 * @param string $eventID    
+	 * Copy the event details in the database
+	 * @param string $eventID
 	 * @param string $date
 	 * @param string $time
 	 */
@@ -116,8 +116,8 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Copy the Participant in the database  
-	 * @param string $eventID    
+	 * Copy the Participant in the database
+	 * @param string $eventID
 	 * @param string $newEventID
 	 */
 	public function copyParticipant($eventID, $newEventID) {
@@ -140,8 +140,8 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get the event details from the database  
-	 * @param string $eventID    
+	 * Get the event details from the database
+	 * @param string $eventID
 	 * @param string $hostID
 	 */
 	public function getEvent($eventID, $hostID = "") {
@@ -171,8 +171,8 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get hosted events details from the database  
-	 * @param string $hostID    
+	 * Get hosted events details from the database
+	 * @param string $hostID
 	 * @param string $timeType
 	 * @param string $limit
 	 */
@@ -213,8 +213,8 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get joined events details from the database  
-	 * @param string $hostID    
+	 * Get joined events details from the database
+	 * @param string $hostID
 	 * @param string $timeType
 	 * @param string $limit
 	 */
@@ -251,8 +251,8 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get past events details from the database  
-	 */	
+	 * Get past events details from the database
+	 */
 	public function getPastEvents() {
 		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
@@ -267,9 +267,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get future events details from the database  
-	 * @param string $userID    
-	 */	
+	 * Get future events details from the database
+	 * @param string $userID
+	 */
 	public function getFeed($userID) {
 		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y') AS FormattedDate,
@@ -293,11 +293,11 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Update the event image to the database  
-	 * @param string $eventID    
-	 * @param string $hostID   
-	 * @param string $image   
-	 */	
+	 * Update the event image to the database
+	 * @param string $eventID
+	 * @param string $hostID
+	 * @param string $image
+	 */
 	public function updateEventImage($eventID, $hostID, $image) {
 		$sql = "UPDATE Event
 				SET Image = :image
@@ -314,11 +314,11 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Insert the media to the database  
-	 * @param string $eventID    
-	 * @param string $userID   
-	 * @param string $image   
-	 */	
+	 * Insert the media to the database
+	 * @param string $eventID
+	 * @param string $userID
+	 * @param string $image
+	 */
 	public function insertMedia($eventID, $userID, $image) {
 		$sql = "INSERT INTO Media (EventID, UserID, Image)
 				VALUES (:eventID, :userID, :image)";
@@ -333,14 +333,14 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get search events details from the database  
-	 * @param string $userID    
-	 * @param string $radius   
-	 * @param string $latitude   
-	 * @param string $longitude 
-	 * @param string $tag 
-	 * @param string $old 
-	 */	
+	 * Get search events details from the database
+	 * @param string $userID
+	 * @param string $radius
+	 * @param string $latitude
+	 * @param string $longitude
+	 * @param string $tag
+	 * @param string $old
+	 */
 	public function getSearchEvents($userID, $radius, $latitude, $longitude, $tag, $old) {
 		$sql = "SELECT Event.*,
 					DATE_FORMAT(Event.Time, '%m/%d/%Y %h:%i %p') AS FormattedDateTime, 
@@ -379,9 +379,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Delete the participants from the database  
-	 * @param string $eventID    
-	 * @param string $userID   
+	 * Delete the participants from the database
+	 * @param string $eventID
+	 * @param string $userID
 	 */
 	public function deleteParticipants($eventID, $userID = "") {
 		$sql = "DELETE
@@ -403,9 +403,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Insert the participants to the database  
-	 * @param string $eventID    
-	 * @param string $userID   
+	 * Insert the participants to the database
+	 * @param string $eventID
+	 * @param string $userID
 	 */
 	public function insertParticipant($eventID, $userID) {
 		$sql = "INSERT INTO Participant (EventID, UserID)
@@ -420,9 +420,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get all comments for an event from the database  
-	 * @param string $eventID    
-	 * @param string $commentID   
+	 * Get all comments for an event from the database
+	 * @param string $eventID
+	 * @param string $commentID
 	 */
 	public function getComments($eventID, $commentID = "") {
 		$sql = "SELECT Comment.*,
@@ -452,11 +452,11 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Insert a comment for an event to the database  
-	 * @param string $eventID    
-	 * @param string $userID   
-	 * @param string $parentID    
-	 * @param string $text   
+	 * Insert a comment for an event to the database
+	 * @param string $eventID
+	 * @param string $userID
+	 * @param string $parentID
+	 * @param string $text
 	 */
 	public function insertComment($eventID, $userID, $parentID, $text) {
 		$sql = "INSERT INTO Comment (EventID, UserID, ParentID, Text)
@@ -488,9 +488,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get all participants for an event from the database  
-	 * @param string $eventID    
-	 * @param string $userID     
+	 * Get all participants for an event from the database
+	 * @param string $eventID
+	 * @param string $userID
 	 */
 	public function getParticipants($eventID, $userID = "") {
 		$sql = "SELECT Participant.*,
@@ -518,10 +518,10 @@ class EventModel extends Model {
 	}
 	
 	/**
-	 * Get all getMedias for an event from the database  
-	 * @param string $eventID    
-	 * @param string $mediaID     
-	 */	
+	 * Get all getMedias for an event from the database
+	 * @param string $eventID
+	 * @param string $mediaID
+	 */
 	public function getMedia($eventID, $mediaID = "") {
 		$sql = "SELECT *
 				FROM Media
@@ -544,10 +544,10 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Delete comments for an event from the database  
-	 * @param string $eventID    
-	 * @param string $commentID     
-	 */	
+	 * Delete comments for an event from the database
+	 * @param string $eventID
+	 * @param string $commentID
+	 */
 	public function deleteComments($eventID, $commentID = "") {
 		$sql = "DELETE
 				FROM Comment
@@ -569,10 +569,10 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Delete media for an event from the database  
-	 * @param string $eventID    
-	 * @param string $mediaID     
-	 */	
+	 * Delete media for an event from the database
+	 * @param string $eventID
+	 * @param string $mediaID
+	 */
 	public function deleteMedia($eventID, $mediaID = "") {
 		$sql = "DELETE
 				FROM Media
@@ -593,9 +593,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Count the hosted events from the database  
-	 * @param string $hostID      
-	 */	
+	 * Count the hosted events from the database
+	 * @param string $hostID
+	 */
 	public function countHostedEvents($hostID) {
 		$sql = "SELECT COUNT(*) as cnt
 				FROM Event
@@ -607,9 +607,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Count the joined events from the database  
-	 * @param string $userID      
-	 */	
+	 * Count the joined events from the database
+	 * @param string $userID
+	 */
 	public function countJoinedEvents($userID) {
 		$sql = "SELECT COUNT(*) as cnt
 				FROM Event
@@ -620,6 +620,5 @@ class EventModel extends Model {
 
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 	}
-    
-    
+
 }

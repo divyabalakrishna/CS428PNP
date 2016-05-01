@@ -3,10 +3,10 @@
 class QueryHelper {
 
 	/**
-	 * Insert a single row to the database  
-	 * @param string $db      
-	 * @param string $sql      
-	 * @param string $parameters      
+	 * Insert a single row to the database
+	 * @param string $db
+	 * @param string $sql
+	 * @param string $parameters
 	 */	
 	public function getSingleRowObject($db, $sql, $parameters) {
 		$query = $db->prepare($sql);
@@ -25,10 +25,10 @@ class QueryHelper {
 	}
 
 	/**
-	 * Execute a write query to the database  
-	 * @param string $db      
-	 * @param string $sql      
-	 * @param string $parameters      
+	 * Execute a write query to the database
+	 * @param string $db
+	 * @param string $sql
+	 * @param string $parameters
 	 */	
 	public function executeWriteQuery($db, $sql, $parameters) {
 		foreach ($parameters as $parameterKey => $parameterValue) {
@@ -46,10 +46,10 @@ class QueryHelper {
 	}
 
 	/**
-	 * Get all rows from the database  
-	 * @param string $db      
-	 * @param string $sql      
-	 * @param string $parameters      
+	 * Get all rows from the database
+	 * @param string $db
+	 * @param string $sql
+	 * @param string $parameters
 	 */	
 	public function getAllRows($db, $sql, $parameters = "") {
 		$query = $db->prepare($sql);

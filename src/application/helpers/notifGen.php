@@ -1,10 +1,10 @@
 <?php
 	/**
-	 ** Generate notification using crontab, separated from tiny framework because need to be called directly from crontab
-	 ** put this line into crontab: crontab -e
-     ** * * * * * /usr/local/bin/php /home/plannplay/public_html/application/helpers/notifGen.php >> /home/plannplay/public_html/notif_log
-     ** create notif_log file in the appropriate directory
-	 */                                    
+	 * Generate notification using crontab, separated from tiny framework because need to be called directly from crontab
+	 * put this line into crontab: crontab -e
+	 * * * * * * /usr/local/bin/php /home/plannplay/public_html/application/helpers/notifGen.php >> /home/plannplay/public_html/notif_log
+	 * create notif_log file in the appropriate directory
+	 */
 
 
 	// DIRECTORY_SEPARATOR adds a slash to the end of the path
@@ -21,10 +21,10 @@
 	$db = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS, $options);
 
 	/**
-	 * Get all rows from the database  
-	 * @param string $db      
-	 * @param string $sql      
-	 * @param string $parameters      
+	 * Get all rows from the database
+	 * @param string $db
+	 * @param string $sql
+	 * @param string $parameters
 	 */	
 	function getAllRows($db, $sql, $parameters = "") {
 		$query = $db->prepare($sql);
@@ -38,10 +38,10 @@
 	}
 
 	/**
-	 * Execute a write query to the database  
-	 * @param string $db      
-	 * @param string $sql      
-	 * @param string $parameters      
+	 * Execute a write query to the database
+	 * @param string $db
+	 * @param string $sql
+	 * @param string $parameters
 	 */		
 	function executeWriteQuery($db, $sql, $parameters) {
 		foreach ($parameters as $parameterKey => $parameterValue) {
@@ -55,8 +55,8 @@
 	}
 
 	/**
-	 * Get all user from the database  
-	 * @param string $db    
+	 * Get all user from the database
+	 * @param string $db
 	 */
 	function getAllUser($db) {
 		$sql = "SELECT UserID
@@ -66,9 +66,9 @@
 	}
 
 	/**
-	 * Get joined events details from the database  
-	 * @param string $db    
-	 * @param integer $userID    
+	 * Get joined events details from the database
+	 * @param string $db
+	 * @param integer $userID
 	 * @param integer $hour
 	 * @param string $check
 	 */
@@ -92,14 +92,14 @@
 	}
 
 	/**
-	 * insert notification into database 
+	 * insert notification into database
 	 * @param string $db
 	 * @param integer $userID
 	 * @param integer $eventID
 	 * @param string $msg
 	 * @param string $urlLink
 	 * @param string $imgLink
-	 */                                    
+	 */
 	function insertNotif($db, $userID, $eventID, $msg, $urlLink, $imgLink) {
 		$sql = "INSERT INTO Notification (UserID, EventID, Message, Time, UrlLink, ImgLink)
 				VALUES (:userID, :eventID, :msg, now(), :urlLink, :imgLink)";
@@ -118,7 +118,7 @@
 	 * @param string $db
 	 * @param integer $hour
 	 * @param string $check
-	 */                                    
+	 */
 	function genNotifications($db, $hour, $check = "") {
 		$users = getAllUser($db);
 		foreach ($users as $user) { 

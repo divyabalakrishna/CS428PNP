@@ -187,7 +187,7 @@
 					<div class="clearfix"></div>
 					<script>
 						var lat = <?php echo $latitude?>, lon = <?php echo $longitude?>;
-                        
+
 						function getLocation() {
 							if (navigator.geolocation) {
 								navigator.geolocation.getCurrentPosition(getPosition,errorFunction);
@@ -209,11 +209,11 @@
 							$('#gmap-error').removeClass("hidden");
 						}
 
-                        if (lat == "" || lon == "") {
-                            lat = 40.11374573;
-                            lon = -88.224828;
-                            getLocation();
-                        }
+						if (lat == "" || lon == "") {
+							lat = 40.11374573;
+							lon = -88.224828;
+							getLocation();
+						}
 
 						$('#gmap-dialog').on('shown.bs.modal', function() {
 							$('#gmap').locationpicker({

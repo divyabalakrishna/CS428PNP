@@ -2,7 +2,7 @@
 
 class Notifs {
 
-    /**
+	/**
 	 * notification main page
 	 */
 	public function index() {
@@ -13,9 +13,9 @@ class Notifs {
 		require APP . 'views/notifs/index.php';
 		require APP . 'views/_templates/footer.php';
 	}
-    
+
 	/**
-	 * generate notification based on time (1hour/24hour) before it start 
+	 * generate notification based on time (1hour/24hour) before it start
 	 * @param integer $hour
 	 * @param string $check
 	 */
@@ -50,7 +50,7 @@ class Notifs {
 	/**
 	 * update notification read flag
 	 * @param integer $notifID
-	 */    
+	 */
 	public function updateFlag($notifID) {
 		$GLOBALS["beans"]->notifModel->updateFlag($notifID);
 	}

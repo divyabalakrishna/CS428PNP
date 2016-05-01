@@ -10,7 +10,7 @@
  */
 class Home {
 	/**
-	 * Display the home page  
+	 * Display the home page
 	 */	
 	public function index() {
 		$userID = $GLOBALS["beans"]->siteHelper->getSession("userID");

@@ -85,13 +85,13 @@ else if ($event->Capacity > count($participants)) {
 						<div class="profile">
 							<a href="<?php echo URL_WITH_INDEX_FILE . "user/viewParticipantProfile/" . $person->UserID; ?>">
 								<?php if ($person->Picture == "") { ?>
-                                    <div class="image-frame-profile"> 
-                                        <div class="image-thumb-med" style="background-image: url('<?php echo URL; ?>public/img/profile.png');"></div>
-                                    </div>
+									<div class="image-frame-profile"> 
+										<div class="image-thumb-med" style="background-image: url('<?php echo URL; ?>public/img/profile.png');"></div>
+									</div>
 								<?php } else { ?>
-                                    <div class="image-frame-profile"> 
-                                        <div class="image-thumb-med" style="background-image: url('<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture)?>');"></div>
-                                    </div>
+									<div class="image-frame-profile"> 
+										<div class="image-thumb-med" style="background-image: url('<?php echo $GLOBALS["beans"]->fileHelper->getUploadedFileURL('profile', $person->Picture)?>');"></div>
+									</div>
 								<?php } ?>
 								<div class="name"><?php echo $person->FirstName ?></div>
 							</a>
@@ -141,12 +141,11 @@ else if ($event->Capacity > count($participants)) {
 							if (count($media) >= 6) {
 								$act = "";
 							}
-                            $cnt++;
+							$cnt++;
 						} 
-                        if($cnt == 0)
-                            echo "<div class='text-center'>no media uploaded</div>";
-                        
-                        ?>
+						if($cnt == 0) {
+							echo "<div class='text-center'>no media uploaded</div>";
+						} ?>
 					</div>
 					<?php if (count($media) >= 6) { ?>
 						<a class="left carousel-control" href="#carousel123" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
