@@ -220,7 +220,7 @@
 
 		<?php echo $GLOBALS["beans"]->siteHelper->getPopUp(); ?>
 
-		// validation
+		// SignIn Form validation
 		$("#signinForm").validate({
 			rules: {
 				email: {
@@ -239,6 +239,7 @@
 			}
 		});
 
+		// SignUp Form validation        
 		$("#signupForm").validate({
 			rules: {
 				email: {
@@ -282,6 +283,7 @@
 			}
 		});
 
+		// Reset Password Form validation        
 		$("#forgotForm").validate({
 			rules: {
 				email: {
@@ -307,6 +309,7 @@
 			}
 		});
 
+		// Reset Password link event handler        
 		$('#forgot').on('click', function(event) {
 			event.preventDefault(); // To prevent following the link (optional)
 
