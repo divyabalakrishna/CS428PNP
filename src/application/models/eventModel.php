@@ -265,7 +265,8 @@ class EventModel extends Model {
 					Tag.Name AS TagName
 				FROM Event
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
-				WHERE Event.Time <= NOW()";
+				WHERE Event.Time <= NOW()
+				ORDER BY Event.Time DESC";
 	
 		return $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql);
 	}
@@ -290,7 +291,8 @@ class EventModel extends Model {
 							AND Participant.UserID = :userID
 					) 
 					AND Event.HostID <> :userID
-					AND Event.Time > NOW()";
+					AND Event.Time > NOW()
+				ORDER BY Event.Time";
 		
 		$parameters = array(":userID" => $userID);
 	
