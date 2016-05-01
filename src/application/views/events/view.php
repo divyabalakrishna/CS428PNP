@@ -138,10 +138,15 @@ else if ($event->Capacity > count($participants)) {
 									</div>
 								<?php }
 							}
-							if ($cnt == "active" && count($media) >= 6) {
+							if (count($media) >= 6) {
 								$act = "";
 							}
-						} ?>
+                            $cnt++;
+						} 
+                        if($cnt == 0)
+                            echo "<div class='text-center'>no media uploaded</div>";
+                        
+                        ?>
 					</div>
 					<?php if (count($media) >= 6) { ?>
 						<a class="left carousel-control" href="#carousel123" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
