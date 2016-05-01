@@ -22,7 +22,7 @@
 
 	/**
 	 * Execute a read query and get all results.
-	 * @param object $db A PDO database connection.
+	 * @param PDO $db A PDO database connection.
 	 * @param string $sql SQL statement.
 	 * @param array $parameters Parameter values.
 	 * @return array Query result.
@@ -42,7 +42,7 @@
 
 	/**
 	 * Execute a write query.
-	 * @param object $db A PDO database connection.
+	 * @param PDO $db A PDO database connection.
 	 * @param string $sql SQL statement.
 	 * @param array $parameters Parameter values.
 	 * @return integer|void Record ID if the query is an insert query, no return value otherwise.
@@ -61,8 +61,8 @@
 	}
 
 	/**
-	 * Get all user IDs.
-	 * @param object $db A PDO database connection.
+	 * Retrieve all user IDs.
+	 * @param PDO $db A PDO database connection.
 	 * @return array Query result.
 	 */
 	function getAllUser($db) {
@@ -75,10 +75,10 @@
 	}
 
 	/**
-	 * Get events that are joined by a user.
-	 * @param object $db A PDO database connection.
+	 * Retrieve events that are joined by a user.
+	 * @param PDO $db A PDO database connection.
 	 * @param integer $userID User ID.
-	 * @param integer $hour Number of hour before events start.
+	 * @param integer $hour Number of hours before events start.
 	 * @param string $check
 	 * @return array Query result.
 	 */
@@ -107,7 +107,7 @@
 
 	/**
 	 * Insert a notification record.
-	 * @param object $db A PDO database connection.
+	 * @param PDO $db A PDO database connection.
 	 * @param integer $userID User ID.
 	 * @param integer $eventID Event ID.
 	 * @param string $msg Notification message.
@@ -132,8 +132,8 @@
 
 	/**
 	 * Generate notifications for all users.
-	 * @param object $db A PDO database connection.
-	 * @param integer $hour Number of hour before events start.
+	 * @param PDO $db A PDO database connection.
+	 * @param integer $hour Number of hours before events start.
 	 * @param string $check
 	 */
 	function genNotifications($db, $hour, $check = "") {

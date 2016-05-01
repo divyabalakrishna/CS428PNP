@@ -1,11 +1,15 @@
 <?php
 
+/**
+ * This class handles database interaction for notification module.
+ */
 class NotifModel extends Model {
 
 	/**
-	 * retrieve notification for given userID
-	 * @param integer $userID
-	 * @param integer $limit
+	 * Retrieve notification records for a given user ID.
+	 * @param integer $userID User ID.
+	 * @param integer $limit Maximum number of results.
+	 * @return array Query result.
 	 */
 	public function getNotifications($userID, $limit) {
 		$sql = "SELECT Notification.*,
@@ -25,10 +29,11 @@ class NotifModel extends Model {
 	}
 
 	/**
-	 * retrieve joined events for given userID
-	 * @param integer $userID
-	 * @param integer $hour
+	 * Retrieve events that are joined by a user.
+	 * @param integer $userID User ID.
+	 * @param integer $hour Number of hours before events start.
 	 * @param string $check
+	 * @return array Query result.
 	 */
 	public function getJoinedEvents($userID, $hour = "", $check = "") {
 		$sql = "SELECT Event.*,
@@ -54,12 +59,13 @@ class NotifModel extends Model {
 	}
 
 	/**
-	 * insert notification into database
-	 * @param integer $userID
-	 * @param integer $eventID
-	 * @param string $msg
-	 * @param string $urlLink
-	 * @param string $imgLink
+	 * Insert a notification record.
+	 * @param integer $userID User ID.
+	 * @param integer $eventID Event ID.
+	 * @param string $msg Notification message.
+	 * @param string $urlLink Click URL.
+	 * @param string $imgLink Notification image URL.
+	 * @return integer Notification ID.
 	 */
 	public function insertNotif($userID, $eventID, $msg, $urlLink, $imgLink) {
 		$sql = "INSERT INTO Notification (UserID, EventID, Message, Time, UrlLink, ImgLink)
@@ -77,8 +83,8 @@ class NotifModel extends Model {
 	}
 
 	/**
-	 * update notification read flag
-	 * @param integer $notifID
+	 * Update read flag for a given notification ID.
+	 * @param integer $notifID Notification ID.
 	 */
 	public function updateFlag($notifID) {
 		$sql = "UPDATE Notification

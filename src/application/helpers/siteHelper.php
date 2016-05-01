@@ -46,7 +46,7 @@ class SiteHelper {
 	}
 
 	/**
-	 * Get an HTML code for all alerts and clear them from the session variables.
+	 * Get an HTML code for all alerts and clear them from the session variable.
 	 * @param string $id Alert ID.
 	 * @return string HTML code.
 	 */
@@ -79,7 +79,7 @@ class SiteHelper {
 	}
 
 	/**
-	 * Get a Javascript code for pop-up and clear it from the session variables.
+	 * Get a Javascript code for pop-up and clear it from the session variable.
 	 * @return string Javascript code.
 	 */
 	public function getPopUp() {

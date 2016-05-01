@@ -7,7 +7,7 @@ class Model {
 
 	/**
 	 * Construct a new Model object.
-	 * @param object $db A PDO database connection.
+	 * @param PDO $db A PDO database connection.
 	 */
 	function __construct($db) {
 		$this->db = $db;

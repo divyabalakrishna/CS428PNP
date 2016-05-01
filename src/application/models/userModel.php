@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * This class handles database interaction for user module.
+ */
 class UserModel extends Model {
 
 	/**
-	 * retrieves login info for given email
-	 * @param string $email
+	 * Retrieve login information for a given email address.
+	 * @param string $email Email address.
+	 * @return stdClass Query result.
 	 */
 	public function getLoginInfo($email) {
 		$sql = "SELECT UserID, Email, Password, Active
@@ -17,10 +21,11 @@ class UserModel extends Model {
 	}
 
 	/**
-	 * insert user into database 
-	 * @param string $email
-	 * @param string $password
-	 * @param string $activation
+	 * Insert a user record.
+	 * @param string $email Email address.
+	 * @param string $password Password.
+	 * @param string $activation Activation code.
+	 * @return integer User ID.
 	 */
 	public function insertUser($email, $password, $activation) {
 		$sql = "INSERT INTO User (Email, Password, Active)
@@ -34,10 +39,11 @@ class UserModel extends Model {
 
 		return $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
-	
+
 	/**
-	 * Retrieves profile with user id
-	 * @param integer $userID
+	 * Retrieve user details for a given user ID.
+	 * @param integer $userID User ID.
+	 * @return stdClass Query result.
 	 */
 	public function getProfile($userID) {
 		$sql = "SELECT FirstName, LastName, Email, Phone, Picture, Radius, Reminder, NickName, 
@@ -52,8 +58,9 @@ class UserModel extends Model {
 	}
 
 	/**
-	 * Retrieves user tags using user id
-	 * @param integer $userID
+	 * Retrieve user tag records for a given user ID.
+	 * @param integer $userID User ID.
+	 * @return array Query result.
 	 */
 	public function getUserTags($userID) {
 		$sql = "SELECT UserTag.*,
@@ -68,23 +75,23 @@ class UserModel extends Model {
 	}
 
 	/**
-	 * updates the user using given values like user id, first name, last name, etc.
-	 * @param integer $userID
-	 * @param string $firstName
-	 * @param string $lastName
-	 * @param string $email
-	 * @param string $password
-	 * @param string $phone
-	 * @param string $nickName
-	 * @param string $gender
-	 * @param string $birthDate
+	 * Updates a user record.
+	 * @param integer $userID User ID.
+	 * @param string $firstName First name.
+	 * @param string $lastName Last name.
+	 * @param string $email Email address.
+	 * @param string $password password.
+	 * @param string $phone Phone number.
+	 * @param string $nickName Nick name.
+	 * @param string $gender Gender.
+	 * @param string $birthDate Birthdate.
 	 */
 	public function updateUser($userID, $firstName, $lastName, $email, $password, $phone, $nickName, $gender, $birthDate) {
 		$sql = "UPDATE User
 				SET FirstName = :firstName,
 					LastName = :lastName,
 					Email = :email,";
-		//make sure password is not blank
+
 		if ($password != "") {
 			$sql .= "Password = :password,";
 		}
@@ -106,7 +113,6 @@ class UserModel extends Model {
 				":birthDate" => $birthDate
 		);
 
-		//make sure password is not blank
 		if ($password != "") {
 			$parameters["password"] = password_hash($password, PASSWORD_DEFAULT);
 		}
@@ -115,8 +121,8 @@ class UserModel extends Model {
 	}
 
 	/**
-	 * Delete user tages using user id
-	 * @param integer $userID
+	 * Delete user tag records for a given user ID.
+	 * @param integer $userID User ID.
 	 */
 	public function deleteUserTags($userID) {
 		$sql = "DELETE
@@ -129,9 +135,9 @@ class UserModel extends Model {
 	}
 
 	/**
-	 * insert user's tag (interest) by giving user id and tag id
-	 * @param integer $userID
-	 * @param string $tagID
+	 * Insert a user tag record.
+	 * @param integer $userID User ID.
+	 * @param integer $tagID Tag ID.
 	 */
 	public function insertUserTag($userID, $tagID) {
 		$sql = "INSERT INTO UserTag (UserID, TagID)
@@ -146,9 +152,9 @@ class UserModel extends Model {
 	}
 
 	/**
-	 * update picture using user id and picture
-	 * @param integer $userID
-	 * @param string $picture
+	 * Update profile picture file name for a given user ID.
+	 * @param integer $userID User ID.
+	 * @param string $picture Profile picture file name.
 	 */
 	public function updatePicture($userID, $picture) {
 		$sql = "UPDATE User
@@ -164,7 +170,8 @@ class UserModel extends Model {
 	}
 
 	/**
-	 * Retrieves all user ids
+	 * Retrieve all user IDs.
+	 * @return array Query result.
 	 */
 	public function getAllUserIDs() {
 		$sql = "SELECT UserID
@@ -175,8 +182,9 @@ class UserModel extends Model {
 	}
 
 	/**
-	 * Checks if user id is active or not
-	 * @param integer $userID
+	 * Retrieve activation code for a given user ID.
+	 * @param integer $userID User ID.
+	 * @return stdClass Query result.
 	 */
 	public function isActive($userID) {
 		$sql = "SELECT Active
@@ -189,28 +197,28 @@ class UserModel extends Model {
 	}
 
 	/**
-	 * Set user id to become active
-	 * @param integer $userID
-	 * @param string $active
+	 * Update activation code for a given user ID.
+	 * @param integer $userID User ID.
+	 * @param string $active Activation code.
 	 */
 	public function setActive($userID, $active) {
 		$sql = "UPDATE User
 				SET Active = :active
 				WHERE UserID = :userID";
-	
+
 		$parameters = array(
 				":userID" => $userID,
 				":active" => $active
 		);
-	
+
 		$GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 	}
 
 	/**
-	 * sets password for user
-	 * @param integer $userID
-	 * @param string $password
-	 * @param string $encrypt
+	 * Update password for a given user ID.
+	 * @param integer $userID User ID.
+	 * @param string $password Password.
+	 * @param string $encrypt Use yes to enable encryption, otherwise encryption will be disabled.
 	 */
 	public function setPassword($userID, $password, $encrypt = 'yes') {
 		$sql = "UPDATE User
@@ -221,8 +229,8 @@ class UserModel extends Model {
 				":userID" => $userID
 		);
 
-		//if encryption is enabled
 		if ($encrypt == "yes") {
+			// Perform encryption
 			$parameters["password"] = password_hash($password, PASSWORD_DEFAULT);
 		}
 		else {

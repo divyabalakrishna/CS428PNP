@@ -1,18 +1,23 @@
 <?php
 
+/**
+ * This class handles database interaction for event module.
+ */
 class EventModel extends Model {
+
 	/**
-	 * Insert the event details to the database
-	 * @param string $hostID
-	 * @param string $name
-	 * @param string $description
-	 * @param string $date
-	 * @param string $time
-	 * @param string $address
-	 * @param string $capacity
-	 * @param string $tagID
-	 * @param string $latitude
-	 * @param string $longitude
+	 * Insert an event record.
+	 * @param integer $hostID Host user ID.
+	 * @param string $name Name.
+	 * @param string $description Description.
+	 * @param string $date Date.
+	 * @param string $time Time.
+	 * @param string $address Address.
+	 * @param integer $capacity Capacity.
+	 * @param integer $tagID Tag ID.
+	 * @param double $latitude Latitude.
+	 * @param double $longitude Longitude.
+	 * @return integer Event ID.
 	 */
 	public function insertEvent($hostID, $name, $description, $date, $time, $address, $capacity, $tagID, $latitude, $longitude) {
 		$sql = "INSERT INTO Event (HostID, Name, Description, Time, Address, Capacity, TagID, Lat, Lon)
@@ -34,18 +39,18 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Update the event details to the database
-	 * @param string $eventID
-	 * @param string $hostID
-	 * @param string $name
-	 * @param string $description
-	 * @param string $date
-	 * @param string $time
-	 * @param string $address
-	 * @param string $capacity
-	 * @param string $tagID
-	 * @param string $latitude
-	 * @param string $longitude
+	 * Update an event record.
+	 * @param integer $eventID Event ID.
+	 * @param integer $hostID Host user ID.
+	 * @param string $name Name.
+	 * @param string $description Description.
+	 * @param string $date Date.
+	 * @param string $time Time.
+	 * @param string $address Address.
+	 * @param integer $capacity Capacity.
+	 * @param integer $tagID Tag ID.
+	 * @param double $latitude Latitude.
+	 * @param double $longitude Longitude.
 	 */
 	public function updateEvent($eventID, $hostID, $name, $description, $date, $time, $address, $capacity, $tagID, $latitude, $longitude) {
 		$sql = "UPDATE Event
@@ -77,9 +82,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Delete the event details from the database
-	 * @param string $eventID
-	 * @param string $hostID
+	 * Delete an event record.
+	 * @param integer $eventID Event ID.
+	 * @param integer $hostID Host user ID.
 	 */
 	public function deleteEvent($eventID, $hostID) {
 		$sql = "DELETE
@@ -96,10 +101,11 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Copy the event details in the database
-	 * @param string $eventID
-	 * @param string $date
-	 * @param string $time
+	 * Insert an event record based on an existing event.
+	 * @param integer $eventID Original event ID.
+	 * @param string $date New event date.
+	 * @param string $time New event time.
+	 * @return integer New event ID.
 	 */
 	public function copyEvent($eventID, $date, $time) {
 		$sql = "INSERT INTO Event (HostID, Name, Description, Time, Address, Capacity, TagID, Lat, Lon)
@@ -116,9 +122,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Copy the Participant in the database
-	 * @param string $eventID
-	 * @param string $newEventID
+	 * Insert participant records based on an existing event.
+	 * @param integer $eventID Original event ID.
+	 * @param integer $newEventID New event ID.
 	 */
 	public function copyParticipant($eventID, $newEventID) {
 		$sql = "INSERT INTO Participant (EventID, UserID)
@@ -140,9 +146,10 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get the event details from the database
-	 * @param string $eventID
-	 * @param string $hostID
+	 * Retrieve event details for a given event ID.
+	 * @param integer $eventID Event ID.
+	 * @param integer $hostID Host user ID.
+	 * @return stdClass Query result.
 	 */
 	public function getEvent($eventID, $hostID = "") {
 		$sql = "SELECT Event.*,
@@ -155,14 +162,12 @@ class EventModel extends Model {
 				LEFT JOIN Tag ON Tag.TagID = Event.TagID
 				LEFT JOIN User ON Event.HostID = User.UserID
 				WHERE Event.EventID = :eventID";
-				
-		//make sure hostID is valid
+
 		if (is_numeric($hostID)) {
 			$sql .= " AND Event.HostID = :hostID";
 		}
 
 		$parameters = array(':eventID' => $eventID);
-		//make sure hostID is valid
 		if (is_numeric($hostID)) {
 			$parameters[":hostID"] = $hostID;
 		}
@@ -171,10 +176,11 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get hosted events details from the database
-	 * @param string $hostID
-	 * @param string $timeType
-	 * @param string $limit
+	 * Retrieve events that are created by a user.
+	 * @param integer $hostID Host user ID.
+	 * @param string $timeType Time type filter (future of past). Use empty string to disable this filter.
+	 * @param integer $limit Maximum number of results.
+	 * @return array Query result.
 	 */
 	public function getHostedEvents($hostID, $timeType = "", $limit = "") {
 		$sql = "SELECT Event.*,
@@ -192,7 +198,6 @@ class EventModel extends Model {
 				) ParticipantSummary ON ParticipantSummary.EventID = Event.EventID
 				WHERE Event.HostID = :hostID";
 
-		//change timetype
 		if (strcasecmp($timeType, "future") == 0) {
 			$sql .= " AND Event.Time > NOW()";
 		}
@@ -202,7 +207,6 @@ class EventModel extends Model {
 
 		$sql .= " ORDER BY Event.Time";
 
-		//make sure limit is valid
 		if (is_numeric($limit)) {
 			$sql .= " LIMIT " . $limit;
 		}
@@ -213,10 +217,11 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get joined events details from the database
-	 * @param string $hostID
-	 * @param string $timeType
-	 * @param string $limit
+	 * Retrieve events that are joined by a user.
+	 * @param integer $userID User ID.
+	 * @param string $timeType Time type filter (future of past). Use empty string to disable this filter.
+	 * @param integer $limit Maximum number of results.
+	 * @return array Query result.
 	 */
 	public function getJoinedEvents($userID, $timeType = "", $limit = "") {
 		$sql = "SELECT Event.*,
@@ -230,7 +235,6 @@ class EventModel extends Model {
 				WHERE Participant.UserID = :userID
 					AND Event.HostID <> Participant.UserID";
 
-		//change timeType
 		if (strcasecmp($timeType, "future") == 0) {
 			$sql .= " AND Event.Time > NOW()";
 		}
@@ -240,7 +244,6 @@ class EventModel extends Model {
 
 		$sql .= " ORDER BY Event.Time";
 
-		//make sure limit is valid
 		if (is_numeric($limit)) {
 			$sql .= " LIMIT " . $limit;
 		}
@@ -251,7 +254,8 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get past events details from the database
+	 * Retrieve past events.
+	 * @return array Query result.
 	 */
 	public function getPastEvents() {
 		$sql = "SELECT Event.*,
@@ -267,8 +271,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get future events details from the database
-	 * @param string $userID
+	 * Retrieve future events where the user is neither the event host nor a participant.
+	 * @param integer $userID User ID.
+	 * @return array Query result.
 	 */
 	public function getFeed($userID) {
 		$sql = "SELECT Event.*,
@@ -293,10 +298,10 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Update the event image to the database
-	 * @param string $eventID
-	 * @param string $hostID
-	 * @param string $image
+	 * Update event image for a given event ID.
+	 * @param integer $eventID Event ID.
+	 * @param integer $hostID Host user ID.
+	 * @param string $image Event image file name.
 	 */
 	public function updateEventImage($eventID, $hostID, $image) {
 		$sql = "UPDATE Event
@@ -314,10 +319,10 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Insert the media to the database
-	 * @param string $eventID
-	 * @param string $userID
-	 * @param string $image
+	 * Insert a media record.
+	 * @param integer $eventID Event ID.
+	 * @param integer $userID User ID.
+	 * @param string $image Media file name.
 	 */
 	public function insertMedia($eventID, $userID, $image) {
 		$sql = "INSERT INTO Media (EventID, UserID, Image)
@@ -333,13 +338,14 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get search events details from the database
-	 * @param string $userID
-	 * @param string $radius
-	 * @param string $latitude
-	 * @param string $longitude
-	 * @param string $tag
-	 * @param string $old
+	 * Retrieve events based on a certain location.
+	 * @param integer $userID User ID.
+	 * @param integer $radius Radius setting.
+	 * @param double $latitude Latitude.
+	 * @param double $longitude Longitude.
+	 * @param boolean $tag True to filter events based on the user interests, false to disable the filter.
+	 * @param boolean $old True to retrieve both future and past events, false to retrieve only future events.
+	 * @return array Query result.
 	 */
 	public function getSearchEvents($userID, $radius, $latitude, $longitude, $tag, $old) {
 		$sql = "SELECT Event.*,
@@ -352,7 +358,6 @@ class EventModel extends Model {
 				HAVING distance < " . $radius . "
 				ORDER BY distance";
 
-		//query for old events
 		if ($old) {
 			$sql = str_replace('WHERE Event.Time > NOW()','',$sql);
 		}
@@ -361,7 +366,6 @@ class EventModel extends Model {
 
 		$query = $GLOBALS["beans"]->queryHelper->getAllRows($this->db, $sql, $parameters);
 
-		//query for tagged events
 		if ($tag) {
 			function tagToID($tag) {
 				return $tag->TagID;
@@ -379,22 +383,20 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Delete the participants from the database
-	 * @param string $eventID
-	 * @param string $userID
+	 * Delete participant records.
+	 * @param integer $eventID Event ID.
+	 * @param integer $userID User ID.
 	 */
 	public function deleteParticipants($eventID, $userID = "") {
 		$sql = "DELETE
 				FROM Participant
 				WHERE Participant.EventID = :eventID";
 
-		//make sure userID is valid
 		if (is_numeric($userID)) {
 			$sql .= " AND Participant.UserID = :userID";
 		}
 
 		$parameters = array(":eventID" => $eventID);
-		//make sure userID is valid
 		if (is_numeric($userID)) {
 			$parameters[":userID"] = $userID;
 		}
@@ -403,9 +405,10 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Insert the participants to the database
-	 * @param string $eventID
-	 * @param string $userID
+	 * Insert a participant record.
+	 * @param integer $eventID Event ID.
+	 * @param integer $userID User ID.
+	 * @return integer Participant ID.
 	 */
 	public function insertParticipant($eventID, $userID) {
 		$sql = "INSERT INTO Participant (EventID, UserID)
@@ -420,9 +423,10 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get all comments for an event from the database
-	 * @param string $eventID
-	 * @param string $commentID
+	 * Retrieve event comments.
+	 * @param integer $eventID Event ID.
+	 * @param integer $commentID Comment ID.
+	 * @return array Query result.
 	 */
 	public function getComments($eventID, $commentID = "") {
 		$sql = "SELECT Comment.*,
@@ -433,7 +437,6 @@ class EventModel extends Model {
 				INNER JOIN User ON User.UserID = Comment.UserID
 				WHERE Comment.EventID = :eventID";
 
-		//make sure commentID is valid
 		if (is_numeric($commentID)) {
 			$sql .= " AND Comment.CommentID = :commentID";
 		}
@@ -443,7 +446,7 @@ class EventModel extends Model {
 		$parameters = array(
 				":eventID" => $eventID
 		);
-		//make sure commentID is valid
+
 		if (is_numeric($commentID)) {
 			$parameters[":commentID"] = $commentID;
 		}
@@ -452,11 +455,12 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Insert a comment for an event to the database
-	 * @param string $eventID
-	 * @param string $userID
-	 * @param string $parentID
-	 * @param string $text
+	 * Insert a comment record.
+	 * @param integer $eventID Event ID.
+	 * @param integer $userID User ID.
+	 * @param integer $parentID Parent comment ID.
+	 * @param string $text Comment text.
+	 * @return integer Comment ID.
 	 */
 	public function insertComment($eventID, $userID, $parentID, $text) {
 		$sql = "INSERT INTO Comment (EventID, UserID, ParentID, Text)
@@ -471,7 +475,7 @@ class EventModel extends Model {
 
 		$commentID = $GLOBALS["beans"]->queryHelper->executeWriteQuery($this->db, $sql, $parameters);
 
-		//make sure parentID is valid
+		// If parent comment ID is blank, store its own ID as the parent comment ID
 		if (!is_numeric($parentID)) {
 			$sql = "UPDATE Comment
 					SET ParentID = CommentID
@@ -488,9 +492,10 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Get all participants for an event from the database
-	 * @param string $eventID
-	 * @param string $userID
+	 * Retrieve event participants.
+	 * @param integer $eventID Event ID.
+	 * @param integer $userID User ID.
+	 * @return array Query result.
 	 */
 	public function getParticipants($eventID, $userID = "") {
 		$sql = "SELECT Participant.*,
@@ -500,8 +505,7 @@ class EventModel extends Model {
 				FROM Participant
 				INNER JOIN User ON User.UserID = Participant.UserID
 				WHERE Participant.EventID = :eventID";
-		
-		//make sure userID is valid
+
 		if (is_numeric($userID)) {
 			$sql .= " AND Participant.UserID = :userID";
 		}
@@ -509,7 +513,7 @@ class EventModel extends Model {
 		$sql .= " ORDER BY User.LastName, User.FirstName";
 
 		$parameters = array(':eventID' => $eventID);
-		//make sure userID is valid
+
 		if (is_numeric($userID)) {
 			$parameters[":userID"] = $userID;
 		}
@@ -518,16 +522,16 @@ class EventModel extends Model {
 	}
 	
 	/**
-	 * Get all getMedias for an event from the database
-	 * @param string $eventID
-	 * @param string $mediaID
+	 * Retrieve event media.
+	 * @param integer $eventID Event ID.
+	 * @param integer $mediaID Media ID.
+	 * @return array Query result.
 	 */
 	public function getMedia($eventID, $mediaID = "") {
 		$sql = "SELECT *
 				FROM Media
 				WHERE Media.EventID = :eventID";
 
-		//make sure mediaID is valid
 		if (is_numeric($mediaID)) {
 			$sql .= " AND Media.MediaID = :mediaID";
 		}
@@ -535,7 +539,7 @@ class EventModel extends Model {
 		$sql .= " ORDER BY Media.MediaID";
 
 		$parameters = array(':eventID' => $eventID);
-		//make sure mediaID is valid
+
 		if (is_numeric($mediaID)) {
 			$parameters[":mediaID"] = $mediaID;
 		}
@@ -544,23 +548,22 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Delete comments for an event from the database
-	 * @param string $eventID
-	 * @param string $commentID
+	 * Delete comment records.
+	 * @param integer $eventID Event ID.
+	 * @param integer $commentID Comment ID.
 	 */
 	public function deleteComments($eventID, $commentID = "") {
 		$sql = "DELETE
 				FROM Comment
 				WHERE Comment.EventID = :eventID";
 
-		//make sure commentID is valid
 		if (is_numeric($commentID)) {
 			$sql .= " AND (Comment.ParentID = :commentID
 					OR Comment.CommentID = :commentID)";
 		}
 
 		$parameters = array(":eventID" => $eventID);
-		//make sure commentID is valid
+
 		if (is_numeric($commentID)) {
 			$parameters[":commentID"] = $commentID;
 		}
@@ -569,22 +572,21 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Delete media for an event from the database
-	 * @param string $eventID
-	 * @param string $mediaID
+	 * Delete media records.
+	 * @param integer $eventID Event ID.
+	 * @param integer $mediaID Media ID.
 	 */
 	public function deleteMedia($eventID, $mediaID = "") {
 		$sql = "DELETE
 				FROM Media
 				WHERE Media.EventID = :eventID";
 
-		//make sure mediaID is valid
 		if (is_numeric($mediaID)) {
 			$sql .= " AND Media.MediaID = :mediaID";
 		}
 
 		$parameters = array(":eventID" => $eventID);
-		//make sure mediaID is valid
+
 		if (is_numeric($mediaID)) {
 			$parameters[":mediaID"] = $mediaID;
 		}
@@ -593,8 +595,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Count the hosted events from the database
-	 * @param string $hostID
+	 * Count the number of events that are created by a user.
+	 * @param integer $hostID Host user ID.
+	 * @return array Query result.
 	 */
 	public function countHostedEvents($hostID) {
 		$sql = "SELECT COUNT(*) as cnt
@@ -607,8 +610,9 @@ class EventModel extends Model {
 	}
 
 	/**
-	 * Count the joined events from the database
-	 * @param string $userID
+	 * Count the number of events that are joined by a user.
+	 * @param integer $userID User ID.
+	 * @return array Query result.
 	 */
 	public function countJoinedEvents($userID) {
 		$sql = "SELECT COUNT(*) as cnt

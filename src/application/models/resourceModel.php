@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * This class handles database interaction for resources.
+ */
 class ResourceModel extends Model {
 
 	/**
-	 * Retrieves all user tags from database
+	 * Retrieve all tag records.
+	 * @return array Query result.
 	 */
 	public function getTags() {
 		$sql = "SELECT *

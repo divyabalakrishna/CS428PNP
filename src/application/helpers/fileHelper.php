@@ -15,7 +15,7 @@ class FileHelper {
 	 * @param integer $maxSize Maximum file size limit in bytes. Use 0 if there is no limit.
 	 * @param string $replaceFileName New file name to replace the original file name. Use empty string to keep the original file name.
 	 * @param integer $index File upload index for multiple file upload. Use 0 for single file upload.
-	 * @return object An object which contains the uploaded file name, error message, and success flag.
+	 * @return stdClass An object which contains the uploaded file name, error message, and success flag.
 	 */
 	public function uploadFile($fieldName, $directory, $acceptedExtensions, $errorMessageSubject, $maxSize = 0, $replaceFileName = "", $index = 0) {
 		$fileName = "";

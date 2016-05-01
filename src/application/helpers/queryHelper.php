@@ -7,10 +7,10 @@ class QueryHelper {
 
 	/**
 	 * Execute a read query and get a single result.
-	 * @param object $db A PDO database connection. 
+	 * @param PDO $db A PDO database connection. 
 	 * @param string $sql SQL statement.
 	 * @param array $parameters Parameter values.
-	 * @return object Query result. If the query does not return anything, this function will return an object where the properties are empty string.
+	 * @return stdClass Query result. If the query does not return anything, this function will return an object where the properties are empty string.
 	 */
 	public function getSingleRowObject($db, $sql, $parameters) {
 		$query = $db->prepare($sql);
@@ -31,7 +31,7 @@ class QueryHelper {
 
 	/**
 	 * Execute a write query.
-	 * @param object $db A PDO database connection.
+	 * @param PDO $db A PDO database connection.
 	 * @param string $sql SQL statement.
 	 * @param array $parameters Parameter values.
 	 * @return integer|void Record ID if the query is an insert query, no return value otherwise.
@@ -53,7 +53,7 @@ class QueryHelper {
 
 	/**
 	 * Execute a read query and get all results.
-	 * @param object $db A PDO database connection.
+	 * @param PDO $db A PDO database connection.
 	 * @param string $sql SQL statement.
 	 * @param array $parameters Parameter values.
 	 * @return array Query result.
